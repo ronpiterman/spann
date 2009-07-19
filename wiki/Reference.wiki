@@ -1,0 +1,31 @@
+
+
+= About Spann =
+
+Spann is a small Java Library for the Spring Framework which adds annotation support to the spring container, beyond the build in annotation processing. 
+
+It brings the same power to annotations as the XML Schema Extention, introduced in spring 2.5, brings to the xml configuration.
+
+== Spring's build in annotation support ==
+
+Spring built in annotation support is of a static nature: four annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Conroller ).
+
+For Spring 3.0, further annotation support was announced, but also this remains static in nature: Annotation classes and their functionality are defined by the container. Defining new Annotations with new functionality remains an assignment for Container developers and requires deep knowledge of the Container internals.
+
+== Spann's annotation support ==
+
+Spann is created to change this and allow application developers to easily define annotations and their functionality inside the spring container.
+
+There are many usecases for the need of such a functionality. To name a few:
+
+ *  Custom proxy creating as implementation for an interface (Auto creation of DAO implementation methods).
+ *  Implementing "strategies" by wrapping a bean's Method by a strategy implementation object and configuring it via annotations.
+
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
