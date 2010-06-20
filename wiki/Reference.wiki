@@ -6,11 +6,11 @@ It relates to spring's annotation support the same way the "XML Schema Extension
 
 Spann introduces *meta programming* via annotations (or any other class meatdata) to the spring framework.
 
-== Spring's build in annotation support ==
+== Whats wrong with spring's built in annotation support ? ==
 
-Spring built in annotation support is of a static nature: in spring 2.5, four annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Conroller ).
+Spring built in annotation support has a very static nature: in spring 2.5, four annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Conroller ).
 
-For Spring 3.0, further annotations were introduced, but the still it remains static in nature: Annotation classes (and how spring interprets them) are defined by the container. Defining new Annotations with new functionality remains an assignment for Container developers and requires deep knowledge of the Container internals.
+For Spring 3.0, further annotations were introduced, but these remain of static nature: Annotation classes (and how spring interprets them) are defined by the container. Defining new Annotations with new functionality remains an assignment for Container developers and requires deep knowledge of the Container internals.
 
 == Spann's annotation support ==
 
