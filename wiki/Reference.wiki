@@ -14,12 +14,15 @@ For Spring 3.0, further annotations were introduced, but these remain of static 
 
 == Spann's annotation support ==
 
-Spann is created to change this and allow application developers to easily define annotations and their functionality inside the spring container.
+Spann allows application developers to easily hook into the bean definition creation phase of the container via annotations.
 
-There are many usecases for the need of such a functionality. To name a few:
+It provides an API to allow custom beans creation and manipulation via any class metadata in general, and annotations metadata specifically.
+
+There are many usecases for such functionality. To name a few:
 
  *  Custom proxy creating as implementation for an interface (Auto creation of DAO implementation methods).
  *  Implementing "strategies" by wrapping a bean's Method by a strategy implementation object and configuring it via annotations.
+ *  Using templates of beans to wrap around a single method; for example for Message (or JMS) listener methods.
 
 == Technical overview ==
 
@@ -36,3 +39,15 @@ Main features of spann-meatdata are:
  *  Rule based scanning: API to optimize the scan by defining which metadata artifacts are read and which remain ignored.
  *  Lazy loading of all unloaded metadata on demand. For example: metadata of super classes, methods etc is transparently lazy-loaded on demand.
  *  Rule based lazy loading: API to define how much metadata is lazy loaded on demand. For example: when lazy-loading methods of a class, load also method-annotations.
+
+
+=== org.spann:spann-spring ==
+
+The core module introduces class path scanning and configurable Class-Metadata-Visitor API for the spring container.
+
+Main features of spann-spring:
+
+ *  API to define custom visitors for class metadata. This allows developers to  process of annotations or any other class metadata.
+ *  Additional API for custom handling of class and/or method annotations.
+ *  A few generic annotations for common tasks, to allow developers further access to
+spring features (For example to implement abstract methods by delegation)
