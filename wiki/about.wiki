@@ -4,11 +4,11 @@ Spann is an extension library for the Spring Framework. It allows developers to 
 
 It's target is similar to the XML Schema extension API (introduced in Spring 2.5) only it uses class metadata (classes, fields, methods, and annotations information) instead of XML.
 
-Spann can be used for to add capabilities similar to *meta programming* via annotations (or any other class meatdata) to the spring framework.
+Spann can be used to add capabilities similar to *meta programming* via annotations (or any other class meatdata) to the spring container.
 
 == Whats wrong with spring's built in annotation support ? ==
 
-Spring built in annotation support has is not customizable: in spring 2.5, four annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Conroller ).
+Spring built in annotation support is not customizable: in spring 2.5, four annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Conroller ).
 
 For Spring 3.0, further annotations were introduced, but spring is lacking an API to 
 handle custom annotations or any other class metadata. Annotations (and how spring handles them) are defined by the container. It remains an assignment for Container developers to introduce new annotations and it requires deep knowledge of container internals.
