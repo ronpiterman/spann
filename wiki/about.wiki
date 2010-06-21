@@ -1,3 +1,4 @@
+#labels ND
 = About Spann =
 
 Spann is an extension library for the Spring Framework. It allows developers to hook into the bean definition creation phase and create beans by handling arbitrary class metadata (including, but not limited to annotations).
@@ -16,15 +17,14 @@ handle custom annotations or any other class metadata. Annotations (and how spri
 
 == Spann's annotation support ==
 
-The spring XML Schema extension API allows developers to handle custom XML to create spring beans. Spann allows them to do the same thing, but via Annotations (or any other class metadata): to easily hook into the bean definition creation phase of the container via annotations.
+The spring XML Schema extension API allows developers to handle custom XML to create spring beans. Spann allows them to do the same thing, but via Annotations (or any other class metadata). 
 
 Spann provides an API to allow custom beans creation and manipulation via any class metadata in general, and annotations metadata specifically.
 
-There are many usecases for such functionality. To name a few:
+There are many usecases for such functionality which all aim at reducing boilerplate code (and configuration) and making application code more precise and easier to manage:
 
- *  Custom proxy creating as implementation for an interface (Auto creation of DAO implementation methods).
- *  Implementing "strategies" by wrapping a bean's Method by a strategy implementation object and configuring it via annotations.
- *  Using templates of beans to wrap around a single method; for example for message (or JMS) listener or dispatcher methods.
+ *  Method implementation via metadata (for example auto creation of DAO implementation methods to perform JPA queries).
+ *  Using templates of beans to wrap around a single method; for example for message (or JMS) listener or dispatcher methods, or implementation of any single method interface.
 
 == Technical overview ==
 
@@ -32,20 +32,20 @@ Spann consists of 2 core modules (or maven projects):
 
 === org.spann:spann-metadata ==
 
-The metadata module provides a complete Metadata scanning facility. It uses asm visitors
-to extract metadata from selected classes.
+The metadata module provides a complete Metadata scanning facility. It uses ASM (objectweb) to collect metadata from selected classes.
 
 Main features of spann-meatdata are:
 
  *  API to refelect all java metadata of the target classes (with exception of code instructions) without loading *any* of the scanned classes. 
  *  Rule based scanning: API to optimize the scan by defining which metadata artifacts are read and which remain ignored.
- *  Lazy loading of all unloaded metadata on demand. For example: metadata of super classes, methods etc is transparently lazy-loaded on demand.
+ *  Lazy loading of all unloaded metadata on demand. For example: metadata of super classes, methods etc is transparently lazy-loaded when needed.
  *  Rule based lazy loading: API to define how much metadata is lazy loaded on demand. For example: when lazy-loading methods of a class, load also method-annotations.
+ *  Portable between different versions of ASM: can be used from within spring without any ASM dependency (using the ASM implementation delivered with spring), or elsewhere with any other ASM version.
 
 
 === org.spann:spann-spring ==
 
-The core module introduces class path scanning and configurable Class-Metadata-Visitor API for the spring container.
+The core module introduces class path scanning and configurable ClassMetadata Visitor API for the spring container.
 
 Main features of spann-spring:
 
