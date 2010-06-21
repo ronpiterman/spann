@@ -13,17 +13,18 @@ Spring built in annotation support has is not customizable: in spring 2.5, four 
 For Spring 3.0, further annotations were introduced, but spring is lacking an API to 
 handle custom annotations or any other class metadata. Annotations (and how spring handles them) are defined by the container. It remains an assignment for Container developers to introduce new annotations and it requires deep knowledge of container internals.
 
+
 == Spann's annotation support ==
 
-Spann allows application developers to easily hook into the bean definition creation phase of the container via annotations.
+The spring XML Schema extension API allows developers to handle custom XML to create spring beans. Spann allows them to do the same thing, but via Annotations (or any other class metadata): to easily hook into the bean definition creation phase of the container via annotations.
 
-It provides an API to allow custom beans creation and manipulation via any class metadata in general, and annotations metadata specifically.
+Spann provides an API to allow custom beans creation and manipulation via any class metadata in general, and annotations metadata specifically.
 
 There are many usecases for such functionality. To name a few:
 
  *  Custom proxy creating as implementation for an interface (Auto creation of DAO implementation methods).
  *  Implementing "strategies" by wrapping a bean's Method by a strategy implementation object and configuring it via annotations.
- *  Using templates of beans to wrap around a single method; for example for Message (or JMS) listener methods.
+ *  Using templates of beans to wrap around a single method; for example for message (or JMS) listener or dispatcher methods.
 
 == Technical overview ==
 
@@ -51,4 +52,4 @@ Main features of spann-spring:
  *  API to define custom visitors for class metadata. This allows developers to  process of annotations or any other class metadata.
  *  Additional API for custom handling of class and/or method annotations.
  *  A few generic annotations for common tasks, to allow developers further access to
-spring features (For example to implement abstract methods by delegation)
+spring features (for example to implement abstract methods by delegation)
