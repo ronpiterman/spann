@@ -1,16 +1,17 @@
 = About Spann =
 
-Spann is a Java Library for the Spring Framework which adds generic api for annotation support to the spring container.
+Spann is a extension library for the Spring Framework. It allows developers to hook into the bean definition creation phase and create beans according to arbitrary class metadata (including, but not limited to) annotations.
 
-It relates to spring's annotation support the same way the "XML Schema Extension" (introduced in Spring 2.5) relates to spring's XML configuration: it allows developers to hook into the bean definition creation phase. 
+It similar to the XML Schema extension api (introduced in Spring 2.5) only it uses class metadata (classes, fields, methods, and annotations information) instead of XML.
 
-Spann introduces *meta programming* via annotations (or any other class meatdata) to the spring framework.
+Spann can be used for to add capabilities similar to *meta programming* via annotations (or any other class meatdata) to the spring framework.
 
 == Whats wrong with spring's built in annotation support ? ==
 
-Spring built in annotation support has a very static nature: in spring 2.5, four annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Conroller ).
+Spring built in annotation support has is not customizable: in spring 2.5, four annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Conroller ).
 
-For Spring 3.0, further annotations were introduced, but these remain of static nature: Annotation classes (and how spring interprets them) are defined by the container. Defining new Annotations with new functionality remains an assignment for Container developers and requires deep knowledge of the Container internals.
+For Spring 3.0, further annotations were introduced, but spring is lacking an API to 
+handle custom annotations or any other class metadata. Annotations (and how spring handles them) are defined by the container. It remains an assignment for Container developers to introduce new annotations and it requires deep knowledge of container internals.
 
 == Spann's annotation support ==
 
