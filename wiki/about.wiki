@@ -1,6 +1,6 @@
 = About Spann =
 
-Spann is a extension library for the Spring Framework. It allows developers to hook into the bean definition creation phase and create beans according to arbitrary class metadata (including, but not limited to annotations).
+Spann is an extension library for the Spring Framework. It allows developers to hook into the bean definition creation phase and create beans by handling arbitrary class metadata (including, but not limited to annotations).
 
 It's target is similar to the XML Schema extension API (introduced in Spring 2.5) only it uses class metadata (classes, fields, methods, and annotations information) instead of XML.
 
