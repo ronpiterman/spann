@@ -28,7 +28,7 @@ There are many usecases for such functionality which all aim at reducing boilerp
 
 == Technical overview ==
 
-Spann consists of 2 core modules (or maven projects):
+Spann consists of 2 core API modules (or maven projects) and other modules which leverage this API to provide concrete implementation of common usecases.
 
 === org.spann:spann-metadata ==
 
