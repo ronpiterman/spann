@@ -25,9 +25,11 @@ to add (or manipulate) custom bean definitions using custom annotations.
 
 The spring XML Schema extension API allows developers to handle custom XML to create spring beans. Spann allows them to do the same thing, but via Annotations (or any other class metadata).
 
-=== How it works ===
+=== How it works : A bird's-eye view ===
 
 Spann scans selected packages by pattern and creates *class metadata*. It then passes this metadata to *visitors* which may create arbitrary bean definitions.
+
+To simplify the handling of annotations, spann includes custom visitors and annotations providing a simple API for creating and handling of custom annotations.
 
 === Do I need it ? ===
 
