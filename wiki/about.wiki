@@ -92,6 +92,12 @@ With XML it is the above code (without the @JmsListener annotation) with some ex
     <property name="defaultListenerMethod" value="doSomethingWithMessage"/>
 </bean>
 
+<bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+  <property name="connectionFactory" ref="connectionFactory"/>
+  <property name="destination" ref="destination"/>
+  <property name="messageListener" ref="messageListener" />
+</bean>
+
 }}}
 
 === A simple interface ===
