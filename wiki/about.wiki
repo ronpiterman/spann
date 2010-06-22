@@ -5,9 +5,13 @@ Spann is an extension library for [http://www.springsource.org the Spring Framew
 
 It's target is to save boilerplate code and configuration, similar to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] (introduced in Spring 2.0) only it uses class metadata (classes, fields, methods, and annotations information) instead of XML.
 
-Spann includes an API for reflection of the complete class metadata information using ASM, with sophisticated rules to define which metadata should be created and transparent lazy loading of missing metadata on demand.  
-
 It adds *meta programming* capabilities (via annotations or any other class meatdata) to the spring container.
+
+==== class metadata ====
+
+Spann includes an API to access the complete class metadata information (internally using [http://asm.ow2.org/ ASM]), with sophisticated rules to define which metadata should be created and transparent lazy loading of missing metadata on demand.
+
+The metadata API is portable across different ASM versions and is not dependent on spring. When used with spring, spann-metadata uses the asm implementation delivered with spring, and does not introduce new dependencies. 
 
 == But is'nt there a built-in annotation support in spring?  ==
 
