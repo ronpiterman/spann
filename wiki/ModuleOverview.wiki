@@ -9,7 +9,7 @@ The metadata module provides a complete Metadata scanning API. It uses ASM (obje
 Main features of spann-meatdata are:
 
  *  API to refelect all java metadata of the target classes (with exception of code instructions) without loading *any* of the scanned classes. 
- *  Rule based scanning: API to optimize the scan by defining which metadata artifacts are read and which remain ignored.
+ *  Rule based scanning: API to optimize the scan by defining which metadata artifacts are read, ignoring unneeded metadata. For example, the spann-spring module reads only class metadata and annotations; fields, methods and their annotations are initially not read, but are available via lazy loading (see below).
  *  Lazy loading of all unloaded metadata on demand. For example: metadata of super classes, methods etc is transparently lazy-loaded when needed.
  *  Rule based lazy loading: API to define how much metadata is lazy loaded on demand. For example: when lazy-loading methods of a class, load also method-annotations.
  *  Portable between different versions of ASM: can be used from within spring without any ASM dependency (using the ASM implementation delivered with spring), or elsewhere with any other ASM version.
