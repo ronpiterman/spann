@@ -7,7 +7,7 @@ It's target is to save boilerplate code and configuration, similar to the [http:
 
 It adds *meta programming* capabilities (via annotations or any other class meatdata) to the spring container.
 
-==== class metadata ====
+=== class metadata ===
 
 Spann includes an API to access the complete class metadata information (internally using [http://asm.ow2.org/ ASM]), with sophisticated rules to define which metadata should be created and transparent lazy loading of missing metadata on demand.
 
