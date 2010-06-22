@@ -4,7 +4,7 @@ Spann consists of 2 core API modules (or maven projects) and other modules which
 
 == org.spann:spann-metadata ==
 
-The metadata module provides a complete Metadata scanning facility. It uses ASM (objectweb) to collect metadata from selected classes.
+The metadata module provides a complete Metadata scanning API. It uses ASM (objectweb) to read metadata from selected classes.
 
 Main features of spann-meatdata are:
 
