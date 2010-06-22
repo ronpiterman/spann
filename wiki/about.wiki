@@ -1,4 +1,3 @@
-#labels ND
 = About Spann =
 
 Spann is an extension library for [http://www.springsource.org the Spring Framework]. It provides an API to create arbitrary spring beans using any class metadata, including annotations, without (almost) any XML.
@@ -41,3 +40,76 @@ There are many usecases for such functionality which all aim at reducing boilerp
 
  *  Method implementation via metadata (for example auto creation of DAO implementation methods to perform JPA queries).
  *  Using templates of beans to wrap around a single method; for example for message (or JMS) listener or dispatcher methods, or implementation of any single method interface.
+
+== Some examples ==
+
+=== JPA ===
+
+These annotations (and more) are implemented in spann-jpa:
+
+{{{
+@Dao
+public interface UserDao extends BaseDao<User,Long> {
+
+  // will perform "FROM User WHERE username = ?"
+  @Finder(fromMethodName=true)
+  User findByUsername( String username );
+
+  // will perform "FROM User WHERE enabled = ?"
+  // with the given position
+  @Finder(fromMethodName=true)
+  List<User> findByEnabled( boolean enabled , QueryPosition pos );
+
+...
+
+}}}
+
+=== JMS : Batch creation of ===
+
+This is not implemented yet, but shows the direction.
+
+With XML, one needs to create a jms listener container, and a listener adapter.
+In spann it looks like that:
+
+{{{
+@Component
+public class MyListener {
+
+  @JmsListener(queue="queue-name")
+  public void doSomethingWithMessage( TranslatedMessageObject in ) {
+    ...
+  }
+}
+}}}
+
+With XML it is the above code (without the @JmsListener annotation) with some extra configuration (taken from the spring reference):
+
+{{{
+<bean id="messageListener"   class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+    <constructor-arg>
+        <bean class="jmsexample.MyListener"/>
+    </constructor-arg>
+    <property name="defaultListenerMethod" value="doSomethingWithMessage"/>
+</bean>
+
+}}}
+
+=== A simple interface ===
+
+Again, this is not implemented yet, but shows the direction...
+
+Wrap an interface implementation bean around a method, for example for a very 
+simple validator implementation.
+{{{
+@Component
+public class MyValidators {
+
+  @Validator
+  public void validate( Person person , Errors errors ) { ... }
+
+  @Validator
+  public void validate( Address address , Errors errors ) { ... }
+
+  ...
+
+} }}}
