@@ -16,12 +16,20 @@ Spring built in annotation support is not customizable: in spring 2.5, four anno
 For Spring 3.0, further annotations were introduced, but spring is lacking an API to 
 handle custom annotations or any other class metadata. Annotations (and how spring handles them) are defined by the container. It remains an assignment for Container developers to introduce new annotations and it requires deep knowledge of container internals.
 
+Sure, these annotations can be used as meta-annotations, allowing developers to introduce new annotations; bundling new functionality with these annotations is involved in either creating aspects for them, or handling them manually. 
+
 Spring is missing an API, similar to the XML Schema extemsion API, to allow developers
-to add their own bean definitions using custom annotations.
+to add (or manipulate) custom bean definitions using custom annotations.
 
 == Spann's annotation support ==
 
-The spring XML Schema extension API allows developers to handle custom XML to create spring beans. Spann allows them to do the same thing, but via Annotations (or any other class metadata). 
+The spring XML Schema extension API allows developers to handle custom XML to create spring beans. Spann allows them to do the same thing, but via Annotations (or any other class metadata).
+
+=== How it works ===
+
+Spann scans selected packages by pattern and creates *class metadata*. It then passes this metadata to *visitors* which may create arbitrary bean definitions.
+
+=== Do I need it ? ===
 
 There are many usecases for such functionality which all aim at reducing boilerplate code (and configuration) and making application code more precise and easier to maintain:
 
