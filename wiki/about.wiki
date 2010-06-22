@@ -41,9 +41,11 @@ There are many usecases for such functionality which all aim at reducing boilerp
  *  Method implementation via metadata (for example auto creation of DAO implementation methods to perform JPA queries).
  *  Using templates of beans to wrap around a single method; for example for message (or JMS) listener or dispatcher methods, or implementation of any single method interface.
 
+
 == Some examples ==
 
-=== JPA ===
+
+==== JPA ====
 
 These annotations (and more) are implemented in spann-jpa:
 
@@ -64,7 +66,7 @@ public interface UserDao extends BaseDao<User,Long> {
 
 }}}
 
-=== JMS : Batch creation of ===
+==== JMS ====
 
 This is not implemented yet, but shows the direction.
 
@@ -100,7 +102,7 @@ With XML it is the above code (without the @JmsListener annotation) with some ex
 
 }}}
 
-=== A simple interface ===
+==== A simple interface ====
 
 Again, this is not implemented yet, but shows the direction...
 
