@@ -1,6 +1,6 @@
 = Module overview =
 
-Spann consists of 2 core API modules (or maven projects) and other modules which leverage this API to provide concrete implementation of common usecases.
+Spann consists of 2 core API modules and other modules which leverage this API to implement solutions for common usecases.
 
 == org.spann:spann-metadata ==
 
