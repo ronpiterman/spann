@@ -6,9 +6,9 @@ It's target is to save boilerplate code and configuration, similar to the [http:
 
 It adds *meta programming* capabilities (via annotations or any other class meatdata) to the spring container.
 
-=== class metadata ===
+=== Class Metadata ===
 
-Spann includes an API to access the complete class metadata information (internally using [http://asm.ow2.org/ ASM]), with sophisticated rules to define which metadata should be created and transparent lazy loading of missing metadata on demand.
+The spann-metadata module provides an API to access the complete class metadata information (internally using [http://asm.ow2.org/ ASM]), with simple rule engine to define which metadata should be read from bytecode. Additionally any metadata that was not initially read is transparently lazy loaded on demand.
 
 The metadata API is portable across different ASM versions and is not dependent on spring. When used with spring, spann-metadata uses the asm implementation delivered with spring, and does not introduce new dependencies. 
 
