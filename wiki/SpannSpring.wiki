@@ -1,0 +1,58 @@
+# spann-spring module: User and Developer guide
+
+= User's guide =
+
+= Developer's Guide =
+Add your content here.
+
+== Understanding the attach semantics ==
+
+To allow visitors to share references to bean definitions and allow them
+to reference or manipulate bean definitions created earlier (either by the same
+visitor or by other visitors), visitors can _attach_ bean definition holder to a metadata scope.
+
+For example, if a visitor needs to create an auxiliary bean which should be referenced
+by all invocation to this visitor and injected to other beans created by this visitor, it can attach it to the global scope.
+
+If a method-annotation visitor needs to create an auxiliary bean which should be referenced only for other "visits" to methods of the same class, it can attach it to the CLASS scope. Later, when visiting other methods in the same class, the bean can be obtained from the ScanContext. When visiting methods of other classes, another bean needs to be created for that class.
+
+By convension, the `"main"` role is used for the main bean of any artifact.
+
+=== API ===
+
+To attach a BDH, a visitor should call 
+
+{{{
+void attach( BeanDefinitionHolder bdh, Metadata metadata , Artifact attachScope, String role );
+}}}
+
+on the ScanContext.
+
+The given BDH is attach to 
+ #  The given metadata with the given role.
+ #  To the given scope with the BDH's full qualified class name.
+
+To retrieve the bean, a visitor may call 
+
+{{{
+BeanDefinitionHolder getBeanDefinitionHolder( Metadata metadata, Artifact attachMetadataArtifact , String beanRole );
+}}}
+where scope is the Artifact corresponding to the *attach* metadata.
+
+The same method can be used with a different scope and different role to obtain the same bean, namley (watch for the argument names):
+
+{{{
+BeanDefinitionHolder getBeanDefinitionHolder( Metadata metadata, Artifact attachScope , String fqClassName );
+}}}
+
+So the bean can be looked up by either 
+ # the attach-metadata-artifact and attach-role, or (2) 
+ # by the attach-scope and the bean's classname.
+
+For convenient creating of dependencies, visitors can use 
+
+{{{
+VisitorSupport.getOrCreateAndAttach( ScanContext context, Metadata metadata , 
+            Artifact scope, String role, Object source , String clazz )
+}}}
+to create a bean reference and attach it to a scope and a role. This method will lookup the needed bean in the given scope. If the bean does not exist, a new bean is created and attached to the given scope and role. `getOrCreateAndAttach` returns the bean name of the needed bean.
