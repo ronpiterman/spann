@@ -1,0 +1,72 @@
+#summary The spann-metadata module
+
+= Introduction =
+
+The spann-metadata module provides an API to scan java bytecode and represent it via metadata classes.
+
+*Rule byte scan* : spann-metadata provides a simple rule engine which allows users to define which metadata will be loaded when "visiting" the java bytecode.
+
+*Lazy loading*: all metadata which was not loaded on the primary scan is lazy-loaded on demand. Lazy loading is transparent to the user and does not require any special API calls.
+
+*Portable* : spann-metadata internally uses ASM to read the bytecode. It uses a thin adapter around ASM to allow different versions of ASM to be used. This is currently used to allow using spann-metadata from within Spring without introducing any dependency to ASM, using the ASM implementation delivered with spring (under the org.springframework.asm package)
+
+== API ==
+
+spann metadata has a single point of entry, the !ClassMetadataSource class.
+
+In short, this is all the API to retrieve the class metadata:
+
+{{{
+
+// defines which metadata will be loaded on the first scan
+
+MetadataPathRules rules = Rules.RULES_CLASS_ANNOTATIONS;
+
+// rules for lazy loading metadata
+
+LazyLoadingRulesFactory lazyrules = Rules.LAZY_EAGER_ALL;
+
+// An adapter to the ASM Implementation
+
+ClassReaderAdapter adapter = new AsmClassReaderAdapter(); 
+// or new SpringClassReaderAdapter();
+
+// Store for class metadata. Can be shared between ClassMetadataSource
+
+MetadataStore store = new MetadataStore();
+
+// now instantiate and use...
+
+ClassMetadataSource cms = new ClassMetadataSource( rules, lazyrules, adapter , store );
+
+ClassMetadata metadata = cms.getClassMetadata(
+  org.spann.metadata.common.ClasspathResource.forClassname( "example.Foo" , cls.getClassLoader() );
+}}}
+
+=== The Metadata API ===
+
+The Metadata interfaces are located in the org.spann.metadata.core package.
+
+You can consult the API-Docs for details.
+
+There are 5 main Metadata types : ClassMetadata, MethodMetadata, ParameterMetadata, FieldMetadata and AnnotationMetadata. The API is quite straight forward.
+
+==== Arrays =====
+
+ClassMetadata may represent an array. If it does, its dimensions property will return the dimensions of the array. In contrary to java reflection API, all other methods reflect the component type's metadata, so `getName()` on the metadata of String[].class will return "java.lang.String". 
+
+==== Generics ====
+
+Generic information is always lazy loaded (never on the first scan). 
+
+To represent java generics some helper-classes are used: !TypeMetadata, !TypeParameter, !TypeArgument and !GenericType.
+
+*!TypeMetadata* is an extension of ClassMetadata may replace it after signature metadata is loaded.
+
+For example, `classMetadata.getSuperClass()` returns a ClassMetadata. If the super class has generic signature and the signature is loaded, it will return a TypeMetadata.
+
+Same applies for `ClassMetadata.getInterfaces(boolean)`.
+
+*!TypeParameter* is used to represent formal type parameters of a class or method as `T` and `X` in:
+{{{
+
