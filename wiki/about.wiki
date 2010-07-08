@@ -1,12 +1,12 @@
 = About Spann =
 
-Spann is an extension library for [http://www.springsource.org the Spring Framework]. It provides an API to create arbitrary spring beans using any class metadata, including annotations, without (almost) any XML.
+Spann is an extension library for the [http://www.springsource.org Spring Framework]. It provides an API for creating any spring beans based on annotation or any other class metadata, without (almost) any XML.
 
-It's target is to reduce boilerplate code and configuration, similar to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] (introduced in Spring 2.0) only it uses class metadata (classes, fields, methods, and annotations information) instead of XML.
+It's target is to reduce boilerplate code and configuration. It can be seen as a counterpart API to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] (introduced in Spring 2.0): instead of using XML it uses class metadata (classes, fields, methods, and annotations information).
 
-It adds *meta programming* capabilities (via annotations or any other class meatdata) to the spring container.
+Spann adds *meta programming* capabilities to the spring container.
 
-=== Class Metadata ===
+==== spann-metadata Module ====
 
 The spann-metadata module provides an API to access the complete class metadata information (internally using [http://asm.ow2.org/ ASM]), with simple rule engine to define which metadata should be read from bytecode. Additionally any metadata that was not initially read is transparently lazy loaded on demand.
 
@@ -14,15 +14,12 @@ The metadata API is portable across different ASM versions and is not dependent 
 
 == But is'nt there a built-in annotation support in spring?  ==
 
-Spring built in annotation support is not customizable: in spring 2.5, four annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Conroller ).
+Spring built in annotation support is limited to specific usecases. In spring 2.5, four annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Conroller ).
 
-For Spring 3.0, further annotations were introduced, but spring is lacking an API to 
-handle custom annotations or any other class metadata. Annotations (and how spring handles them) are defined by the container. It remains an assignment for Container developers to introduce new annotations and it requires deep knowledge of container internals.
+For Spring 3.0, further annotations were introduced, but spring is missing an API to 
+allow custom bean creation using custom annotations or any other class metadata. Annotations (and how spring handles them) are defined by the container. It remains an assignment for Container developers to introduce new annotations and it requires deep knowledge of container internals.
 
-Sure, these annotations can be used as meta-annotations, allowing developers to introduce new annotations; bundling new functionality with these annotations is involved in either creating aspects for them, or handling them manually. 
-
-Spring is missing an API, similar to the XML Schema extemsion API, to allow developers
-to add (or manipulate) custom bean definitions using custom annotations.
+Sure, the predefined @Component annotation (and others) can be used as meta-annotations. This allows developers to introduce new annotations; but bundling new functionality with these annotations is either done via aspects, or special handling. 
 
 == Spann's annotation support ==
 
@@ -30,41 +27,53 @@ The spring XML Schema extension API allows developers to handle custom XML to cr
 
 === How it works : A bird's-eye view ===
 
-Spann scans selected packages by pattern and creates *class metadata*. It then passes this metadata to *visitors* which may create arbitrary bean definitions.
+Spann scans selected packages by name and creates *class metadata*. It then passes this metadata to *visitors* which may create arbitrary bean definitions.
 
 To simplify the handling of annotations, spann includes custom visitors and annotations providing a simple API for creating and handling of custom annotations.
-
-=== Do I need it ? ===
-
-There are many usecases for such functionality which all aim at reducing boilerplate code (and configuration) and making application code more precise and easier to maintain:
-
- *  Method implementation via metadata (for example auto creation of DAO implementation methods to perform JPA queries).
- *  Using templates of beans to wrap around a single method; for example for message (or JMS) listener or dispatcher methods, or implementation of any single method interface.
-
 
 == Some examples ==
 
 
 ==== JPA ====
 
-These annotations (and more) are implemented in spann-jpa:
+
+The following example is implemented in spann-orm.
+Using this code, spann will implement the `UserDao` interface and
+the annotated methods. This is not done via cglib mostly by spring itself and
+is very efficient at runtime. 
 
 {{{
 @Dao
 public interface UserDao extends BaseDao<User,Long> {
 
   // will perform "FROM User WHERE username = ?"
-  @Finder(fromMethodName=true)
+  @DaoMethod
+  @ByMethodName
   User findByUsername( String username );
 
   // will perform "FROM User WHERE enabled = ?"
   // with the given position
-  @Finder(fromMethodName=true)
+  @DaoMethod
+  @ByMethodName
   List<User> findByEnabled( boolean enabled , QueryPosition pos );
+
+  // simple jpql
+  @DaoMethod
+  @Jpql("FROM User AS u WHERE email = ?")
+  User getUserByEmail( String email );
+
+  // More advanced usage with MessageFormat arguments in the jpql.
+  // calling findByRegdateOp( "username" , "<" , date );
+  // will perform 'FROM User AS u WHERE u.regdate < ? ORDER BY u.username'
+  @DaoMethod
+  @Jpql("FROM User AS u WHERE u.regdate {1} ? ORDER BY u.{0}")
+  List<User> findByRegdateOp( String sortfield , String regdateOp, Date minRegdate );
 
 ...
 
 }}}
+
+
 
 ==== JMS ====
 
