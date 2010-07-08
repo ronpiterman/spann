@@ -1,5 +1,7 @@
 #summary The spann-metadata module
+#sidebar TOC
 
+<wiki:toc/>
 = Introduction =
 
 The spann-metadata module provides an API to scan java bytecode and represent it via metadata classes.
@@ -10,7 +12,7 @@ The spann-metadata module provides an API to scan java bytecode and represent it
 
 *Portable* : spann-metadata internally uses ASM to read the bytecode. It uses a thin adapter around ASM to allow different versions of ASM to be used. This is currently used to allow using spann-metadata from within Spring without introducing any dependency to ASM, using the ASM implementation delivered with spring (under `org.springframework.asm`).
 
-== API ==
+= API Overview=
 
 spann-metadata has a single entry point, the `ClassMetadataSource` class.
 
@@ -38,19 +40,19 @@ ClassMetadata metadata = cms.getClassMetadata(
   org.spann.metadata.common.ClasspathResource.forClassname( "example.Foo" , cls.getClassLoader() );
 }}}
 
-=== The Metadata API ===
+= Details =
 
 The Metadata interfaces are under `org.spann.metadata.core`. Consult the API-docs for details.
 
 There are 5 main Metadata types : `ClassMetadata`, `MethodMetadata`, `ParameterMetadata`, `FieldMetadata` and `AnnotationMetadat`. The API is quite straight forward.
 
-==== Arrays =====
+== Arrays ==
 
   Any ClassMetadata may represent an array. If it does, its dimensions property will return a value greater than zero. 
 
-  In contrary to java reflection API, all other methods reflect the component type's metadata, so `getName()` on the metadata of String[].class will return "java.lang.String". 
+  In contrary to java reflection API, all other methods reflect the component type's metadata, so `getName()` on the metadata of String\[\].class will return "java.lang.String". 
 
-==== Generics ====
+== Generics ==
 
   Generic information is always lazy loaded (never loaded on the first scan). 
 
@@ -85,7 +87,7 @@ There are 5 main Metadata types : `ClassMetadata`, `MethodMetadata`, `ParameterM
 
 
 
-==== Annotations ====
+== Annotations ==
 
   The annotations metadata API is quite straight forward.
 
