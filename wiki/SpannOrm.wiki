@@ -1,4 +1,4 @@
-#summary spamm-orm module
+#summary spann-orm module
 = Introduction =
 
 The target of spann-orm module is to provide implementation of common ORM related usecases.
@@ -6,6 +6,8 @@ The target of spann-orm module is to provide implementation of common ORM relate
 Currently implemented are:
 
   * JPA based DAOs
+
+spann-orm is inspired by the excellent Polyforms library, is however flexibler (query by method name or jpql) and extendable via the spann-spring API, and has better support for JPA features (better named parameters support).
 
 == JPA DAOs ==
 
@@ -54,6 +56,8 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
   The `@ByMethodName` annotations creates a JPQL query from the method name. It can be used for very simple queries which make a single use of each argument with the "=" operator.
 
+  Named parameters are not supported.
+
   See the API Docs for the supported syntax. 
 
   Some examples of the supported method name syntax: `findAll(), findByName(..), count(), countByName(..), countDistinctNameByCountry(..), avgSallaryByDepartment(..), maxSallaryByPosition(..), sumAmountByDepartment(..)`
@@ -61,6 +65,8 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 ==== `@Jpql`====
 
   Executes a given JPQL query.
+
+  Named parameters are supported via the `@NamedParameters annotation (see below).
 
   The JPQL may contain simple argument replacements in form of `{0}`, `{1}` etc. indicating a method argument index. This allows great flexibility in creating dymanic queries in which order-by columns or any other token in the query is dynamicaly replaced by a method argument.
 
@@ -75,6 +81,11 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
   @DaoMethod
   @Jpql("FROM User AS u WHERE u.role = ?")
   List<User> findUserByRole( String role );
+
+  @DaoMethod
+  @Jpql("FROM User AS u WHERE u.role in :roles)
+  @NamedParameters( "roles )
+  List<User> findUserByRoles( Collection<String> roles , QueryPosition qp );
 
   @DaoMethod
   @Jpql("FROM Department AS d WHERE d.budget {3} ? ORDER BY d.{1} {2}")
