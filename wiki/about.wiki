@@ -39,8 +39,9 @@ To simplify the handling of annotations, spann includes custom visitors and anno
 
 The following example is implemented in spann-orm.
 Using this code, spann will implement the `UserDao` interface and
-the annotated methods. This is not done via cglib mostly by spring itself and
-is very efficient at runtime. 
+the annotated methods. This is done via CGLib (mostly by spring itself) and is very efficient at runtime.
+
+(This is inspired by the  excellent 'polyforms' library. Polyforms offers similar functionality but relies on aspects. It uses XML and implements solutions for specific usecases. spann-spring and spann-metadata on the other hand provide an API for creating beans via annotations)
 
 {{{
 @Dao
@@ -73,7 +74,7 @@ public interface UserDao extends BaseDao<User,Long> {
 
 }}}
 
-
+spann-orm contains many other features, you can take a look [SpannOrm here]
 
 ==== JMS ====
 
