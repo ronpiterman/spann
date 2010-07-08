@@ -1,4 +1,5 @@
 #summary The spann-metadata module
+#labels Featured
 #sidebar TOC
 
 <wiki:toc/>
