@@ -1,8 +1,6 @@
 #summary Table of content
 
-= Table of content =
-
-== General ==
+*General*
 
 [about About Spann]
 
@@ -11,7 +9,7 @@
 [Maven Maven]
 
 
-== Modules ==
+*Modules*
 
 [SpannMetadata spann-metadata] (API)
 
