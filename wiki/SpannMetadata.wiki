@@ -32,7 +32,7 @@ ClassReaderAdapter adapter = new AsmClassReaderAdapter();
                        // or new SpringClassReaderAdapter();
 
 // Store for class metadata. Can be shared between ClassMetadataSource
-MetadataStore store = new MetadataStore();
+MetadataStore store = new MetadataStoreImpl();
 
 // now instantiate and use...
 ClassMetadataSource cms = new ClassMetadataSource( rules, lazyrules, adapter , store );
