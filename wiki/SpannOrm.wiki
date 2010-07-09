@@ -43,12 +43,12 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
   A important feature of the `@DaoMethod` annotation is the dynamic use of arguments.
   Method arguments are "consumed" by call-context handlers, allowing some arguments to be used as query arguments, other as Jpql replacement (`{0},{1}` etc), and yet others for any other use. 
 
-  For example, the `!QueryPosition` class, which can be used with any `@DaoMethod`. An argumnet of this
+  For example, the `QueryPosition` class, which can be used with any `@DaoMethod`. An argumnet of this
   class will be consumed and will set the `firstResult` and/or `maxResults` property of the JPA Query.
 
   <b>Usage</b>
 
-  The `@!DaoMethod` annotation requires at least one more annotation which indicates how to create the query (technically spoken: to set the `contextFactory` property of the `GenericMethodReplacer`).
+  The `@DaoMethod` annotation requires at least one more annotation which indicates how to create the query (technically spoken: sets the `contextFactory` property of the `GenericMethodReplacer`).
 
   Currently the annotations `@ByMethodName`, `@Jpql` and `@NamedQuery` are implemented. (Developers can create other custom annotations).
 
