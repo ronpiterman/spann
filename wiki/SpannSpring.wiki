@@ -9,16 +9,16 @@ Add your content here.
 
 To allow visitors to share references to bean definitions and allow them
 to reference or manipulate bean definitions created earlier (either by the same
-visitor or by other visitors), visitors can _attach_ bean definition holder to a metadata scope.
+visitor or by other visitors), visitors can _attach_ any !BeanDefinitionHolder to a metadata scope.
 
-_Attaching_ a BDH to a given metadata and to a given scope is 
- #  giving the bean a certain semantic (role) for the given metadata, and
- #  making the bean unique for its class in the given scope (this is only forced by the attach method and does not constrain spring or creation of other beans).
+_Attaching_ a BDH to a given metadata and to a given scope will
+ #  give the bean a certain semantic (role) for the given metadata, and
+ #  make the bean unique by class name in the given scope (this is only forced by the attach method and does not constrain spring or creation of other beans).
 
 For example, if a visitor needs to create an auxiliary bean which should be referenced
 by all invocation to this visitor (e.g. to be injected to other beans created by this visitor), it can attach it to the global scope.
 
-Or, if a method-annotation visitor needs to create an auxiliary bean which should be referenced only for other "visits" to methods of the same class, it can attach it to the CLASS scope. Later, when visiting other methods in the same class, the bean can be obtained from the `ScanContext. When visiting methods of other classes, another bean needs to be created for that class.
+Or, if a method-annotation visitor needs to create an auxiliary bean which should be referenced only for other "visits" to methods of the same class, it can attach it to the CLASS scope. Later, when visiting other methods in the same class, the attached bean can be obtained from the !ScanContext. When visiting methods of other classes, another bean needs to be created for that class.
 
 By convension, the `"main"` role is used for the main bean of any artifact.
 
