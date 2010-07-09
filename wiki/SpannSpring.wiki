@@ -2,6 +2,23 @@
 
 = User's guide =
 
+== Integrating in a spring context ==
+
+*Add the jars*: first you need to add `spann-metadata.jar`and `spann-spring.jar` to your class path. If you are using Maven or Ivy, see [Maven] for repository and group- and artifact ids.
+
+*Add the xml*: second you need to used the following XML to add spann-spring to the spring application context:
+
+{{{
+TODO
+}}}
+
+*conflict with spring component scan*: spann should apear in the XML after spring's component scann element. Since spann is aware of spring, this allows annotation visitors to avoid double definition of beans. 
+
+One situation where such a conflict might occur is when a non abstract class is annotated with a spann annotation which is itself annotated by @Component. An example is the @Dao annotation, which is itself annotated with @Repository (in order to leverage Spring's exception translation). To avoid such conflicts, make sure that such annotations are only used with abstract classes or interfaces. 
+
+
+
+
 = Developer's Guide =
 Add your content here.
 
