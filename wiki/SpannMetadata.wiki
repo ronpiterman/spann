@@ -66,7 +66,7 @@ There are 5 main Metadata types : `ClassMetadata`, `MethodMetadata`, `ParameterM
   {{{
 
   // ClassMetadata Foo has 1 TypeParameter[name="X",type=<ClassMetadata of Bar>].
-  // (Also methods may have TypeParameters)
+  // (Also methods may have TypeParameters, like in 'public <T> void getValue( Foo<T> f);')
   public class Foo<X extends Bar>
   
       // Foo's ClassMetadata.superClass is a TypeMetadata with 1 TypeArgument{contextBoundTypeParameter="X"}
@@ -76,11 +76,19 @@ There are 5 main Metadata types : `ClassMetadata`, `MethodMetadata`, `ParameterM
       implements Predicate<? super Bar> {
 
     // The fieldType of field 'value' is a GenericType{contextBoundTypeParameter="X"}
-    // GenericType is also used for method return value or method parameter type.
+    // GenericType is also used for method return type or method parameter type.
     private X value;
 
-    // The fieldType of field 'type' is a GenericType{type=<TypeMetadata of Class>}
-    private Class<X> type;
+    // The fieldType of field 'type' is a 
+    //  GenericType{
+    //    type=TypeMetadata{
+    //      name=java.lang.Class,
+    //      typeArguments[ TypeArgument{
+    //          contextBoundTypeParameter="X",contextBoundParameterDimentions=1
+    //      } ]
+    //    }
+    //  }
+    private Class<X[]> type;
   }
   }}}
 
