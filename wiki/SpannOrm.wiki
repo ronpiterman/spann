@@ -33,10 +33,10 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
   The `@!DaoMethod` annotation delegates the annotated method to a `GenericMethodReplacer.
 
-  The `op` attribute defines which method to call on the JPA Query to create the result: `getResultList()`, `getSingleResult()` or `executeUpdate()`. The default is to detect the op from the method name and return type: 
+  The `op` attribute defines the query execution strategy: `getResultList()`, `getSingleResult()` or `executeUpdate()`. The default is to detect the strategy from the method name and its return type: 
     * `update...` will execute an update 
     * `get...` will get a unique result 
-    * All other method names will use `getResultList()`; if the method does not return a `Collection` or a `List`, the first element in result list will be returned ("find first or null").
+    * All other method names will use `getResultList()`; if the method does not return a `Collection` or a `List`, the first element in the result list will be returned ("find first or null").
 
   <b>Dynamic argument mapping</b>
 
