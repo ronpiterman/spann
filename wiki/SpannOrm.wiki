@@ -62,6 +62,8 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
   Some examples of the supported method name syntax: `findAll(), findByName(..), count(), countByName(..), countDistinctNameByCountry(..), avgSallaryByDepartment(..), maxSallaryByPosition(..), sumAmountByDepartment(..)`
 
+  Note that aggregate functions 'By' clause (sumFooByBar) is used as 'WHERE' clause in the generated JPQL, and not as GROUP BY. 
+
 ==== `@Jpql`====
 
   Executes a given JPQL query.
