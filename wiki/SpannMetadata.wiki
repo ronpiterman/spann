@@ -103,3 +103,7 @@ There are 5 main Metadata types : `ClassMetadata`, `MethodMetadata`, `ParameterM
   (1) `AnnotationMetadata` distinguishes between explicit annotation attribute values and default values. This information is not available via the java annotation API and may be usefull.
 
   (2) `AnnotatedElement.findAnnotationPaths(...)` returns a list of paths to a given (meta-)annotation. Meta-Annotations are annotations which annotate annotations. See Spring 3.0 usage of `@Component`.
+
+== Utilities ==
+
+  `MetadataSupport` contains useful utility methods, like finding a generic type argument in a class hierarchy or searching for an annotation attribute value by attribute name in an annotation path.
