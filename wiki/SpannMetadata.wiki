@@ -55,8 +55,6 @@ There are 5 main Metadata types : `ClassMetadata`, `MethodMetadata`, `ParameterM
 
 == Generics ==
 
-  Generic information is always lazy loaded (never loaded on the first scan). 
-
   <strong>!TypeMetadata</strong> extends `ClassMetadata` with a `typeArguments` property. Both are interchangeable in many scenarios, so many methods which return `ClassMetadata` may actually return a `TypeMetadata` if generic informattion is present *and* loaded.
 
     For example, `ClassMetadata.getSuperClass()` returns a ClassMetadata. If the super class has a generic signature and the signature is loaded, it will return a !TypeMetadata.
