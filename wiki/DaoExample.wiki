@@ -1,0 +1,14 @@
+#summary Dao Example
+
+{{{
+
+@Dao
+public interface BookingItemDao extends BaseDao<BookingItem,Long> {
+
+  @ByMethodName
+  List<BookingItem> findByOwnerAndState( User owner , BookingItemState state );
+
+  
+
+
+}}}
