@@ -167,9 +167,11 @@ The `DaoMethodInvoker` gives access to the DAO class, the DAO bean, the method a
 
 == Creating new annotations ==
 
-New annotations can be created for new used cases. You need to get familiar with the spann-metadata and spann-spring API, but these are quite straight forward.
+New annotations can be created for new used cases. You need to get familiar with the *spann-metadata* and *spann-spring* API, but these are quite straight forward.
 
-For example, we can create an annotation which supports a dynamic query hint. The following example is limited to one hint per method, but illustrates how to create new functionality via annotations and their visitors.
+The most tricky part is understanding the `GenericMethodReplacer` and its 2-phase configuration (configuration-time, bean-creation-time and method-call-time). 
+
+For example, we can create an annotation which supports a dynamic query hint. The following example is limited to one hint per method, but illustrates how to create new functionality via annotations and their visitors (in real life, hint values would probably be static and not retrieved via method arguments).
 
 {{{
   public interface HintValue {
@@ -228,6 +230,18 @@ For example, we can create an annotation which supports a dynamic query hint. Th
     }
   }
 		
-}}}	  
+}}}
+
+and then use it...
+
+{{{
+  @ByMethodName
+  @Hint("openjpa.FetchPlan.MaxFetchDepth")
+  List<Foo> findFooByBaz( Baz baz , HintValue hintValue );
+}}}
+and 
+{{{
+  fooDao.findFooByBaz( baz , new HintValueImpl( 3 ) );
+}}}
    
 	
