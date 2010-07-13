@@ -172,7 +172,8 @@ For example, we can create an annotation which enables us to set dynamic query h
 {{{
   public class HintMap extends HashMap<String,Object> { }
   
-  
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target({ElementType.METHOD,ElementType.ANNOTATION_TYPE})
   @Visitor(value=HintSupportVisitor.class,order=Order.AFTER_CREATE)
   public @interface HintSupport {
   }
@@ -235,8 +236,11 @@ and then use it...
 }}}
 and 
 {{{
-  HintMap hints = createHintsMap( "openjpa.FetchPlan.MaxFetchDepth" , 3 );
+  HintMap hints = new HintMap();
+  hints.put( "openjpa.FetchPlan.MaxFetchDepth" , 3 );
   fooDao.findFooByBaz( baz , hints );
 }}}
+
+We can also create any new annotation which is annotated with the new `@HintSupport`, maybe bundle it with other annotations. *spann-spring* will trigger our new `HintSupportVisitor` without any extra configuration.
    
 	
