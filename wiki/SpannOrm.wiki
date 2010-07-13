@@ -11,16 +11,16 @@ Currently implemented are:
 
 spann-orm is inspired by the excellent Polyforms library, is however flexibler (query by method name or jpql) and extendable via the spann-spring API, and has better support for JPA features (better named parameters support).
 
-== JPA DAOs ==
+= JPA DAOs =
 
 JPA DAOs method replacement uses spann-spring's `GenericMethodReplacer` class.
 This allows developers to customize and extend the `@DaoMethod` for (almost) any JPA Query related use.
 
-=== Syntax ===
+== Syntax ==
 
 [DaoExample A Complete Dao exmaple]
 
-==== `@Dao`====
+=== `@Dao`===
 
   A Dao must be defined in either an interface extending `BaseDao<Entity,PrimaryKey>` 
   or in an (optionally abstract) class extending `BaseDaoImpl<Entity,PrimaryKey>`.
@@ -33,7 +33,7 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
   public /* abstract ?*/ class UserDao extends BaseDaoImpl<User,Long> { ... }
   }}}
 
-==== `@DaoMethod`====
+=== `@DaoMethod`===
 
   The `@DaoMethod` annotation delegates the annotated method to a `GenericMethodReplacer.
 
@@ -64,7 +64,7 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
   Currently the annotations `@ByMethodName`, `@Jpql` and `@NamedQuery` are implemented. (Developers can create other custom annotations).
 
-==== `@ByMethodName` ====
+=== `@ByMethodName` ===
 
   The `@ByMethodName` annotations creates a JPQL query from the method name. It can be used for very simple queries which make a single use of each argument with the "=" operator.
 
@@ -76,7 +76,7 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
   Note that aggregate functions 'By' clause (sumFooByBar) is used as 'WHERE' clause in the generated JPQL, and not as GROUP BY. 
 
-==== `@Jpql`====
+=== `@Jpql`===
 
   Executes a given JPQL query.
 
@@ -111,11 +111,22 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
     BigDecimal budget);// will be used as query argument 
   }}}
 
-==== `@NamedQuery`====
+=== `@NamedQuery`===
 
   The `@NamedQuery` will use a defined named query. If no query name is given, the default is `<entity-simple-name.<method-name>`, for example `"Author.findByFoo"`.
 
-==== `@Count` ====
+=== `@NamedParameter` ===
+
+  Will map the method arguments used as query parameters to the given named parameters.
+
+  Not supported with `@ByMethodName`.
+   {{{
+     @Jpal("FROM Foo as f WHERE f.bar = :bar AND f.baz in (:baz)")
+     @NamedParameter({"baz","bar")
+     List<Foo> findByBarAndBaz( Collection<Baz> baz , Bar bar );
+   }}}
+
+=== `@Count` ===
 
   When using `@Jpql` or `@ByMethodName`, the @Count annotation may be used to perform a count query before the actual finder. If used, one argument of type `QueryCount` must be present.
 
