@@ -144,7 +144,9 @@ Naturally this will not test the correctness of any query, but will validates it
 
 The invokers are confgured with default values by argument type, which are provided by the given resolver. The class `MapArgumentResolver` provides a map based resolver implementation which is initialized with many common classes (primitives and their boxed types, dates, calendar aso). For support of further argument types either add types to the `MapArgumentResolver` instance (which is actually a HashMap), or create your own resolver.
 
-Some queries use entities as parameters, and JPA requires these are attached to the current entity manager. The resolver can return a Factory instance to defer the value creation to just before the call. The resolver may also return `DaoTestSupport.SKIP`. If a method argument type is mapped to SKIP, no invoker will be created for that method.
+Some queries use entities as parameters, and JPA requires these are attached to the current entity manager. The resolver can return a Factory instance to defer the value creation to just before the call. You will have to make sure that invoker.invoke() is called after creating the EntityManager - for exmaple from inside spring's `JpaTemplate.execute(...)`. 
+
+The resolver may also return `DaoTestSupport.SKIP`. If a method argument type is mapped to SKIP, no invoker will be created for that method.
 
 The resolver should never return `null`. Instead, use `DaoTestSupport.NULL`. If a null is returned by the resolver, an IllegalArgumentException is thrown by the `createCallbacks` method.
 
