@@ -198,7 +198,7 @@ For example, we can create an annotation which supports a dynamic query hint. Th
       // TODO - check that hintValuePos is >= 0
 
       // the CallContextHandlerChainBuilderCallbackImpl will 'consume' the HintValue
-      // argument, so it is not treated as query parameter, and add our HintHandler
+      // argument (by index), so it is not treated as query parameter, and add our HintHandler
       // to the call context handler chain. This will be performed only once, when spring
       // creates the bean. On method-call-time, only our HintHandler will be called.
       GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( callContextHandlerListFactoryBean, 0, 
