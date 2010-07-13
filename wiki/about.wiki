@@ -1,6 +1,6 @@
 = About Spann =
 
-Spann is an extension library for the [http://www.springsource.org Spring Framework]. It provides an API for creating any spring beans based on annotation or any other class metadata, without (almost) any XML.
+Spann is an extension library for the [http://www.springsource.org Spring Framework]. It provides an API for creating spring beans based on annotation or any other class metadata, without (almost) any XML.
 
 It's target is to reduce boilerplate code and configuration. It can be seen as a counterpart API to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] (introduced in Spring 2.0): instead of using XML it uses class metadata (classes, fields, methods, and annotations information).
 
