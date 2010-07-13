@@ -16,6 +16,8 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
 === Syntax ===
 
+[DaoExample A Complete Dao exmaple]
+
 ==== `@Dao`====
 
   A Dao must be defined in either an interface extending `BaseDao<Entity,PrimaryKey>` 
