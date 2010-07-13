@@ -171,7 +171,7 @@ New annotations can be created for new used cases. You need to get familiar with
 
 The most tricky part is understanding the `GenericMethodReplacer` and its 2-phase configuration (configuration-time, bean-creation-time and method-call-time). 
 
-For example, we can create an annotation which supports a dynamic query hint. The following example is limited to one hint per method, but illustrates how to create new functionality via annotations and their visitors (in real life, hint values would probably be static and not retrieved via method arguments).
+For example, we can create an annotation which supports a dynamic query hint. The following example is limited to one hint per method, but illustrates how to create new functionality via annotations and their visitors.
 
 {{{
   public interface HintValue {
