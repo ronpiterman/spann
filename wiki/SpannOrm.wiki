@@ -40,6 +40,12 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
   The annotations `ByMethodName`, `Jpql` and `NamedQuery` are annotated with `DaoMethod`. So, using it in combination with those annotations is only needed if you wish to use a different op than the default (DETECT).
 
+  <b>Query firstResult and maxResults</b>
+
+  Any method (meta-)annotated by `@DaoMethod` may have an argument of type QueryPosition. This will optionally set the firstResult and maxResults of the query. The argument handling is null safe. A `null` QueryPosition on call time will be ignored. The same applies to firstResult and maxResults - they may be null and will be ignored.
+
+  See also `@Count` below.
+
   <b>Dynamic argument mapping</b>
 
   A important feature of the `@DaoMethod` annotation is the dynamic use of arguments.
@@ -100,3 +106,17 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
     String budgetOp,   // will replace {3}, can be any Jpql Op, such as "=","!=" etc.
     BigDecimal budget);// will be used as query argument 
   }}}
+
+==== `@NamedQuery`====
+
+  The `@NamedQuery` will use a defined named query. If no query name is given, the default is "<entity-simple-name>.<method-name>", for example `"Author.findByFoo"`.
+
+==== `@Count` ====
+
+  When using `@Jpql` or `@ByMethodName`, the @Count annotation may be used to perform a count query before the actual finder. If used, one argument of type `QueryCount` must be present.
+
+  Note that for complicated query syntax, the `@Count` annotation may not be able to transform the Jpql to a count query. 
+
+  The class `QueryPositionCount` extends `QueryPosition` with a `QueryCount` implementation simplifies Pagination. It allows adjusting the query first result after the count query, if this exceeds the count returned from the database.
+
+ 
