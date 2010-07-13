@@ -8,7 +8,42 @@ public interface BookingItemDao extends BaseDao<BookingItem,Long> {
   @ByMethodName
   List<BookingItem> findByOwnerAndState( User owner , BookingItemState state );
 
+  // Will return first result
+  @ByMethodName
+  BookingItem findByOwnerAndState( User owner , BookingItemState state );
+
+  // Will use JPA getSingleResult() and throw exception if none or more than one...
+  @ByMethodName
+  BookingItem getByOwnerAndState( User owner , BookingItemState state );
+
+  // ByMethodName supports count, countDistinct, max, min and avg.
+  @ByMethodName
+  BigDecimal maxAmountByOwner( User owner );
+
+  // Aill set the count to the 'count' argument and return a sorted list.
+  //
+  // The QueryPosition of the performed find-query is optionaly adjusted if the
+  // the count is smaller than firstResult.
+  //
+  // Note that ASC or DESC is parameterized.
+  //
+  @Jpql("FROM BookingItem AS i WHERE i.owner = :o AND i.state = :s ORDER BY i.date {3}")
+  @NamedParameters({"s" , "o"})
+  @Count
+  List<BookingItem> findByStateAndOwnerOrdered( QueryPositionCount count,
+     BookingItemState state , User owner , String ascOrDesc );
   
+  // an update...
+  @Jpql("UPDATE BookingItem AS i SET i.state = ? WHERE i.owner = ? AND i.date < date )
+  int updateStateByOwnerBefore( BookingItemState newState , User owner , Date date );
+
+  // will execute the named query 'BookingItem.findByState'
+  //
+  @NamedQuery
+  @NamedParameters("s")
+  List<BookingItem> findByState( QueryPosition qp, Collection<BookingItemState> states );
+  
+}
 
 
 }}}
