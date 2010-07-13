@@ -19,7 +19,7 @@ public interface BookingItemDao extends BaseDao<BookingItem,Long> {
   BookingItem getByOwnerAndState( User owner , BookingItemState state );
 
 
-  // ByMethodName supports count, countDistinct, max, min and avg.
+  // ByMethodName supports count, countDistinct, max, min, sum and avg.
   @ByMethodName
   BigDecimal maxAmountByOwner( User owner );
 
