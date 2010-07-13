@@ -164,3 +164,56 @@ The resolver may also return `DaoTestSupport.SKIP`. If a method argument type is
 The resolver should never return `null`. Instead, use `DaoTestSupport.NULL`. If a null is returned by the resolver, an IllegalArgumentException is thrown by the `createCallbacks` method.
 
 The `DaoMethodInvoker` gives access to the DAO class, the DAO bean, the method and the arguments, so one can further customize the invocation prior to invoking, if needed.
+
+== Creating new annotations ==
+
+New annotations can be created for new used cases. You need to get familiar with the spann-metadata and spann-spring API, but these are quite straight forward.
+
+For example, we can create an annotation which supports a dynamic query hint. The following example is limited to one hint per method, but illustrates how to create new functionality via annotations and their visitors.
+
+{{{
+  public interface HintValue {
+    Object getHintValue();
+  }
+  
+  @Visitor(value=HintVisitor.class,order=Order.AFTER_CREATE)
+  public @interface Hint {
+    String value();
+  }
+
+  public class HintVisitor extends AbstractGenericReplacerAnnotationVisitor {
+    public HintVisitor() {
+      super( Visitor.class.getCanonicalName() , true );
+    }
+  
+
+    @Override
+    protected void process(MethodMetadata metadata, ScanContext context, AnnotationPath path,
+			BeanDefinitionHolder methodReplacer, BeanDefinitionHolder callContextHandlerListFactoryBean) {
+      String hint = path.getAttribute( 0, String.class, "value", false );
+      int hintValuePos = MetadataSupport.findParameterByType( metadata, HintValue.class.getCanonicalName() );
+      // TODO - check that hintValuePos is >= 0
+      GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( callContextHandlerListFactoryBean, 0, 
+		new CallContextHandlerChainBuilderCallbackImpl( new HintHandler(hint, hintValuePos), hintValuePos );
+    }
+  }
+  
+  public class HintHandler implements Resolver<Boolean,QueryCallContext> {
+    private final String hint;
+    private final int argIndex;
+
+    public HintHandler( String hint, int idx ) { 
+      this.hint = hint; 
+      this.argIndex = idx;
+    }
+    public Boolean resolve( QueryCallContext ctx ) {
+      HintValue v = (HintValue)ctx.getArgument( argIndex );
+      if ( v != null ) {
+        ctx.getQuery().setHint( this.hint , v.getHintValue() );
+      }
+    }
+  }
+		
+}}}	  
+   
+	
