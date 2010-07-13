@@ -126,7 +126,7 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
   When using `@Jpql` or `@ByMethodName`, the @Count annotation may be used to perform a count query before the actual finder. If used, one argument of type `QueryCount` must be present.
 
-  Note that for complicated query syntax, the `@Count` annotation may not be able to transform the Jpql to a count query. 
+  Note that the Count annotation does not use a full-featured JPQL parser, so for complicated query syntax, it may fail to transform the Jpql to a count query. 
 
   The class `QueryPositionCount` extends `QueryPosition` with a `QueryCount` implementation simplifies Pagination. It allows adjusting the query first result after the count query, if this exceeds the count returned from the database.
   {{{
