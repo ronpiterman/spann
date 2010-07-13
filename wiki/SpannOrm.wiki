@@ -142,7 +142,7 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
 Naturally this will not test the correctness of any query, but will validates it is a legal JPA query and that the entity names and their fields are correct.
 
-The invoker is confgured with default values by argument type, provided by the given resolver. The `MapArgumentResolver` provides a map based implementation which is initialized with many common classes (primitives and their boxed types, dates, calendar aso). For support of further argument types either add types to the `MapArgumentResolver` instance (which is actually a HashMap), or create your own resolver.
+The invokers are confgured with default values by argument type, which are provided by the given resolver. The class `MapArgumentResolver` provides a map based resolver implementation which is initialized with many common classes (primitives and their boxed types, dates, calendar aso). For support of further argument types either add types to the `MapArgumentResolver` instance (which is actually a HashMap), or create your own resolver.
 
 Some queries use entities as parameters, and JPA requires these are attached to the current entity manager. The resolver can return a Factory instance to defer the value creation to just before the call. The resolver may also return `DaoTestSupport.SKIP`. If a method argument type is mapped to SKIP, no invoker will be created for that method.
 
