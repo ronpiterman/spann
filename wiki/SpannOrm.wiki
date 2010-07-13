@@ -167,21 +167,19 @@ New annotations can be created for new used cases. You need to get familiar with
 
 The most tricky part is understanding the `GenericMethodReplacer` and its 2-phase configuration (configuration-time, bean-creation-time and method-call-time). 
 
-For example, we can create an annotation which supports a dynamic query hint. The following example is limited to one hint per method, but illustrates how to create new functionality via annotations and their visitors.
+For example, we can create an annotation which supports a dynamic query hint. The following example illustrates how this can be done.
 
 {{{
-  public interface HintValue {
-    Object getHintValue();
-  }
+  public class HintMap extends HashMap<String,Object> { }
   
-  @Visitor(value=HintVisitor.class,order=Order.AFTER_CREATE)
-  public @interface Hint {
-    String value();
+  
+  @Visitor(value=HintSupportVisitor.class,order=Order.AFTER_CREATE)
+  public @interface HintSupport {
   }
 
-  public class HintVisitor extends AbstractGenericReplacerAnnotationVisitor {
+  public class HintSupportVisitor extends AbstractGenericReplacerAnnotationVisitor {
     public HintVisitor() {
-      super( Visitor.class.getCanonicalName() , true );
+      super( HintSupport.class.getCanonicalName() , true );
     }
   
 
@@ -189,37 +187,37 @@ For example, we can create an annotation which supports a dynamic query hint. Th
     protected void process(MethodMetadata metadata, ScanContext context, AnnotationPath path,
 			BeanDefinitionHolder methodReplacer, BeanDefinitionHolder callContextHandlerListFactoryBean) {
       
-      // get the 'value' attribute from the annotation path.
-      String hint = path.getAttribute( 0, String.class, "value", false );
+      // to access the any annotation attribute you can use:
+      // AttributeClass val = path.getAttribute( 0, AttributeClass.class, "attributename", false );
      
       // find the index of the HintValue argument in the annotated method.
-      int hintValuePos = MetadataSupport.findParameterByType( metadata, HintValue.class.getCanonicalName() );
+      int hintValuePos = MetadataSupport.findParameterByType( metadata, HintMap.class.getCanonicalName() );
 
       // TODO - check that hintValuePos is >= 0
 
-      // the CallContextHandlerChainBuilderCallbackImpl will 'consume' the HintValue
-      // argument (by index), so it is not treated as query parameter, and add our HintHandler
+      // the CallContextHandlerChainBuilderCallbackImpl will 'consume' the HintMap
+      // argument (by index), so it is not treated as query parameter, and add our HintMapHandler
       // to the call context handler chain. This will be performed only once, when spring
-      // creates the bean. On method-call-time, only our HintHandler will be called.
+      // creates the bean. On method-call-time, only our HintMapHandler will be called.
       GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( callContextHandlerListFactoryBean, 0, 
-		new CallContextHandlerChainBuilderCallbackImpl( new HintHandler(hint, hintValuePos), hintValuePos );
+		new CallContextHandlerChainBuilderCallbackImpl( new HintHandler( hintValuePos), hintValuePos );
     }
   }
   
-  public class HintHandler implements Resolver<Boolean,QueryCallContext> {
-    private final String hint;
+  public class HintMapHandler implements Resolver<Boolean,QueryCallContext> {
     private final int argIndex;
 
-    public HintHandler( String hint, int idx ) { 
-      this.hint = hint; 
+    public HintHandler( int idx ) { 
       this.argIndex = idx;
     }
 
     // will be called on each method invocation and may mutate the query...
     public Boolean resolve( QueryCallContext ctx ) {
-      HintValue v = (HintValue)ctx.getArgument( argIndex );
+      HintMap v = (HintMap)ctx.getArgument( argIndex );
       if ( v != null ) {
-        ctx.getQuery().setHint( this.hint , v.getHintValue() );
+        for ( Entry<String,Object> e : v.entrySet() ) {
+          ctx.getQuery().setHint(e.getKey(),e.getValue());
+        }
       }
       // do not shortcut execution.
       return false;
@@ -232,12 +230,13 @@ and then use it...
 
 {{{
   @ByMethodName
-  @Hint("openjpa.FetchPlan.MaxFetchDepth")
-  List<Foo> findFooByBaz( Baz baz , HintValue hintValue );
+  @HintSupport
+  List<Foo> findFooByBaz( Baz baz , HintMap hints );
 }}}
 and 
 {{{
-  fooDao.findFooByBaz( baz , new HintValueImpl( 3 ) );
+  HintMap hints = createHintsMap( "openjpa.FetchPlan.MaxFetchDepth" , 3 );
+  fooDao.findFooByBaz( baz , hints );
 }}}
    
 	
