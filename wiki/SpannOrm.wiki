@@ -142,10 +142,10 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
 Naturally this will not test the correctness of any query, but will validates it is a legal JPA query and that the entity names and their fields are correct.
 
-The default arguments are configurable by the resolver argument. The `MapArgumentResolver` provides a map based implementation which is initialized with many common classes. For support of further argument types either add types to the `MapArgumentResolver` instance, or create your own resolver.
+The invoker is confgured with default values by argument type, provided by the given resolver. The `MapArgumentResolver` provides a map based implementation which is initialized with many common classes (primitives and their boxed types, dates, calendar aso). For support of further argument types either add types to the `MapArgumentResolver` instance (which is actually a HashMap), or create your own resolver.
 
-Some queries use entities as parameters, and JPA requires these are attached to the current entity manager. The resolver can return a Factory instance to defer the value creation to just before the call. The resolver may also return `DaoTestSupport.SKIP`. All methods with an argument type mapped to SKIP will not be tested.
+Some queries use entities as parameters, and JPA requires these are attached to the current entity manager. The resolver can return a Factory instance to defer the value creation to just before the call. The resolver may also return `DaoTestSupport.SKIP`. If a method argument type is mapped to SKIP, no invoker will be created for that method.
 
-The resolver should not use `null`. If null is needed, use `DaoTestSupport.NULL`.
+The resolver should never return `null`. Instead, use `DaoTestSupport.NULL`. If a null is returned by the resolver, an IllegalArgumentException is thrown by the `createCallbacks` method.
 
 The `DaoMethodInvoker` gives access to the DAO class, the DAO bean, the method and the arguments, so one can further customize the invocation prior to invoking, if needed.
