@@ -133,4 +133,17 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
     QueryPositionCount qpc = new QueryPositionCount( myoffs , pagesize , AdjustOffset.TO_LAST_PAGE );
     List<Foo> l = myDao.findFooByBar( qpc , bar );
   }}}
- 
+
+  This makes (1) an extra count query definition, (2) a count dao method and (3) the extra code to adjust the offset obsolete by a single @Count annotation.
+
+== Testing ==
+
+`DaoTestSupport.createCallbacks(springAppCtx,resolver,packages)` returns a list of `DaoMethodInvoker`s for all daos found in the given packages. The invokers are configured with default argument values for testing the syntax of all dao methods. Simply call invoker.invoke() from your test class to validate that JPA can process the query.
+
+Ofcause this does not test the correctness of the query, but validates it is a legal JPA query and that the entity names and their fields are correct.
+
+The default arguments are configurable by the resolver argument. The `MapArgumentResolver` provides a map based implementation which is initialized with many common classes. For support of further argument types either add types to the `MapArgumentResolver` instance, or create your own resolver.
+
+Some queries use entities as parameters, and JPA requires these are attached to the current entity manager. The resolver can return a Factory instance to defer the value creation to just before the call. The resolver may also return `DaoTestSupport.SKIP`. All methods with an argument type mapped to SKIP will not be tested.
+
+The resolver should not use `null`. If null is needed, use `DaoTestSupport.NULL`.
