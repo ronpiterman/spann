@@ -16,24 +16,21 @@ spann-orm is inspired by the excellent Polyforms library, is however flexibler (
 JPA DAOs method replacement uses spann-spring's `GenericMethodReplacer` class.
 This allows developers to customize and extend the `@DaoMethod` for (almost) any JPA Query related use.
 
-== Syntax ==
-
 [DaoExample A Complete Dao exmaple]
 
-=== `@Dao`===
+== `@Dao`==
 
   A Dao must be defined in either an interface extending `BaseDao<Entity,PrimaryKey>` 
   or in an (optionally abstract) class extending `BaseDaoImpl<Entity,PrimaryKey>`.
-
-  {{{
-  @Dao
-  public interface UserDao extends BaseDao<User,Long> { ... }
+   {{{
+   @Dao
+   public interface UserDao extends BaseDao<User,Long> { ... }
   
-  @Dao
-  public /* abstract ?*/ class UserDao extends BaseDaoImpl<User,Long> { ... }
-  }}}
+   @Dao
+   public /* abstract ?*/ class UserDao extends BaseDaoImpl<User,Long> { ... }
+   }}}
 
-=== `@DaoMethod`===
+== `@DaoMethod`==
 
   The `@DaoMethod` annotation delegates the annotated method to a `GenericMethodReplacer.
 
@@ -64,7 +61,7 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
   Currently the annotations `@ByMethodName`, `@Jpql` and `@NamedQuery` are implemented. (Developers can create other custom annotations).
 
-=== `@ByMethodName` ===
+== `@ByMethodName` ==
 
   The `@ByMethodName` annotations creates a JPQL query from the method name. It can be used for very simple queries which make a single use of each argument with the "=" operator.
 
@@ -76,7 +73,7 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
   Note that aggregate functions 'By' clause (sumFooByBar) is used as 'WHERE' clause in the generated JPQL, and not as GROUP BY. 
 
-=== `@Jpql`===
+== `@Jpql`==
 
   Executes a given JPQL query.
 
@@ -90,7 +87,6 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
   Any arguments used as JPQL Token replacement will be excluded from the query arguments.
 
   For example:
-
   {{{
   @DaoMethod
   @Jpql("FROM User AS u WHERE u.role = ?")
@@ -111,11 +107,11 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
     BigDecimal budget);// will be used as query argument 
   }}}
 
-=== `@NamedQuery`===
+== `@NamedQuery`==
 
   The `@NamedQuery` will use a defined named query. If no query name is given, the default is `<entity-simple-name.<method-name>`, for example `"Author.findByFoo"`.
 
-=== `@NamedParameter` ===
+== `@NamedParameter` ==
 
   Will map the method arguments used as query parameters to the given named parameters.
 
@@ -126,7 +122,7 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
      List<Foo> findByBarAndBaz( Collection<Baz> baz , Bar bar );
    }}}
 
-=== `@Count` ===
+== `@Count` ==
 
   When using `@Jpql` or `@ByMethodName`, the @Count annotation may be used to perform a count query before the actual finder. If used, one argument of type `QueryCount` must be present.
 
@@ -147,7 +143,7 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
     List<Foo> l = myDao.findFooByBar( qpc , bar );
   }}}
 
-  This makes (1) an extra count query definition, (2) a count dao method and (3) the extra code to adjust the offset obsolete by a single @Count annotation.
+  This makes (1) an extra count query definition, (2) a count dao method and (3) the extra code to adjust the offset obsolete by a single @Count annotation. 
 
 == Testing ==
 
