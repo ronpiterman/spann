@@ -109,7 +109,7 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
 
 ==== `@NamedQuery`====
 
-  The `@NamedQuery` will use a defined named query. If no query name is given, the default is "<entity-simple-name>.<method-name>", for example `"Author.findByFoo"`.
+  The `@NamedQuery` will use a defined named query. If no query name is given, the default is `<entity-simple-name.<method-name>`, for example `"Author.findByFoo"`.
 
 ==== `@Count` ====
 
