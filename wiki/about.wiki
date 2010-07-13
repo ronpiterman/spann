@@ -21,11 +21,7 @@ allow custom bean creation using custom annotations or any other class metadata.
 
 Sure, the predefined @Component annotation (and others) can be used as meta-annotations. This allows developers to introduce new annotations; but bundling new functionality with these annotations is either done via aspects, or special handling. 
 
-== Spann's annotation support ==
-
-The spring XML Schema extension API allows developers to handle custom XML to create spring beans. Spann allows them to do the same thing, but via Annotations (or any other class metadata).
-
-=== How it works : A bird's-eye view ===
+== How it works : A bird's-eye view ==
 
 Spann scans selected packages by name and creates *class metadata*. It then passes this metadata to *visitors* which may create arbitrary bean definitions.
 
