@@ -190,9 +190,19 @@ For example, we can create an annotation which supports a dynamic query hint. Th
     @Override
     protected void process(MethodMetadata metadata, ScanContext context, AnnotationPath path,
 			BeanDefinitionHolder methodReplacer, BeanDefinitionHolder callContextHandlerListFactoryBean) {
+      
+      // get the 'value' attribute from the annotation path.
       String hint = path.getAttribute( 0, String.class, "value", false );
+     
+      // find the index of the HintValue argument in the annotated method.
       int hintValuePos = MetadataSupport.findParameterByType( metadata, HintValue.class.getCanonicalName() );
+
       // TODO - check that hintValuePos is >= 0
+
+      // the CallContextHandlerChainBuilderCallbackImpl will 'consume' the HintValue
+      // argument, so it is not treated as query parameter, and add out HintHandler
+      // to the call context handler chain. This will be executed when spring
+      // creates the bean. On method-call-time, only our HintHandler will be called.
       GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( callContextHandlerListFactoryBean, 0, 
 		new CallContextHandlerChainBuilderCallbackImpl( new HintHandler(hint, hintValuePos), hintValuePos );
     }
@@ -206,11 +216,15 @@ For example, we can create an annotation which supports a dynamic query hint. Th
       this.hint = hint; 
       this.argIndex = idx;
     }
+
+    // will be called on each method invocation and may mutate the query...
     public Boolean resolve( QueryCallContext ctx ) {
       HintValue v = (HintValue)ctx.getArgument( argIndex );
       if ( v != null ) {
         ctx.getQuery().setHint( this.hint , v.getHintValue() );
       }
+      // do not shortcut execution.
+      return false;
     }
   }
 		
