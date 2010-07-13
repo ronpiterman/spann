@@ -120,5 +120,17 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
   Note that for complicated query syntax, the `@Count` annotation may not be able to transform the Jpql to a count query. 
 
   The class `QueryPositionCount` extends `QueryPosition` with a `QueryCount` implementation simplifies Pagination. It allows adjusting the query first result after the count query, if this exceeds the count returned from the database.
+  {{{
+    // instead of
+    long count = myDao.countFooByBar( bar );
+    if ( myoffs < count ) {
+      ...
+    }
+    QueryPosition qp = new QueryPosition( myoffs , pagesize );
+    List<Foo> l = myDao.findFooByBar( qp , bar );
 
+    // use
+    QueryPositionCount qpc = new QueryPositionCount( myoffs , pagesize , AdjustOffset.TO_LAST_PAGE );
+    List<Foo> l = myDao.findFooByBar( qpc , bar );
+  }}}
  
