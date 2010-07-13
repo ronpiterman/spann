@@ -24,7 +24,8 @@ public interface BookingItemDao extends BaseDao<BookingItem,Long> {
   BigDecimal maxAmountByOwner( User owner );
 
 
-  // Aill set the count to the 'count' argument and return a sorted list.
+  // Will perform 2 queries: count and find. 
+  // Will set the count to the 'count' argument and return the result of the find.
   //
   // The QueryPosition of the performed find-query is optionaly adjusted if the
   // the count is smaller than firstResult.
