@@ -1,4 +1,6 @@
 #summary spann-orm module
+<wiki:toc/>
+
 = Introduction =
 
 The target of spann-orm module is to provide implementation of common ORM related usecases.
