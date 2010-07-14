@@ -163,7 +163,7 @@ The `DaoMethodInvoker` gives access to the DAO class, the DAO bean, the method a
 
 == Creating new annotations ==
 
-New annotations can be created for new used cases. You need to get familiar with the *spann-metadata* and *spann-spring* API, but these are quite straight forward.
+New annotations can be created for new use cases. You need to get familiar with the *spann-metadata* and *spann-spring* API, but these are quite straight forward.
 
 The most tricky part is understanding the `GenericMethodReplacer` and its 2-phase configuration (configuration-time, bean-creation-time and method-call-time). 
 
@@ -191,10 +191,10 @@ For example, we can create an annotation which enables us to set dynamic query h
       // to access the any annotation attribute you can use:
       // AttributeClass val = path.getAttribute( 0, AttributeClass.class, "attributename", false );
      
-      // find the index of the HintValue argument in the annotated method.
+      // find the index of the HintMap argument in the annotated method.
       int hintValuePos = MetadataSupport.findParameterByType( metadata, HintMap.class.getCanonicalName() );
 
-      // TODO - check that hintValuePos is >= 0
+      // TODO - check that hintValuePos is >= 0, else throw? quit silently? warn?
 
       // the CallContextHandlerChainBuilderCallbackImpl will 'consume' the HintMap
       // argument (by index), so it is not treated as query parameter, and add our HintMapHandler
