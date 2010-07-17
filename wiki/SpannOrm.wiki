@@ -11,7 +11,7 @@ Currently implemented are:
 
 = JPA DAOs =
 
-The main motivation for this module is DRY. It reduces duplication of both java code and JPQL code. Creating JPA queries with spann-orm is very simple and concise. Maintaining the queries is made easy via (half-)automated Unit-testing.
+The main motivation for this module is DRY. It reduces duplication of both java code and JPQL code. Creating JPA queries with spann-orm is very simple and concise. Maintaining the queries is made easy via unit testing and (half-)automated generation of tests.
 
 JPA DAOs is not a black box, but extendable in (almost) any way you can think of.It uses spann-spring's `GenericMethodReplacer` which contains a simple workflow for customizing method execution. This allows developers to customize and extend the `@DaoMethod` for (almost) any JPA Query related use.
 
