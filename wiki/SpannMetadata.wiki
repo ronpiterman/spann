@@ -51,7 +51,7 @@ There are 5 main Metadata types : `ClassMetadata`, `MethodMetadata`, `ParameterM
 
   Any ClassMetadata may represent an array. If it does, its dimensions property will return a value greater than zero. 
 
-  In contrary to java reflection API, all other methods reflect the component type's metadata, so `getName()` on the metadata of String\[\].class will return "java.lang.String". 
+  In contrary to java reflection API, all other methods reflect the component type's metadata, so `getName()` on the metadata of `String[].class` will return "java.lang.String" and `getMethods()` will return `String.class` methods and not the array's. 
 
 == Generics ==
 
