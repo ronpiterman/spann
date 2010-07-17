@@ -62,7 +62,6 @@ There are 5 main Metadata types : `ClassMetadata`, `MethodMetadata`, `ParameterM
     Same applies to `ClassMetadata.getInterfaces(boolean)`, and for `TypeParameter`'s,`TypeArgument`'s and `GenericType`'s getType() method. 
 
   The following code shows the different generic metadata classes and their semantics.
-
   {{{
 
   // ClassMetadata Foo has 1 TypeParameter[name="X",type=<ClassMetadata of Bar>].
