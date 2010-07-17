@@ -9,6 +9,14 @@ Currently implemented are:
 
   * JPA based DAOs
 
+
+== Usage ==
+
+To use *spann-orm* you need to:
+  * Add it (and spann-spring and spann-metadata) to your class path, see [Maven].
+  * Add the spann-spring scan bean to your spring container and set the packages to scan, see [SpannSpring].
+  * Create the DAO classes/interfaces.
+
 = JPA DAOs =
 
 The main motivation for this module is DRY. It reduces duplication of both java code and JPQL code. Creating JPA queries with spann-orm is very simple and concise. Maintaining the queries is made easy via unit testing and (half-)automated generation of tests.
