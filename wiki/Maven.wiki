@@ -1,3 +1,10 @@
+The current version is *xxx*
+
+Previous versions:
+
+
+
+
 To use spann in a maven project, use the following settings
 
 {{{
