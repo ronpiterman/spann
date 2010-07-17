@@ -2,9 +2,9 @@
 
 Spann is an extension library for the [http://www.springsource.org Spring Framework]. It provides an API for creating spring beans based on annotation or any other class metadata, without (almost) any XML.
 
-It's target is to reduce boilerplate code and configuration. It can be seen as a counterpart API to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] (introduced in Spring 2.0): instead of using XML it uses class metadata (classes, fields, methods, and annotations information).
+It's target is to reduce boilerplate code and configuration. It can be seen as a counterpart API to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] (introduced in Spring 2.0): while the latter enables reducing XML code for creating complex bean strtctures, spann allows developers do it using annotations or any other class metadata (classes, generics, fields, methods).
 
-Spann adds *meta programming* capabilities to the spring container using spring beans and (almost) without bytecode engineering.
+Spann adds *meta programming* capabilities to the spring container without (almost) any bytecode engineering.
 
 === spann-metadata Module ===
 
@@ -17,29 +17,28 @@ The metadata API is portable across different ASM versions and is not dependent 
 Spring built in annotation support is limited to specific usecases. In spring 2.5, four annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Conroller ).
 
 For Spring 3.0, further annotations were introduced, but spring is missing an API to 
-allow custom bean creation using custom annotations or any other class metadata. Annotations (and how spring handles them) are defined by the container. It remains an assignment for Container developers to introduce new annotations and it requires deep knowledge of container internals.
-
-Sure, the predefined @Component annotation (and others) can be used as meta-annotations. This allows developers to introduce new annotations; but bundling new functionality with these annotations is either done via aspects, or special handling. 
+allow custom bean creation using custom annotations or any other class metadata. Annotations (and how spring handles them) are defined by the container. Introducing new annotations is very demanding and requires both knowledge of container internals and 
 
 == How it works : A bird's-eye view ==
 
-Spann scans selected packages by name and creates *class metadata*. It then passes this metadata to *visitors* which may create arbitrary bean definitions.
+Similar to spring's component scan, spann scans resources by pattern under selected packages and creates *class metadata*. Instead of processing this metadata itself, like spring does, spann passes this metadata to *visitors* which may create arbitrary bean definitions.
+
+Spann-metadata was developed to allow metadata visitors to access *any class metadata* in any depth, also outside the scanned classes. Initially, spann-metadata loads only a small part of the available class metadata, making every else transparently available via on demand lazy loading. Spann-metadata is independent of spring and can be used by any application which needs simple access to class metadata information.
 
 To simplify the handling of annotations, spann includes custom visitors and annotations providing a simple API for creating and handling of custom annotations.
 
 == Some examples ==
 
 
-==== JPA ====
+=== JPA ===
 
 
-The following example is implemented in spann-orm.
-Using this code, spann will implement the `UserDao` interface and
-the annotated methods. This is done via CGLib (mostly by spring itself) and is very efficient at runtime.
+  The following example is implemented in spann-orm.
+  Using this code, spann will implement the `UserDao` interface and
+  the annotated methods. This is done via CGLib (mostly by spring itself) and is very efficient at runtime.
 
-(This is inspired by the  excellent 'polyforms' library. Polyforms offers similar functionality but relies on aspects. It uses XML and implements solutions for specific usecases. spann-spring and spann-metadata on the other hand provide an API for creating beans via annotations)
-
-{{{
+  (This is inspired by the  excellent 'polyforms' library. Polyforms offers similar   functionality but relies on aspects. It uses XML and implements solutions for specific usecases. spann-spring and spann-metadata on the other hand provide an API for creating beans via annotations)
+  {{{
 @Dao
 public interface UserDao extends BaseDao<User,Long> {
 
@@ -68,18 +67,17 @@ public interface UserDao extends BaseDao<User,Long> {
 
 ...
 
-}}}
+  }}}
 
-spann-orm contains many other features, you can take a look [SpannOrm here]
+  spann-orm contains many other features, you can take a look [SpannOrm here]
 
-==== JMS ====
+=== JMS ===
 
-This is not implemented yet, but shows the direction.
+  This is not implemented yet, but shows the direction.
 
-With XML, one needs to create a jms listener container, and a listener adapter.
-In spann it looks like that:
-
-{{{
+  With XML, one needs to create a jms listener container, and a listener adapter.
+  In spann it as simple as:
+  {{{
 @Component
 public class MyListener {
 
@@ -88,11 +86,10 @@ public class MyListener {
     ...
   }
 }
-}}}
+  }}}
 
-With XML it is the above code (without the @JmsListener annotation) with some extra configuration (taken from the spring reference):
-
-{{{
+  With XML it is the above code (without the @JmsListener annotation) with some extra configuration (taken from the spring reference):
+  {{{
 <bean id="messageListener"   class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
     <constructor-arg>
         <bean class="jmsexample.MyListener"/>
@@ -106,15 +103,14 @@ With XML it is the above code (without the @JmsListener annotation) with some ex
   <property name="messageListener" ref="messageListener" />
 </bean>
 
-}}}
+  }}}
 
-==== A simple interface ====
+=== A simple interface ===
 
-Again, this is not implemented yet, but shows the direction...
+  Again, this is not implemented yet, but shows the direction...
 
-Wrap an interface implementation bean around a method, for example for a very 
-simple validator implementation.
-{{{
+  Wrap an interface implementation bean around a method, for example for a very simple validator implementation.
+  {{{
 @Component
 public class MyValidators {
 
@@ -126,4 +122,5 @@ public class MyValidators {
 
   ...
 
-} }}}
+} 
+  }}}
