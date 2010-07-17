@@ -1,6 +1,6 @@
-The current version is *xxx*
+The current version is *none*
 
-Previous versions:
+Previous versions: none.
 
 
 
