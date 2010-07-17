@@ -62,7 +62,9 @@ Spann DAOs are inspired by the excellent Polyforms library. However, spann DAOs 
   Method arguments are "consumed" by call-context handlers, allowing some arguments to be used as query arguments, other as Jpql replacement (`{0},{1}` etc), and yet others for any other use. 
 
   For example, the `QueryPosition` class, which can be used with any `@DaoMethod`. An argumnet of this
-  class will be consumed and will set the `firstResult` and/or `maxResults` property of the JPA Query.
+  class will be consumed and not be used as query argument, no mutter in which position it is used.
+
+  Annotation developers can decide which strategy to use to identify arguments to be consumed. Using method argument annotations is also possible, but Spann's preferred strategy is by type. Using parameter annotation makes argument semantic clear only via the documentation or the source code, while using argument type (like QueryPosition) is self documenting.
 
   <b>Usage</b>
 
