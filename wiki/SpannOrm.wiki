@@ -129,8 +129,14 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
   Note that the Count annotation does not use a full-featured JPQL parser, so for complicated query syntax, it may fail to transform the Jpql to a count query. 
 
   The class `QueryPositionCount` extends `QueryPosition` with a `QueryCount` implementation simplifies Pagination. It allows adjusting the query first result after the count query, if this exceeds the count returned from the database.
+
+  With `@Count` and `QueryPositionCount`, pagination is both simple and concise: 
   {{{
-    // instead of
+    QueryPositionCount qpc = new QueryPositionCount( myoffs , pagesize , AdjustOffset.TO_LAST_PAGE );
+    List<Foo> l = myDao.findFooByBar( qpc , bar );
+  }}}
+  Instead of
+  {{{
     long count = myDao.countFooByBar( bar );
     if ( myoffs < count ) {
       ...
@@ -138,9 +144,6 @@ This allows developers to customize and extend the `@DaoMethod` for (almost) any
     QueryPosition qp = new QueryPosition( myoffs , pagesize );
     List<Foo> l = myDao.findFooByBar( qp , bar );
 
-    // use
-    QueryPositionCount qpc = new QueryPositionCount( myoffs , pagesize , AdjustOffset.TO_LAST_PAGE );
-    List<Foo> l = myDao.findFooByBar( qpc , bar );
   }}}
 
   This makes (1) an extra count query definition, (2) a count dao method and (3) the extra code to adjust the offset obsolete by a single @Count annotation. 
@@ -159,7 +162,7 @@ The resolver may also return `DaoTestSupport.SKIP`. If a method argument type is
 
 The resolver should never return `null`. Instead, use `DaoTestSupport.NULL`. If a null is returned by the resolver, an IllegalArgumentException is thrown by the `createCallbacks` method.
 
-The `DaoMethodInvoker` gives access to the DAO class, the DAO bean, the method and the arguments, so one can further customize the invocation prior to invoking, if needed.
+The `DaoMethodInvoker` gives access to the DAO class, the DAO bean, the method and the arguments, so one can further customize the invocation prior to invoking, if needed. `DaoTestSupport` will contain also other useful methods for filtering, finding and mutating `DaoMethodInvoker`s.
 
 == Creating new annotations ==
 
