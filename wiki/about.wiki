@@ -21,15 +21,15 @@ allow custom bean creation using custom annotations or any other class metadata.
 
 == How it works : A bird's-eye view ==
 
-Similar to spring's component scan, spann scans resources by pattern under selected packages and creates *class metadata*. Instead of processing this metadata itself, like spring does, spann passes this metadata together with a `ScanContext` to *visitors*. Via the context, the visitors may create arbitrary bean definitions. 
+Similar to spring's component scan, spann scans resources by pattern under selected packages and creates *class metadata*. Instead of processing this metadata itself, like spring does, spann passes this metadata together with a `ScanContext` to *visitors*. Through the `ScanContext`, the visitors may create arbitrary bean definitions. 
 
-To allow different visitors to "Play together", visitors can "attach" created beans to a a chosen "semantic" in a "scope". This allows other visitors to pick up the bean definitions and manipulate them.
+To allow different visitors to "play together", the `ScanContext` also contains an API  to give bean definition "semantic" in a "scope" ("attaching" them to a metadata in the current tree). This allows other visitors to pick up the bean definitions and manipulate them.
 
-The *spann-metadata* module was developed to allow metadata visitors accessing *any class metadata* in any depth, also outside the scanned classes. Initially, spann-metadata loads only a small part of the available class metadata, making every else transparently available via on demand lazy loading. Spann-metadata is independent of spring and can be used by any application which needs simple access to class metadata information.
+The *spann-metadata* module was developed to give metadata visitors access to *any class metadata* in any depth, also outside the scanned classes. Initially, spann-metadata loads only a small part of the available class metadata, making every else transparently available via on demand lazy loading. THe *spann-metadata* module is independent of spring and can be used by any application which needs simple access to class metadata information.
 
 To simplify the handling of annotations, the *spann-spring* module includes custom visitors and annotations providing a simple API for creating and handling of custom annotations.
 
-== Some examples ==
+== Usecase examples ==
 
 === JPA ===
 
