@@ -145,12 +145,16 @@ Spann DAOs are inspired by the excellent Polyforms library. However, spann DAOs 
   {{{
     QueryPositionCount qpc = new QueryPositionCount( myoffs , pagesize , AdjustOffset.TO_LAST_PAGE );
     List<Foo> l = myDao.findFooByBar( qpc , bar );
+    gui.applyOffset( qpc.getFirstResult() );
+    gui.applyCount( qpc.getCount() );
   }}}
   Instead of
   {{{
     long count = myDao.countFooByBar( bar );
     if ( myoffs < count ) {
-      ...
+      // TODO adjust offset
+      gui.applyOffset( myoffs );
+      gui.applyCount( count );
     }
     QueryPosition qp = new QueryPosition( myoffs , pagesize );
     List<Foo> l = myDao.findFooByBar( qp , bar );
