@@ -21,7 +21,7 @@ To use *spann-orm* you need to:
 
 The main motivation for this module is DRY. It reduces duplication of both java code and JPQL code. Creating JPA queries with spann-orm is very simple and concise. Maintaining the queries is made easy via unit testing and (half-)automated generation of tests.
 
-JPA DAOs is not a black box, but extendable in (almost) any way you can think of.It uses spann-spring's `GenericMethodReplacer` which contains a simple workflow for customizing method execution. This allows developers to customize and extend the `@DaoMethod` for (almost) any JPA Query related use.
+JPA DAOs is not a close black box: it is extendable in (almost) any way you can think of. It uses spann-spring's `GenericMethodReplacer` which contains a simple workflow for customizing method execution. This allows developers to customize and extend the `@DaoMethod` for (almost) any JPA Query related use, so if you are missing a feature, you can easily implement it using your own annotation. See example below.
 
 [DaoExample A Complete Dao exmaple]
 
