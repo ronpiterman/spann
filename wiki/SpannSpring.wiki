@@ -1,5 +1,9 @@
 # spann-spring module: User and Developer guide
 
+= Introduction =
+
+*spann-spring* provides advanced annotation support for the spring framework. It facilitates spann-metadata to produce metadata which reflects java classes
+
 = User's guide =
 
 == Integrating in a spring context ==
