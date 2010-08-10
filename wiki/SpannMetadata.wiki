@@ -5,7 +5,7 @@
 <wiki:toc/>
 = Introduction =
 
-The spann-metadata module provides an API for scanning java bytecode and accessing it via metadata classes.
+The spann-metadata module provides an API for scanning java bytecode and accessing it via metadata objects (`ClassMetadata, MehtodMetadata, AnnotationMetatdat` aso).
 
 *Rules based scan* : spann-metadata uses a simple rule engine which allows users to define which metadata will be loaded when "visiting" the java bytecode.
 
