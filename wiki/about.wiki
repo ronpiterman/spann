@@ -27,25 +27,25 @@ To simplify the handling of annotations, the *spann-spring* module includes cust
 
 === spann-metadata Module ===
 
-The *spann-metadata* module was developed to give metadata visitors access to *any class metadata* in any depth, also outside the scanned classes. It provides an API to access the complete class metadata information (internally using [http://asm.ow2.org/ ASM]), without loading the classes.
+The [spann-metadata] module was developed to give metadata visitors access to *any class metadata* in any depth, also outside the scanned classes. It provides an API to access the complete class metadata information (internally using [http://asm.ow2.org/ ASM]), without loading the classes.
 
-Initially, spann-metadata reads only a small part of the available class metadata, making everything else transparently available via on demand lazy loading. 
+Initially, [spann-metadata] reads only a small part of the available class metadata, making everything else transparently available via on demand lazy loading. 
 
 It is independent of spring and can be used by any application which needs simple access to class metadata information.
 
-To define which metadata is read and which is lazy-loaded, spann-metadata uses a simple rule engine.
+To define which metadata is read and which is lazy-loaded, [spann-metadata] uses a simple rule engine.
 
-The metadata API is portable across different ASM versions and is not dependent on spring. When used with spring, spann-metadata uses the asm implementation delivered with spring, and does not introduce new dependencies.
+The metadata API is portable across different ASM versions and is not dependent on spring. When used with spring, [spann-metadata] uses the asm implementation delivered with spring, and does not introduce new dependencies.
 
 == Usecase examples ==
 
 === JPA ===
 
-  The following example is implemented in spann-orm.
+  The following example is implemented in [spann-orm].
   Using this code, spann will implement the `UserDao` interface and
   the annotated methods. This is done via CGLib (mostly by spring itself) and is very efficient at runtime.
 
-  (This is inspired by the  excellent 'polyforms' library. Polyforms offers similar   functionality but relies on aspects. It uses XML and implements solutions for specific usecases. spann-spring and spann-metadata on the other hand provide an API for creating beans via annotations)
+  (This is inspired by the  excellent 'polyforms' library. Polyforms provides similar   functionality but relies on aspects. It uses XML and implements solutions for specific usecases. spann-spring and spann-metadata on the other hand provide an API for creating beans via annotations)
   {{{
 @Dao
 public interface UserDao extends BaseDao<User,Long> {
