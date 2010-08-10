@@ -1,16 +1,12 @@
+<wiki:toc/>
+
 = About Spann =
 
 Spann is an extension library for the [http://www.springsource.org Spring Framework]. It provides an API for creating spring beans based on annotation or any other class metadata, without (almost) any XML.
 
 It's target is to reduce boilerplate code and configuration. It can be seen as a counterpart API to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] (introduced in Spring 2.0): while the latter enables usign XML Schemas to simplify XML configuration and creating complex bean strtctures, spann allows developers do it using annotations or any other class metadata (classes, generics, fields, methods).
 
-Spann adds *meta programming* capabilities to the spring container without (almost) any bytecode engineering.
-
-=== spann-metadata Module ===
-
-The spann-metadata module provides an API to access the complete class metadata information (internally using [http://asm.ow2.org/ ASM]), with simple rule engine to define which metadata should be read from bytecode. Additionally any metadata that was not initially read is transparently lazy loaded on demand.
-
-The metadata API is portable across different ASM versions and is not dependent on spring. When used with spring, spann-metadata uses the asm implementation delivered with spring, and does not introduce new dependencies. 
+Spann adds *meta programming* capabilities to the spring container without (almost) any bytecode engineering. 
 
 == But is'nt there a built-in annotation support in spring?  ==
 
@@ -27,9 +23,19 @@ Similar to spring's component scan, spann scans resources by pattern under selec
 
 *The Scan Context* provides a simple API to allows different visitors to "play together" by giving bean definitions a "semantic" in a "scope" ("attaching" them to a metadata in the current tree). This allows other visitors to pick up the bean definitions and manipulate them.
 
-The *spann-metadata* module was developed to give metadata visitors access to *any class metadata* in any depth, also outside the scanned classes. Initially, spann-metadata loads only a small part of the available class metadata, making every else transparently available via on demand lazy loading. THe *spann-metadata* module is independent of spring and can be used by any application which needs simple access to class metadata information.
-
 To simplify the handling of annotations, the *spann-spring* module includes custom visitors and annotations providing a simple API for creating and handling of custom annotations.
+
+=== spann-metadata Module ===
+
+The *spann-metadata* module was developed to give metadata visitors access to *any class metadata* in any depth, also outside the scanned classes. It provides an API to access the complete class metadata information (internally using [http://asm.ow2.org/ ASM]), without loading the classes.
+
+Initially, spann-metadata reads only a small part of the available class metadata, making everything else transparently available via on demand lazy loading. 
+
+It is independent of spring and can be used by any application which needs simple access to class metadata information.
+
+To define which metadata is read and which is lazy-loaded, spann-metadata uses a simple rule engine.
+
+The metadata API is portable across different ASM versions and is not dependent on spring. When used with spring, spann-metadata uses the asm implementation delivered with spring, and does not introduce new dependencies.
 
 == Usecase examples ==
 
