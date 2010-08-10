@@ -15,7 +15,7 @@ Spring built in annotation support is limited to specific usecases. In spring 2.
 For Spring 3.0, further annotations were introduced, but spring is missing an API to 
 allow custom bean creation using custom annotations or any other class metadata. Annotations (and how spring handles them) are defined by the container. Introducing new annotations is very demanding and requires both knowledge of container internals and 
 
-== How it works : A bird's-eye view ==
+= How it works : A bird's-eye view =
 
 Similar to spring's component scan, spann scans classes by name pattern under selected packages and creates *class metadata* objects. Instead of processing this metadata itself, spann passes this metadata together to *visitors*. Through the `ScanContext`, the visitors can create arbitrary bean definitions.
 
@@ -37,9 +37,9 @@ To define which metadata is read and which is lazy-loaded, [SpannMetadata spann-
 
 The metadata API is portable across different ASM versions and is not dependent on spring. When used with spring, [SpannMetadata spann-metadata] uses the asm implementation delivered with spring, and does not introduce new dependencies.
 
-== Usecase examples ==
+= Usecase examples =
 
-=== JPA ===
+  *JPA*
 
   The following example is implemented in [spann-orm].
   Using this code, spann will implement the `UserDao` interface and
@@ -79,7 +79,7 @@ public interface UserDao extends BaseDao<User,Long> {
 
   spann-orm contains many other features, you can take a look [SpannOrm here]
 
-=== JMS ===
+  *JMS*
 
   This is not implemented yet, but shows the direction.
 
@@ -113,7 +113,7 @@ public class MyListener {
 
   }}}
 
-=== A simple interface ===
+  *A simple interface*
 
   Again, this is not implemented yet, but shows the direction...
 
