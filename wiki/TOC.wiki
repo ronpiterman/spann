@@ -2,19 +2,19 @@
 
 *General*
 
-[about About Spann]
+  [about About Spann]
 
-[ChangeLog Change log]
+  [ChangeLog Change log]
 
-[Maven Maven]
+  [Maven Maven]
 
 
 *Modules*
 
-[ModuleOverview Modules Overview]
+  [ModuleOverview Modules Overview]
 
-[SpannMetadata spann-metadata] (API)
+  [SpannMetadata spann-metadata] (API)
 
-[SpannSpring spann-spring] (API)
+  [SpannSpring spann-spring] (API)
 
-[SpannOrm spann-orm]
+  [SpannOrm spann-orm]
