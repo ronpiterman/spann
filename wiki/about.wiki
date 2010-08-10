@@ -25,17 +25,17 @@ Similar to spring's component scan, spann scans resources by pattern under selec
 
 To simplify the handling of annotations, the *spann-spring* module includes custom visitors and annotations providing a simple API for creating and handling of custom annotations.
 
-=== spann-metadata Module ===
+=== [SpannMetadata spann-metadata] Module ===
 
-The [spann-metadata] module was developed to give metadata visitors access to *any class metadata* in any depth, also outside the scanned classes. It provides an API to access the complete class metadata information (internally using [http://asm.ow2.org/ ASM]), without loading the classes.
+The [SpannMetadata spann-metadata] module was developed to give metadata visitors access to *any class metadata* in any depth, also outside the scanned classes. It provides an API to access the complete class metadata information (internally using [http://asm.ow2.org/ ASM]), without loading the classes.
 
-Initially, [spann-metadata] reads only a small part of the available class metadata, making everything else transparently available via on demand lazy loading. 
+Initially, [SpannMetadata spann-metadata] reads only a small part of the available class metadata, making everything else transparently available via on demand lazy loading. 
 
 It is independent of spring and can be used by any application which needs simple access to class metadata information.
 
-To define which metadata is read and which is lazy-loaded, [spann-metadata] uses a simple rule engine.
+To define which metadata is read and which is lazy-loaded, [SpannMetadata spann-metadata] uses a simple rule engine.
 
-The metadata API is portable across different ASM versions and is not dependent on spring. When used with spring, [spann-metadata] uses the asm implementation delivered with spring, and does not introduce new dependencies.
+The metadata API is portable across different ASM versions and is not dependent on spring. When used with spring, [SpannMetadata spann-metadata] uses the asm implementation delivered with spring, and does not introduce new dependencies.
 
 == Usecase examples ==
 
