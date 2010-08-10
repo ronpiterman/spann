@@ -7,9 +7,9 @@
 
 The spann-metadata module provides an API for scanning java bytecode and accessing it via metadata objects (`ClassMetadata, MehtodMetadata, AnnotationMetatdat` aso).
 
-*Rules based scan* : spann-metadata uses a simple rule engine which allows users to define which metadata will be loaded when "visiting" the java bytecode.
+*Rules based scan* : spann-metadata uses a simple rules engine which allows users to define which metadata will be loaded when "visiting" the java bytecode.
 
-*Lazy loading*: all metadata which was not loaded on the primary scan is lazy-loaded on demand. Lazy loading is transparent to the user and does not require any special API calls.
+*Lazy loading*: all metadata which was not loaded during the primary scan is lazy-loaded on demand. Lazy loading is transparent to the user and does not require any special API calls.
 
 *Portable* : spann-metadata internally uses ASM to read the bytecode. It uses a thin adapter around ASM to allow different versions of ASM to be used. This is currently used to allow using spann-metadata from within Spring without introducing any dependency to ASM, using the ASM implementation delivered with spring (under `org.springframework.asm`).
 
