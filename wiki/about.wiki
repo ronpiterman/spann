@@ -8,7 +8,7 @@ It's target is to reduce boilerplate code and configuration. It can be seen as a
 
 Spann adds *meta programming* capabilities to the spring container without (almost) any bytecode engineering. 
 
-== But is'nt there a built-in annotation support in spring?  ==
+*But is'nt there a built-in annotation support in spring?*
 
 Spring built in annotation support is limited to specific usecases. In spring 2.5, four annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Conroller ).
 
