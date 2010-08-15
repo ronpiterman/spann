@@ -17,13 +17,16 @@ allow custom bean creation using custom annotations or any other class metadata.
 
 = How it works : A bird's-eye view =
 
-Similar to spring's component scan, spann scans classes by name pattern under selected packages and creates *class metadata* objects. Instead of processing this metadata itself, spann passes this metadata together to *visitors*. Through the `ScanContext`, the visitors can create arbitrary bean definitions.
+Similar to spring's component scan, spann scans classes by name pattern under selected packages and creates *class metadata* objects. Instead of processing this metadata itself, spann passes this metadata to *visitors*. Through the `ScanContext`, the visitors can create arbitrary bean definitions.
 
-*The Default Visitor* searches classes for the `@Visitor` meta-annotation. The `@Visitor` annotation specifies a delegate visitor. This allows annotations to be self-containing and reduces XML configuration. To define a new annotation ,devleopers do not need to change configuration; instead they use the ‘@Visitor‘ annotation which maps a `MetadataVisitor` implementation to an annotation.
+*The Default Visitor* searches classes for the `@Visitor` meta-annotation. The `@Visitor` annotation specifies a delegate visitor. This allows annotations to be self-contained and reduces XML configuration: to define a new annotation ,developers do not need to change configuration; instead they use the ‘@Visitor‘ annotation which maps a `MetadataVisitor` implementation to an annotation type.
 
-*The Scan Context* provides a simple API for accessing and creating bean defintions. To allow different visitors to "play together", it allows giving bean definitions a semantics by "attaching" them to a "role" in a "scope". This allows other visitors to mutate previously created bean definitions, create singleton collaborators  and share dependencies.
+*The Scan Context* provides a simple API for accessing and creating bean definitions. To allow different visitors to "play together", it allows giving semantics to bean definitions by "attaching" them to a "role" in a "scope". This allows other visitors to mutate previously created bean definitions, create singleton collaborators and share dependencies.
 
-To simplify the handling of annotations, the [SpannSpring spann-spring] module includes custom visitors and annotations providing a simple API for creating and handling of custom annotations.
+To simplify the handling of annotations, the [SpannSpring spann-spring] module includes custom visitors and annotations for some generic use-cases, for example:
+ * Creating beans from abstract classes or interfaces.
+ * Using spring method replacing facilities via annotations.
+ * Creating synthetic method adapters.
 
 *The [SpannMetadata spann-metadata] Module*
 
