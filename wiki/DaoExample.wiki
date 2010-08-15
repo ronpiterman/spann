@@ -23,21 +23,30 @@ public interface BookingItemDao extends BaseDao<BookingItem,Long> {
   @ByMethodName
   BigDecimal maxAmountByOwner( User owner );
 
+  // The QueryPosition argument will set the JPA Query's firstResult and maxResults
+  // properties. It is null safe so users can pass null to return all results.
+  @ByMethodName
+  List<BookingItem> findByOwner( User owner , QueryPosition pos );
 
-  // Will perform 2 queries: count and find. 
-  // Will set the count to the 'count' argument and return the result of the find.
+  // Note the MessageFormat argument in the end of the JPQL query.
+  @Jpql("FROM BookingItem WHERE account.id = ? ORDER BY date {1}")
+  List<BookingItem> findByAccountId( Long accountId , String ascOrDesc , 
+    QueryPosition qp );
+
+  // Or with named parameters
+  @Jpql("FROM BookingItem WHERE account.id in (:ids)")
+  @NamedParameters("ids")
+  List<BookingItem> findByAccountIds( Collection<Long> ids );
+
+  // The @Count annotation is pretty neat: it performs a count query
+  // before the actual query, and sets the result to the given
+  // QueryCount argument.
   //
-  // The QueryPosition of the performed find-query is optionaly adjusted if the
-  // the count is smaller than firstResult.
-  //
-  // Note that ASC or DESC is parameterized.
-  //
-  @Jpql("FROM BookingItem AS i WHERE i.owner = :o AND i.state = :s ORDER BY i.date {3}")
-  @NamedParameters({"s" , "o"})
+  // The QueryPositionCount class will adjust the query position
+  // if the result if the count query exceeds the current position.
+  @Jpql("FROM BookingItem WHERE owner = ?")
   @Count
-  List<BookingItem> findByStateAndOwnerOrdered( QueryPositionCount count,
-     BookingItemState state , User owner , String ascOrDesc );
-
+  List<BookingItem> findByOwner( User owner , QueryPositionCount c );
   
   // an update...
   @Jpql("UPDATE BookingItem AS i SET i.state = ? WHERE i.owner = ? AND i.date < ?" )
@@ -45,7 +54,6 @@ public interface BookingItemDao extends BaseDao<BookingItem,Long> {
 
 
   // Will execute the named query 'BookingItem.findByState'
-  //
   @NamedQuery
   @NamedParameters("s")
   List<BookingItem> findByState( QueryPosition qp, Collection<BookingItemState> states );
