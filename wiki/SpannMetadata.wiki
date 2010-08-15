@@ -107,4 +107,4 @@ There are 5 main Metadata types : `ClassMetadata`, `MethodMetadata`, `ParameterM
 
 == Utilities ==
 
-  `MetadataSupport` contains useful utility methods, like finding a generic type argument in a class hierarchy or searching for an annotation attribute value by attribute name in an annotation path.
+  `AnnotationMetadataSupport`, `ClassMetadataSupport`, `FieldMetadataSupport` and `MethodMetadataSupport` are utility classes with some usefull methods to handle the corresponding metadata objects.
