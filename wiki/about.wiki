@@ -23,7 +23,7 @@ Similar to spring's component scan, spann scans classes by name pattern under se
 
 *The Scan Context* provides a simple API for accessing and creating bean definitions. To allow different visitors to "play together", it allows giving semantics to bean definitions by "attaching" them to a "role" in a "scope". This allows other visitors to mutate previously created bean definitions, create singleton collaborators and share dependencies.
 
-To simplify the handling of annotations, the [SpannSpring spann-spring] module includes custom visitors and annotations for some generic use-cases, for example:
+To simplify the handling of annotations, the [SpannSpring spann-spring] module includes custom visitors and annotations for some common use-cases, for example:
  * Creating beans from abstract classes or interfaces.
  * Using spring method replacing facilities via annotations.
  * Creating synthetic method adapters.
