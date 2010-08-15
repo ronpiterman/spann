@@ -41,7 +41,7 @@ Spann DAOs are inspired by the excellent Polyforms library. However, spann DAOs 
 
 == `@DaoMethod`==
 
-  The `@DaoMethod` annotation delegates the annotated method to a `GenericMethodReplacer.
+  The `@DaoMethod` annotation delegates the annotated method to a `GenericMethodReplacer`.
 
   The `op` attribute defines the query execution strategy: `getResultList()`, `getSingleResult()` or `executeUpdate()`. The default is to detect the strategy from the method name and its return type: 
     * `update...` will execute an update 
