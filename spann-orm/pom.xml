@@ -21,7 +21,7 @@
 			<version>${pom.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.springframework</groupId>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${spring-version}</version>
 			<scope>provided</scope>
