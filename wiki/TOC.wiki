@@ -2,11 +2,9 @@
 
 *General*
 
-  [about About Spann]
-
-  [ChangeLog Change log]
-
-  [Maven Maven]
+  [http://code.google.com/p/spann/ Spann Home] <br/>
+  [ChangeLog Change log] <br/>
+  [Maven Maven] <br/>
 
 
 *Modules*
@@ -17,4 +15,4 @@
 
   [SpannSpring spann-spring] (API)
 
-  [SpannOrm spann-orm]
+  [SpannOrm spann-orm] []
