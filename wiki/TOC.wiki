@@ -2,17 +2,14 @@
 
 *General*
 
-  [http://code.google.com/p/spann/ Spann Home] <br/>
-  [ChangeLog Change log] <br/>
-  [Maven Maven] <br/>
+[http://code.google.com/p/spann/ Spann Home] <br/>
+[ChangeLog Change log] <br/>
+[Maven Maven] <br/>
 
 
 *Modules*
 
-  [ModuleOverview Modules Overview]
-
-  [SpannMetadata spann-metadata] (API)
-
-  [SpannSpring spann-spring] (API)
-
-  [SpannOrm spann-orm] []
+[ModuleOverview Modules Overview] <br/>
+[SpannMetadata spann-metadata (API)] <br/>
+[SpannSpring spann-spring (API)] <br/>
+[SpannOrm spann-orm] [DaoExample example] <br/>
