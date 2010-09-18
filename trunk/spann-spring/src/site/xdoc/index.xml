@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2010 the original author or authors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+	<body>
+		<section name="What is Spann">
+			<p>
+				Spann (which stands for <b>Sp</b>ring <b>Ann</b>otations) adds generic annotation
+				support to the <a href="http://www.springsource.com">Spring Framework</a>. With 
+				Spann you can create your own annotations which create custom bean defintions
+				way beyong the native capabilities supplied by spring.
+			</p>
+			<p>
+				In a way, Spann relates to annotation support the same way that 
+				<a href="http://static.springsource.org/spring/docs/2.5.x/reference/extensible-xml.html">xml schema
+				 based extensions</a> 
+				(introduced in spring 2.0) relate to xml configuration. It allows you to use
+				annotations to configure much more than just plain beans, their scope and 
+				dependencies.
+			</p>
+			<p> 
+				The main reason to use spann is to spare boilerplate code. 
+				Specifically we are currently using it for two purposes: 
+			</p>
+			<ol>
+				<li>
+					To allow annotation-based definition of 
+					<a href="http://www.javadesign.info/DesignConcepts/DesignPatterns/GOF/">Strategies.</a>
+				</li>
+				<li>
+					To create Proxy implementations of interfaces with convention based
+					and/or annotation based delegation of method calls.
+				</li>
+			</ol>
+			<p>
+				But there are probably some more use cases we didn't use yet.
+			</p>
+		</section>				
+		<section name="Taste the difference">
+			<p>
+				To give you a small taste, here are some examples of when and where Spann might
+				be usefull
+			</p>
+			<subsection name="Interface implementation">
+				<p>
+					 Create a proxy as an implementation of an interface, without the 
+					 need to use xml.
+				</p>
+				<p>
+					It is clear from the example below that the logic involved in such custom
+					beans exceeds the possibilities of native Spring annotation support (including 
+					the so called extended support announced for Spring 3 )
+				</p>
+				<source><![CDATA[
+@ProxyBean
+public interface UserDao extends BaseDao<User,Long> {
+
+	@FindByMethodName
+	public List<User> findByName( String name );
+	
+	@FindByNamedQuery
+	public List<User> findActiveByName( String name );
+	
+}
+				]]>
+				</source>
+			</subsection>
+			<subsection name="Wrapping methods with beans">
+				<p>
+					 You can transparently create Interface implementation
+					 around any Bean's method. 
+				</p>
+				<p>
+					It is then much simpler to create strategies, allowing you 
+					to implement many strategies on the same bean, letting <b>Spann</b>
+					create the beans around these methods.
+				</p>
+				<source><![CDATA[
+@Component
+public class UserValidators {
+
+	@Autowired
+	private SecurityService securityService;
+
+	@Validator
+	public void validateUser( User user , ValidationContext context ) {
+		// ...
+	}
+	
+	@Validator
+	public void validateSeller( Seller seller , ValidationContext context ) {
+		// ...
+	}
+	
+	@Validator
+	public void validateSomeOtherKindOfUser( SomeOtherKindOfUser soku , ValidationContext context ) {
+		// ...
+	}
+	
+}
+				]]>
+				</source>
+			</subsection>
+		</section>
+		<section name="General project structure">
+			<p>
+				Spann consists of two jars / maven artifacts:
+			</p>
+			<p> 
+				<tt>spann-core</tt> contains generic support for reading class metadata and passing this 
+				metadata to visitors, which, in turn, may create BeanDefintions.  
+			</p>
+			<p>
+				<tt>spann-impl</tt> contains some usefull annotations and auxiliary classes for
+				some common use cases. 
+			</p>
+			<subsection name="Dependencies">
+				<p>Spann naturally depends on <tt>spring-beans</tt>. 
+				Additionaly it uses <a href="http://asm.ow2.org/"><tt>asm</tt></a> to extract class metadata
+				(since it needs to access the metadata before loading the class, to not get in the way
+				of class weaving).
+				</p>
+				<p> These dependencies are marked set in maven with scope <b>provided</b>, to allow 
+				the user to choose the version best suited for his or her needs.
+				</p>
+			</subsection>
+		</section>
+		
+	</body>
+</document>
