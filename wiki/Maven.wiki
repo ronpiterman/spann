@@ -15,13 +15,14 @@ To use spann in a maven project, use the following settings
 
 <depednency>
   <groupId>org.spann</groupId>
-  <artifactId>spann-metadata</artifactId>
+<!--  uncomment one.. -->
+<!--  <artifactId>spann-metadata</artifactId> -->
 <!--  <artifactId>spann-spring</artifactId> -->
-<!--  <artifactId>spann-jpa</artifactId> -->
+<!--  <artifactId>spann-orm</artifactId> -->
   <version>0.1</version>
 </dependency>
 
 }}}
 
-If using spann-metadata, you also need to add an ASM implementation to your
+If using spann-metadata directly, you will also need to add an ASM implementation to your
 project.

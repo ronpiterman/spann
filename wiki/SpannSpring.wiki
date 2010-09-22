@@ -1,36 +1,168 @@
-= Introduction =
 
 *spann-spring* provides advanced annotation support for the spring framework. It facilitates spann-metadata to produce metadata which reflects java classes
 
-= User's guide =
+== Understanding how spann works ==
 
-== Integrating in a spring context ==
+Similar to spring's component scan, spann-spring processes all classes in the class path under 
+given packages which match a given resource name and creates `ClassMetadata` objects representing
+the scanned classes.
 
-*Add the jars*: first you need to add `spann-metadata.jar`and `spann-spring.jar` to your class path. If you are using Maven or Ivy, see [Maven] for repository and group- and artifact ids.
+Each `ClassMetadata` object is then passed the a list of `MetadataVisitor`s, 
+which in turn may configure spring beans.
 
-*Add the xml*: second you need to used the following XML to add spann-spring to the spring application context:
+Support of annotations "composition" is provided through the `ScanContext`'s `attach(...)` method,
+which allows Visitors developers to give beans a "role" in a "context", allowing
+other Visitors to retrieve the bean definition and manipulate it.
+
+To Further simplify dealing with BeanDefinitions, the `ScanContext` can provide a
+`BeanDefinitionBuilder` with simple callback methods for setting bean properties and name.
+
+== Configuring spann-spring ==
+
+There are two methods to configure spann: using spann xml schema extension and as a 
+normal spring bean.
+
+=== Configuration using xml schema extension === 
+
+When using the spann xml schema extension, spann will execute in the xml parse 
+phase of the spring container initialization.
+
+It is strongly recommended to add `<spann:scan...`  *after* spring's component scan element (if any).
+
+A Minimal configuration would be:
 
 {{{
-TODO
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:spann="http://os.masetta.com/spann/schema/spann-1.0"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://os.masetta.com/spann/schema/spann-1.0 http://os.masetta.com/spann/schema/spann-1.0.xsd">
+
+    <context:annotation-config/>
+    
+    <context:component-scan base-package="package1,package2,..."/>
+    
+    <spann:scan base-package="package1,package2,..."/>
+    
 }}}
 
-*conflict with spring component scan*: spann should apear in the XML after spring's component scann element. Since spann is aware of spring, this allows annotation visitors to avoid double definition of beans. 
+=== Configuration as BeanFactoryPostProcessor ===
 
-One situation where such a conflict might occur is when a non abstract class is annotated with a spann annotation which is itself annotated by @Component. An example is the @Dao annotation, which is itself annotated with @Repository (in order to leverage Spring's exception translation). To avoid such conflicts, make sure that such annotations are only used with abstract classes or interfaces. 
+When using spann as normal spring bean, spann will execute as a BeanFactoryPostProcessor. 
+This phase takes place after xml parsing and involves loading of some application classes.  
+In some cases, this may cause class loading issues. Also as a `BeanFactoryPostProcessor`, 
+spann will execute *before* spring's annotation configuration is processed 
+(with exception of `@Component` and it's sub annotation); hence any bean configured with 
+spann may use @Autowired and other Annotations used by spring's annotation configuration.  
+
+A Minimal configuration as a spring bean would be:
+
+{{{
+  ...
+  <bean class="com.masetta.spann.spring.config.SpannBeanFactoryPostProcessor">
+       <property name="basePackagesNames" value="package1,package2"/>
+  </bean>
+}}}
+
+=== Configuration in detail ===
+
+Spann component scan supports the following properties / attributes:
+
+|| *xml schema attribute* || *( bean property )* || *detail* ||
+|| base-package || ( basePackagesNames ) || comma separated list of package names to scan. All packages under the given packages will also be scanned recursivley. ||
+|| scoped-proxy-resolver || ( scopeProxyModeResolver ) || a full qualified class name of a ScopeProxyModeResolver implementation. Consult spring documentation for details || 
+|| scoped-proxy-mode || -none- || one of `'targetClass'`, `'interfaces'` or `'no'`. This is a convenience method to setup a "constant" resolver. ||
+|| resource-pattern || ( resourcePattern ) || Ant style resource pattern to be used under the given packages. The default pattern is '**/*.class'. ||  
+||Êname-generator || (  ) || A full qualified class name ( A BeanNameGenerator implementation ) of a name generator to use for auto generating bean names. The default generator is conform to the spring default name generator. <br/>*Note* that this object will be "consulted", but spann will add '#n' to the generated bean names on demand to avoid conflicting bean names. || 
+
+*Visitors*
+
+Visitors configuration is optional. If not explicitly set, the `DefaultVisitor` is used (see below).
+If Visitors _are_ configured, the DefaultVisitor should be explicitly added if needed.
+
+When using xml schema configuration, visitors can be added with the `spann:visitor` element:
+{{{
+    <spann:scan ...>
+        <spann:visitor class="..."/>
+        <spann:visitor class="..."/>
+        ...
+    </spann:scan>
+}}}
+
+When configuring spann as a bean, use the `List<MetadataVisitor>` `metadataVisitors` property.
+
+== The default visitor ==
+
+The default visitor scans classes for the `@Visitor` annotation at any meta annotation level and
+delegates to the `MetadataVisitor` defined by that annotation.
+
+If a class is annotated by `@VisitMethods` (at any meta-annotation level), its methods will also be 
+searched for the @Visitor annotation. The same applies to `@VisitFields`.
+
+To support Annotation composition, the default visitor supports visitor ordering via the
+`@Visitor` `order` attribute ( see Order class for usefull constants ). This allows different
+annotations of the same element (e.g. Method) to be processed by different visitors 
+in a given order, each annotation optionally complementing beans configured by other annotations.
+
+The following example defines the Implement annotation 
+(implemented in spann-spring's base package). 
+{{{
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE,ElementType.ANNOTATION_TYPE})
+@Visitor(order=Order.CREATE_BEAN , value=ImplementVisitor.class)
+@VisitMethods
+public @interface Implement {
+    
+    /** Implement name */
+    String value() default "";
+    
+}
+}}}
+
+The DefaultVisitor will create a singleton instance of ImpelementVisitor  call its visit(...) methods 
+for every class or interface annotated by the @Implement annotation (or annotated by any annotation
+which is itself annotated by @Implement at any recursion depth).
+
+{{{
+public class ImplementVisitor implements MetadataVisitor<ClassMetadata> {
+    public void visit( ClassMetadata metadata, ScanContext context) {
+        ...
+    }
+}
+}}}
+
+See also `AnnotationPathMetadataVisitor`, a usefull base class for implementing metadata visitors.
+
+== Annotation Composition  ==
+
+A Design goal of spann-spring is to allow annotation composition: the API should allow designing
+annotations (and the beans configured as the result of their use) that may be enhanced 
+by yet other annotations.
+
+One technical requirement to address this goal is that annotations can be detected in
+any meta-annotation level. Class- Field- and MethodMetadata interfaces supply the API to 
+address this:
+
+{{{
+ List<AnnotationPath> findAnnotationPaths( String annotationCannonicalClassName );
+}}}
+
+A Second requirement addressing this goal was to provide an API through which `MetadataVisitor`s 
+can easily share references to bean definitions. This is addressed with the _attach_ API of
+the `ScanContext` which is explained in detail below.
+
+Lastly, `MetadataVisitor` order is configurable via the `@Visitor` annotation, and convention 
+constants are available via the `Order` class. 
+
+== The _attach_ API ===
+
+As mentioned above, the _attach_ API allows visitors to share references to `BeanDefinition`s.
 
 
 
-
-= Developer's Guide =
-Add your content here.
-
-== Understanding the attach semantics ==
-
-To allow visitors to share references to bean definitions and allow them
-to reference or manipulate bean definitions created earlier (either by the same
-visitor or by other visitors), visitors can _attach_ any !BeanDefinitionHolder to a metadata scope.
-
-_Attaching_ a BDH to a given metadata and to a given scope will
+_Attaching_ a `BeanDefinitionHolder` to a given metadata and to a given scope will
  #  give the bean a certain semantic (role) for the given metadata, and
  #  make the bean unique by class name in the given scope (this is only forced by the attach method and does not constrain spring or creation of other beans).
 
