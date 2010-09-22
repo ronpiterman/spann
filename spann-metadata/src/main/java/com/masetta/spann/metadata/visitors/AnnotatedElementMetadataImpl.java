@@ -58,15 +58,20 @@ class AnnotatedElementMetadataImpl extends AbstractMetadataImpl implements Annot
         return am;
     }
 
+    /** {@inheritDoc} */
     public AnnotationMetadata getAnnotation(String cannonicalClassName) {
         loadAnnotations();
         return annotations.get( cannonicalClassName );
     }
 
+    /**
+     * <p>loadAnnotations</p>
+     */
     protected void loadAnnotations() {
         load( ArtifactElement.ANNOTATIONS );
     }
 
+	/** {@inheritDoc} */
 	public List<AnnotationPath> findAnnotationPaths(String annotationCannonicalClassName ) {
 		List<AnnotationPath> path = findAnnotationPathInternal( annotationCannonicalClassName );
 		if ( path == null ) {

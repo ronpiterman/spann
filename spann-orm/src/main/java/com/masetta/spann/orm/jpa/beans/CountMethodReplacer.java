@@ -17,12 +17,15 @@
 package com.masetta.spann.orm.jpa.beans;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import javax.persistence.Query;
-
+import javax.sql.rowset.CachedRowSet;
 
 import com.masetta.spann.orm.jpa.support.QueryCount;
 import com.masetta.spann.spring.base.method.beans.GenericMethodReplacer;
+import com.masetta.spann.spring.util.Chain;
+import com.masetta.spann.spring.util.ChainExecutor;
 import com.masetta.spann.spring.util.Resolver;
 
 public class CountMethodReplacer extends GenericMethodReplacer<QueryCallContext> {
@@ -32,6 +35,8 @@ public class CountMethodReplacer extends GenericMethodReplacer<QueryCallContext>
 	public static final String COUNT_ARGUMENT_INDEX_PROPERTY = "countArgumentIndex";
 	
 	private Resolver<QueryCallContext,Object[]> countContextFactory;
+	
+	private Chain<Object,QueryCallContext>[] countChain;
 	
 	private Integer countArgumentIndex;
 	
@@ -45,13 +50,10 @@ public class CountMethodReplacer extends GenericMethodReplacer<QueryCallContext>
 
 	private Number performCount(Object[] args) {
 		QueryCallContext ctx = countContextFactory.resolve( args );
-		if ( ! performChain( ctx ) )
-			return 0;
-		
-		final Query query = ctx.getQuery();
-		query.setFirstResult( 0 );
-		return (Number) query.getSingleResult();
-			
+		ChainExecutor<Object, QueryCallContext> executor =
+			new ChainExecutor<Object, QueryCallContext>( countChain );
+		Object result = executor.next( ctx );
+		return (Number)result;
 	}
 
 	public void setCountContextFactory(Resolver<QueryCallContext, Object[]> countContextFactory) {
@@ -60,6 +62,35 @@ public class CountMethodReplacer extends GenericMethodReplacer<QueryCallContext>
 
 	public void setCountArgumentIndex(Integer countArgumentIndex) {
 		this.countArgumentIndex = countArgumentIndex;
+	}
+	
+	
+	
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		super.afterPropertiesSet();
+		Chain<Object, QueryCallContext>[] contextHandlerChain = getContextHandlerChain();
+		if ( contextHandlerChain == null ) {
+			this.countChain = new Chain[] { CountResultStrategy.INSTANCE };
+		}
+		else {
+			this.countChain = Arrays.copyOf( contextHandlerChain, contextHandlerChain.length + 1 );
+			this.countChain[ this.countChain.length - 1 ] = CountResultStrategy.INSTANCE;
+		}
+	}
+
+	private static class CountResultStrategy implements Chain<Object,QueryCallContext> {
+		
+		private static final CountResultStrategy INSTANCE = new CountResultStrategy();
+		
+		private CountResultStrategy() {}
+
+		public Object perform(QueryCallContext param, ChainExecutor<Object, QueryCallContext> next) {
+			final Query query = param.getQuery();
+			query.setFirstResult( 0 );
+			return (Number) query.getSingleResult();
+		}
+		
 	}
 
 }

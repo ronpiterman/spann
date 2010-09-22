@@ -20,19 +20,33 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-
 class TraceInvocationHandler implements InvocationHandler {
 	
 	private final Object target;
 	
 	private final SpannLog log;
 	
+	/**
+	 * <p>Constructor for TraceInvocationHandler.</p>
+	 *
+	 * @param target a {@link java.lang.Object} object.
+	 * @param log a {@link com.masetta.spann.metadata.util.SpannLog} object.
+	 */
 	public TraceInvocationHandler(Object target,SpannLog log) {
 		super();
 		this.target = target;
 		this.log = log == null ? SpannLogFactory.getLog( target.getClass() ) : log ;
 	}
 
+	/**
+	 * <p>invoke</p>
+	 *
+	 * @param proxy a {@link java.lang.Object} object.
+	 * @param method a {@link java.lang.reflect.Method} object.
+	 * @param args an array of {@link java.lang.Object} objects.
+	 * @return a {@link java.lang.Object} object.
+	 * @throws java.lang.Throwable if any.
+	 */
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		log.trace( method.getName() + "(" + Arrays.toString( args ) + ")");
 		boolean ok = false;

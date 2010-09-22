@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.visitors;
@@ -42,7 +46,6 @@ import com.masetta.spann.metadata.rules.MetadataPathRules;
 import com.masetta.spann.metadata.util.Provider;
 import com.masetta.spann.metadata.util.SpannLog;
 import com.masetta.spann.metadata.util.SpannLogFactory;
-
 public class VisitorControllerImpl implements VisitorController , Provider<ClassLoader> {
     
     private SpannLog log = SpannLogFactory.getLog( VisitorControllerImpl.class );
@@ -75,6 +78,14 @@ public class VisitorControllerImpl implements VisitorController , Provider<Class
     
     private Resource resource;
     
+    /**
+     * <p>Constructor for VisitorControllerImpl.</p>
+     *
+     * @param store a {@link com.masetta.spann.metadata.MetadataStore} object.
+     * @param rules a {@link com.masetta.spann.metadata.rules.MetadataPathRules} object.
+     * @param lazyLoadingRulesFactory a {@link com.masetta.spann.metadata.rules.LazyLoadingRulesFactory} object.
+     * @param adapter a {@link com.masetta.spann.metadata.reader.ClassReaderAdapter} object.
+     */
     public VisitorControllerImpl( MetadataStore store, MetadataPathRules rules , 
             LazyLoadingRulesFactory lazyLoadingRulesFactory , ClassReaderAdapter adapter ) {
         this.metadataStore = store;
@@ -96,6 +107,7 @@ public class VisitorControllerImpl implements VisitorController , Provider<Class
         this.classVisitorAdapter = getVisitor( Artifact.CLASS , ClassVisitorImpl.class );
     }
     
+    /** {@inheritDoc} */
     public boolean isVisit(ArtifactElement e) {
         boolean b = (this.metadataGranularity.peek().intValue() & e.getBit()) != 0 ;
         if ( log.isTraceEnabled() ) {
@@ -105,10 +117,12 @@ public class VisitorControllerImpl implements VisitorController , Provider<Class
         return b;
     }
     
+    /** {@inheritDoc} */
     public VisitorAdapter<?> getEmptyVisitorAdapter( Artifact artifact ) {
     	return (VisitorAdapter<?>) this.emptyVisitors.get( artifact );
     }
     
+    /** {@inheritDoc} */
     public <T> VisitorAdapter<T> visit( Class<T> visitorType, Metadata metadata, ArtifactElement element ) {
         int granularity = rules.getElements( metadata.getPath() );
         if ( ! metadataStack.isEmpty() ) {
@@ -136,6 +150,7 @@ public class VisitorControllerImpl implements VisitorController , Provider<Class
         }
     }
 
+    /** {@inheritDoc} */
     public void lazyload( ClassLoader classLoader, String className,
             ArtifactPath path, ArtifactElement element) {
         if ( log.isTraceEnabled() ) {
@@ -160,6 +175,11 @@ public class VisitorControllerImpl implements VisitorController , Provider<Class
         this.rules = temp;
     }
 
+    /**
+     * <p>visit</p>
+     *
+     * @param resource a {@link com.masetta.spann.metadata.common.Resource} object.
+     */
     public void visit( Resource resource ) {
     	this.resource = resource;
     	try {
@@ -212,11 +232,15 @@ public class VisitorControllerImpl implements VisitorController , Provider<Class
         return (VisitorAdapter<T>) visitors.get( artifact );
     }
 
+    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     public <T> T getCurrentMetadata(Class<T> type) {
         return (T) metadataStack.peek();
     }
 
+    /**
+     * <p>visitEnd</p>
+     */
     public void visitEnd() {
         Object metadata = this.metadataStack.pop();
         this.metadataGranularity.pop();
@@ -225,14 +249,21 @@ public class VisitorControllerImpl implements VisitorController , Provider<Class
         }
     }
     
+    /**
+     * <p>getFactories</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.reader.ClassReaderAdapter} object.
+     */
     public ClassReaderAdapter getFactories() {
         return this.classReaderAdapter;
     }
     
+    /** {@inheritDoc} */
     public ClassMetadata getClassMetadata( String className , int dimensions ) {
         return getClassMetadata( className , dimensions , this );
     }
     
+    /** {@inheritDoc} */
     public ClassMetadata getClassMetadata( String className , int dimensions , Provider<ClassLoader> classLoaderProvider ) {
         if ( className == null || "void".equals(className))
             return null;
@@ -275,12 +306,19 @@ public class VisitorControllerImpl implements VisitorController , Provider<Class
         return new ClassMetadataImpl( this, className , classLoader );
     }
 
+    /**
+     * <p>Getter for the field <code>delegate</code>.</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.visitors.VisitorDelegate} object.
+     */
     public VisitorDelegate getDelegate() {
         return delegate;
     }
 
     /**
      * Implementation of Provider&lt;ClassLoader>.
+     *
+     * @return a {@link java.lang.ClassLoader} object.
      */
     public ClassLoader get() {
         if ( this.metadataStack.isEmpty() )

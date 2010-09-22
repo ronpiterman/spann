@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.visitors;
@@ -20,21 +24,39 @@ import com.masetta.spann.metadata.common.ArtifactElement;
 import com.masetta.spann.metadata.core.AnnotationMetadata;
 import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.reader.VisitorAdapter;
-
 public class MethodVisitorImpl extends AbstractVisitor<MethodMetadataImpl> {
     
     private final VisitorAdapter<AnnotationVisitorImpl> annotationVisitor;
 
+    /**
+     * <p>Constructor for MethodVisitorImpl.</p>
+     *
+     * @param controller a {@link com.masetta.spann.metadata.visitors.VisitorController} object.
+     * @param annotationVisitor a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     public MethodVisitorImpl( VisitorController controller , VisitorAdapter<AnnotationVisitorImpl> annotationVisitor ) {
         super( MethodMetadataImpl.class, controller);
         this.annotationVisitor = annotationVisitor;
     }
 
+    /**
+     * <p>visitAnnotationDefault</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     public VisitorAdapter<AnnotationVisitorImpl> visitAnnotationDefault() {
         visit( Object.class , getMetadata() , ArtifactElement.DEFAULT_VALUE );
         return annotationVisitor;
     }
     
+    /**
+     * <p>visitParameterAnnotation</p>
+     *
+     * @param parameter a int.
+     * @param desc a {@link java.lang.String} object.
+     * @param visible a boolean.
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     public VisitorAdapter<AnnotationVisitorImpl> visitParameterAnnotation(int parameter,
             String desc, boolean visible) { 
         if ( ! visible )

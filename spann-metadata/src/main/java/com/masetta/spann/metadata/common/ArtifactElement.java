@@ -18,12 +18,13 @@ package com.masetta.spann.metadata.common;
 
 import java.util.Collection;
 
-/** 
+/**
  * Represents different elements of metadata types.
- * 
+ *
  * The exact semantics of each element changes according to the artifact it is applies to.
- *  
- * 
+ *
+ * @author rpt
+ * @version $Id: $
  */
 public enum ArtifactElement {
     
@@ -58,10 +59,21 @@ public enum ArtifactElement {
         this.bit = 1 << ordinal();
     }
 
+    /**
+     * <p>Getter for the field <code>bit</code>.</p>
+     *
+     * @return a int.
+     */
     public int getBit() {
         return bit;
     }
     
+    /**
+     * <p>collect</p>
+     *
+     * @param elements a {@link com.masetta.spann.metadata.common.ArtifactElement} object.
+     * @return a int.
+     */
     public static int collect( ArtifactElement ...elements ) {
         int bit = 0;
         for ( ArtifactElement ae : elements ) {
@@ -70,6 +82,12 @@ public enum ArtifactElement {
         return bit;
     }
     
+    /**
+     * <p>collect</p>
+     *
+     * @param elements a {@link java.util.Collection} object.
+     * @return a int.
+     */
     public static int collect( Collection<ArtifactElement> elements ) {
         int bit = 0;
         for ( ArtifactElement ae : elements ) {

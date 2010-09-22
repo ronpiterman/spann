@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,18 +13,26 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.core;
-
-
 public interface ParameterMetadata extends Metadata , AnnotatedElementMetadata {
 
+    /**
+     * <p>getParameterClass</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     */
     ClassMetadata getParameterClass();
     
     /**
      * Retrieve the generic type infomration for this method parameter.
+     *
      * @see FieldMetadata#getFieldType()
+     * @return a {@link com.masetta.spann.metadata.core.GenericType} object.
      */
     GenericType getParameterType();
 

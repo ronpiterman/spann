@@ -22,6 +22,7 @@ import com.masetta.spann.orm.jpa.beans.handler.NamedArgumentSetter;
 import com.masetta.spann.orm.jpa.beans.handler.PositionalArgumentSetter;
 import com.masetta.spann.spring.base.method.beans.CallContextHandlerChainBuilder;
 import com.masetta.spann.spring.base.method.beans.CallContextHandlerChainBuilderCallback;
+import com.masetta.spann.spring.util.Chain;
 import com.masetta.spann.spring.util.Resolver;
 
 public final class QueryArgumentsCallback {
@@ -35,7 +36,7 @@ public final class QueryArgumentsCallback {
 				builder.addAndConsume( createVisitor( i, available[i] ), available[i] );
 			}
 		}
-		protected abstract Resolver<Boolean,QueryCallContext> createVisitor(int queryPos, int methodArgIndex );
+		protected abstract Chain<Object,QueryCallContext> createVisitor(int queryPos, int methodArgIndex );
 	}
 	
 	public final static class Positional extends Abstract {
@@ -44,7 +45,7 @@ public final class QueryArgumentsCallback {
 		
 		private Positional() {}
 	
-		protected final Resolver<Boolean,QueryCallContext> createVisitor(int queryPos, int methodArgIndex ) {
+		protected final Chain<Object,QueryCallContext> createVisitor(int queryPos, int methodArgIndex ) {
 			return new PositionalArgumentSetter( queryPos , methodArgIndex );
 		}
 	}
@@ -58,7 +59,7 @@ public final class QueryArgumentsCallback {
 			this.namedParameters = namedPaameters;
 		}
 		
-		protected final Resolver<Boolean,QueryCallContext> createVisitor(int queryPos, int methodArgIndex ) {
+		protected final Chain<Object,QueryCallContext> createVisitor(int queryPos, int methodArgIndex ) {
 			return new NamedArgumentSetter( this.namedParameters[queryPos] , methodArgIndex );
 		}
 	}

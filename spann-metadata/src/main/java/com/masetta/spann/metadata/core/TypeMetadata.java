@@ -29,19 +29,26 @@ import java.util.List;
  * For example, having
  * <code> public class Foo extends ArrayList&lt;String> {...} </code>,
  * Foo will be represented by ClassMetadata foo.
- * foo's {@link ClassMetadata#getSuperClass() superClass } will return a {@link TypeMetadata}, 
- * with a single {@link TypeArgument} of {@link TypeParameter#getTypes() type} java.lang.String.
+ * foo's {@link ClassMetadata#getSuperClass(boolean) superClass } will return a {@link TypeMetadata},
+ * with a single {@link TypeArgument} of {@link TypeParameter#getType() type} java.lang.String.
  *
- * @author Ron Piterman    
+ * @author Ron Piterman
+ * @version $Id: $
  */
 public interface TypeMetadata extends ClassMetadata {
     
     /**
      * The signature of the outerclass, if this metadata is an inner non static class.
-     * @return
+     *
+     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
      */
     ClassMetadata getOuterType();
     
+    /**
+     * <p>getTypeArguments</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     List<TypeArgument> getTypeArguments();
     
 }

@@ -46,6 +46,11 @@ class TypeMetadataImpl extends ClassMetadataDelegate implements TypeMetadata, Cl
     // impl
     // ---------------------------------------------------------------------------------------------
 
+    /**
+     * <p>Getter for the field <code>typeArguments</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     @SuppressWarnings("unchecked")
     public List<TypeArgument> getTypeArguments() {
         if (this.typeArguments == null)
@@ -69,10 +74,20 @@ class TypeMetadataImpl extends ClassMetadataDelegate implements TypeMetadata, Cl
         this.typeArguments.getUnderlying().add(tp);
     }
 
+    /**
+     * <p>getClassMetadata</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     */
     public ClassMetadata getClassMetadata() {
         return this.classMetadata;
     }
 
+    /**
+     * <p>Getter for the field <code>outerType</code>.</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     */
     public ClassMetadata getOuterType() {
         return this.outerType;
     }

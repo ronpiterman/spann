@@ -17,10 +17,13 @@
 package com.masetta.spann.spring.base.method.beans;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.support.MethodReplacer;
 
+import com.masetta.spann.spring.util.Chain;
+import com.masetta.spann.spring.util.ChainExecutor;
 import com.masetta.spann.spring.util.Resolver;
 import com.masetta.spann.spring.util.Resolver2;
 
@@ -54,48 +57,30 @@ public class GenericMethodReplacer<T> implements MethodReplacer , InitializingBe
 	
 	public static final String DESCRIPTION_PROPERTY = "description";
 	
-	public static final String EMPTY_RESULT_PROPERTY = "emptyResult";
-	
 	private Resolver<T,Object[]> contextFactory;
 	
-	private Resolver<Boolean,T>[] contextHandlerChain;
+	private Chain<Object,T>[] contextHandlerChain;
 	
 	private Resolver<Object,T> resultStrategy;
 	
-	private Resolver2<Object,Object,T> resultTransformer;
+	private Chain<Object,T>[] mergedChain;
 	
-	private Object emptyResult;
+	private Resolver2<Object,Object,T> resultTransformer;
 	
 	private String description;
 
 	public Object reimplement( Object obj, Method method, Object[] args ) throws Throwable {
 		T context = contextFactory.resolve( args );
-		if ( ! performChain(context) )
-			return emptyResult;
-		Object result = resultStrategy.resolve( context );
+		ChainExecutor<Object, T> executor = new ChainExecutor<Object, T>(
+				this.mergedChain );
+		
+		Object result = executor.next(context);
 		if ( resultTransformer != null ) {
 			result = resultTransformer.resolve( result , context );
 		}
 		return result;
 	}
 
-	/**
-	 * pass the given context to the context handler.
-	 * 
-	 * @param context
-	 * @return if normal invocation should continue. returns false if invocation should
-	 * 	return empty value.
-	 */
-	protected final boolean performChain(T context) {
-		Boolean shortcut;
-		for ( Resolver<Boolean,T> handler : contextHandlerChain ) {
-			shortcut = handler.resolve( context );
-			if ( shortcut != null && shortcut ) 
-				return false;
-		}
-		return true;
-	}
-	
 	/**
 	 * Set a context factory.
 	 * @param contextFactory
@@ -105,11 +90,18 @@ public class GenericMethodReplacer<T> implements MethodReplacer , InitializingBe
 	}
 
 	/**
-	 * Set an array of context contextHandler which may mutate the context.
-	 * @param contextVisitor
+	 * Set an array of context handler which may mutate the context.
+	 * Each context handler may return true to shortcut handling of 
+	 * the method an return null.
+	 * 
+	 * @param contextHandlerChain
 	 */
-	public void setContextHandlerChain(Resolver<Boolean, T>[] contextHandlerChain) {
+	public void setContextHandlerChain(Chain<Object, T>[] contextHandlerChain) {
 		this.contextHandlerChain = contextHandlerChain;
+	}
+	
+	public Chain<Object, T>[] getContextHandlerChain() {
+		return contextHandlerChain;
 	}
 
 	/**
@@ -128,6 +120,14 @@ public class GenericMethodReplacer<T> implements MethodReplacer , InitializingBe
 		if ( this.resultStrategy == null ) {
 			throw new IllegalStateException( description + ":Generic method resultStrategy not set.");
 		}
+		ResultStrategyChainAdapter<T> fl = new ResultStrategyChainAdapter( this.resultStrategy );
+		if ( this.contextHandlerChain == null ) {
+			this.mergedChain = new Chain[] { fl };
+		}
+		else {
+			this.mergedChain = Arrays.copyOf( contextHandlerChain, contextHandlerChain.length + 1);
+			this.mergedChain[ this.mergedChain.length - 1] = fl;
+		}
 	}
 
 	/**
@@ -140,14 +140,25 @@ public class GenericMethodReplacer<T> implements MethodReplacer , InitializingBe
 
 	/**
 	 * Set a result command, which creates the result from the call context.
-	 * @param resultFactory
+	 * @param resultStrategy strategy object to generate 
 	 */
 	public void setResultStrategy(Resolver<Object, T> resultStrategy) {
 		this.resultStrategy = resultStrategy;
 	}
 
-	public void setEmptyResult(Object emptyResult) {
-		this.emptyResult = emptyResult;
+	private static class ResultStrategyChainAdapter<P> implements Chain<Object,P> {
+		
+		private final Resolver<Object,P> resultStrategy;
+
+		public ResultStrategyChainAdapter(Resolver<Object, P> resultStrategy) {
+			super();
+			this.resultStrategy = resultStrategy;
+		}
+
+		public Object perform(P param, ChainExecutor<Object, P> next) {
+			return this.resultStrategy.resolve( param );
+		}
+		
 	}
 	
 }

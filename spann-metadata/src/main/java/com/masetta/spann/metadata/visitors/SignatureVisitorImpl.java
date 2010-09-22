@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.visitors;
@@ -34,7 +38,6 @@ import com.masetta.spann.metadata.reader.VisitorAdapter;
 import com.masetta.spann.metadata.util.Provider;
 import com.masetta.spann.metadata.util.SpannLog;
 import com.masetta.spann.metadata.util.SpannLogFactory;
-
 public class SignatureVisitorImpl implements Provider<ClassLoader> , VisitEndSupport {
 
     private static final String CANONICAL_NAME = SignatureVisitorImpl.class.getCanonicalName();
@@ -66,26 +69,49 @@ public class SignatureVisitorImpl implements Provider<ClassLoader> , VisitEndSup
         this.adapter = adapter;
     }
 
+    /**
+     * <p>reset</p>
+     */
     public void reset() {
         this.stack.clear();
         this.currentParameter = null;
         this.target = null;
     }
 
+    /**
+     * <p>visitFormalTypeParameter</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     */
     public void visitFormalTypeParameter(String name) {
         TypeParameter pc = new TypeParameterImpl(name);
         ((TypeParameterSupport) target).addTypeParameter(pc);
         push(pc);
     }
 
+    /**
+     * <p>visitClassBound</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     public VisitorAdapter<SignatureVisitorImpl> visitClassBound() {
         return adapter;
     }
 
+    /**
+     * <p>visitInterfaceBound</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     public VisitorAdapter<SignatureVisitorImpl> visitInterfaceBound() {
         return adapter;
     }
 
+    /**
+     * <p>visitClassType</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     */
     public void visitClassType(String name) {
         visitClassTypeInternal(name, false);
     }
@@ -131,11 +157,20 @@ public class SignatureVisitorImpl implements Provider<ClassLoader> , VisitEndSup
         return dimensions;
     }
 
+    /**
+     * <p>visitTypeArgument</p>
+     *
+     * @param wildcard a char.
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     public VisitorAdapter<SignatureVisitorImpl> visitTypeArgument(char wildcard) {
         final GenericCapture capture = visitorController.getDelegate().resolveCapture(wildcard);
         return addTypeArgument(capture);
     }
 
+    /**
+     * <p>visitTypeArgument</p>
+     */
     public void visitTypeArgument() {
         addTypeArgument(null);
         visitEnd();
@@ -174,6 +209,11 @@ public class SignatureVisitorImpl implements Provider<ClassLoader> , VisitEndSup
                 : ((TypeArgument) typeParameterOrArgument).getType();
     }
 
+    /**
+     * <p>visitTypeVariable</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     */
     public void visitTypeVariable(String name) {
         int dimensions = getArrayDimensions();
         ((NameMutable) stack.peek()).setName(name);
@@ -185,6 +225,8 @@ public class SignatureVisitorImpl implements Provider<ClassLoader> , VisitEndSup
 
     /**
      * Visit the 'extends' clause of a class definition
+     *
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
      */
     public VisitorAdapter<SignatureVisitorImpl> visitSuperclass() {
         while ( !stack.isEmpty() )
@@ -203,6 +245,8 @@ public class SignatureVisitorImpl implements Provider<ClassLoader> , VisitEndSup
 
     /**
      * Visit an interface in the 'implements' clause of a class definition
+     *
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
      */
     public VisitorAdapter<SignatureVisitorImpl> visitInterface() {
         Object prev = null;
@@ -234,6 +278,9 @@ public class SignatureVisitorImpl implements Provider<ClassLoader> , VisitEndSup
         }
     }
 
+    /**
+     * <p>visitEnd</p>
+     */
     public void visitEnd() {
         Object last = pop();
 
@@ -275,21 +322,41 @@ public class SignatureVisitorImpl implements Provider<ClassLoader> , VisitEndSup
         return true;
     }
 
+    /**
+     * <p>visitArrayType</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     public VisitorAdapter<SignatureVisitorImpl> visitArrayType() {
         push(ARRAY_MARKER);
         return adapter;
     }
 
+    /**
+     * <p>visitBaseType</p>
+     *
+     * @param descriptor a char.
+     */
     public void visitBaseType(char descriptor) {
         String typename = delegate.getClassForBaseType(descriptor);
         visitClassType(typename);
         visitEnd();
     }
 
+    /**
+     * <p>visitExceptionType</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     public VisitorAdapter<SignatureVisitorImpl> visitExceptionType() {
         return null;
     }
 
+    /**
+     * <p>visitInnerClassType</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     */
     public void visitInnerClassType(String name) {
         visitClassTypeInternal(currentClassNameForInnerType() + "$" + name, true);
     }
@@ -305,6 +372,11 @@ public class SignatureVisitorImpl implements Provider<ClassLoader> , VisitEndSup
     }
 
     // only for methods
+    /**
+     * <p>visitParameterType</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     public VisitorAdapter<SignatureVisitorImpl> visitParameterType() {
         Iterator<?> params;
         if ( this.stack.isEmpty() ) {
@@ -335,6 +407,11 @@ public class SignatureVisitorImpl implements Provider<ClassLoader> , VisitEndSup
     }
 
     // only for methods
+    /**
+     * <p>visitReturnType</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     public VisitorAdapter<SignatureVisitorImpl> visitReturnType() {
         while ( !stack.isEmpty() )
             pop();
@@ -342,10 +419,20 @@ public class SignatureVisitorImpl implements Provider<ClassLoader> , VisitEndSup
         return adapter;
     }
 
+    /**
+     * <p>Setter for the field <code>target</code>.</p>
+     *
+     * @param target a {@link com.masetta.spann.metadata.core.Metadata} object.
+     */
     public void setTarget(Metadata target) {
         this.target = target;
     }
 
+    /**
+     * <p>get</p>
+     *
+     * @return a {@link java.lang.ClassLoader} object.
+     */
     public ClassLoader get() {
         ArtifactPath path = this.target.getPath();
         while ( !(path.getMetadata() instanceof ClassMetadata) ) {

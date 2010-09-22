@@ -50,8 +50,8 @@ public interface TypeArgument extends TypeReference {
     /**
      * If the argument represents a context bound parameter array, return
      * the dimensions of the array.
+     * <p>
      * If the context bound parameter is not an array, return 0.
-     * @return
      */
     int getContextBoundParameterDimensions();
 

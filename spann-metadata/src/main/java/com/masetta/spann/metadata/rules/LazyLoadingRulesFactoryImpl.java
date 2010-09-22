@@ -30,8 +30,9 @@ import com.masetta.spann.metadata.core.Metadata;
 
 /**
  * Implementation of a factory for lazy loading rules.
- * 
- * @author Ron Piterman    
+ *
+ * @author Ron Piterman
+ * @version $Id: $
  */
 public class LazyLoadingRulesFactoryImpl implements LazyLoadingRulesFactory {
     
@@ -49,6 +50,7 @@ public class LazyLoadingRulesFactoryImpl implements LazyLoadingRulesFactory {
     /* (non-Javadoc)
      * @see org.masetta.spann.asm.rules.LazyLoadingRulesFactory#createRules(org.masetta.spann.asm.metadata.ArtifactPath, org.masetta.spann.asm.common.ArtifactElement)
      */
+    /** {@inheritDoc} */
     public MetadataPathRules createRules(ArtifactPath path,
             ArtifactElement element) {
         Artifact lastInPath = path.getMetadata().getArtifact();
@@ -152,15 +154,15 @@ public class LazyLoadingRulesFactoryImpl implements LazyLoadingRulesFactory {
      * Defines which sibling-elements should be lazy loaded when lazy-loading the given element
      * for the given artifact.
      * <p>
-     * For example, the call 
+     * For example, the call
      * <code>lazyLoadSiblingArtifact( Artifact.CLASS, ArtifactElement.ANNOTATIONS,
-     * 	ArtifactElement.METHODS ); </code> adds a rule to indicate that  
-     * when element ANNOTATIONS of artifact CLASS is lazy loaded, also elements METHODS should 
+     * 	ArtifactElement.METHODS ); </code> adds a rule to indicate that
+     * when element ANNOTATIONS of artifact CLASS is lazy loaded, also elements METHODS should
      * be loaded.
      * <p>
      * Note that this rule is not mutual: taking the example above, the rule does not
      * indicate that when METHODS will lazy load, ANNOTATIONS will.
-     *  
+     *
      * @param artifact the artifact which is lazy loading.
      * @param element the element of the artifact which is lazy loaded
      * @param elements other elements of the artifact which are requested to lazy load.
@@ -172,10 +174,11 @@ public class LazyLoadingRulesFactoryImpl implements LazyLoadingRulesFactory {
     /**
      * Defines which child elements should be loaded when an artifact is lazy-loaded.
      * <p>
-     * For example, when a <code>Artifact.METHOD</code>s are loaded, 
+     * For example, when a <code>Artifact.METHOD</code>s are loaded,
      * also elements ANNOTATIONS and PARAMETER_ANNOTATIONS (of the methods!)
      * can be lazy loaded.
      * <p>
+     *
      * @param artifact artifact type
      * @param elements elements to load when the given artifact type loads.
      */
@@ -188,20 +191,20 @@ public class LazyLoadingRulesFactoryImpl implements LazyLoadingRulesFactory {
      * For example, when METHOD 'foo()' is lazy loading ANNOTATIONS, if <b>all other methods</b> in
      * the same class should also load annotations.
      * <p>
-     * Note that this cascades also to the defined 
+     * Note that this cascades also to the defined
      * {@link #lazyLoadChildren(Artifact, ArtifactElement...) lazyLoadChildren(...)} .
      * <br>
-     * For example: if Artifact METHOD loads child-element PARAMETER_ANNOTATIONS when it loads child-element ANNOTATIONS, 
-     * and the strict policy is set to false, also all other methods in the same class will load 
+     * For example: if Artifact METHOD loads child-element PARAMETER_ANNOTATIONS when it loads child-element ANNOTATIONS,
+     * and the strict policy is set to false, also all other methods in the same class will load
      * both PARAMETER_ANNOTATIONS and ANNOTATIONS.
      * <p>
      * The default policy is strict, which means (for example): when METHOD 'foo()' is loading ANNOTATIONS,
      * other methods will not.
      * <p>
-     * Also note that strict policy is only applicable for Artifacts below the CLASS level. 
+     * Also note that strict policy is only applicable for Artifacts below the CLASS level.
      * Setting a non-strict policy to CLASS or PACKAGE artifacts will have no effect.
      * (lazy-loading methods of class Foo will never preload methods of other classes).
-     * 
+     *
      * @param artifact the artifact which lazy-loads an element
      * @param element the element which is lazy loading.
      * @param strict the strict policy to set for the given artifact and element.

@@ -25,6 +25,7 @@ import org.springframework.beans.factory.InitializingBean;
 
 import com.masetta.spann.metadata.util.SpannLog;
 import com.masetta.spann.metadata.util.SpannLogFactory;
+import com.masetta.spann.spring.util.Chain;
 import com.masetta.spann.spring.util.Resolver;
 
 /**
@@ -61,7 +62,7 @@ public class CallContextHandlerChainFactoryBean<T> implements FactoryBean , Call
 	
 	private SpannLog log = SpannLogFactory.getLog( CallContextHandlerChainFactoryBean.class );
 	
-	private static final Resolver<?,?>[] EMPTY_RESOLVER_ARRAY = {}; 
+	private static final Chain<?,?>[] EMPTY_CHAIN_ARRAY = {}; 
 	
 	private static final Integer[] EMPTY_INT_ARRAY = new Integer[0];
 
@@ -69,7 +70,7 @@ public class CallContextHandlerChainFactoryBean<T> implements FactoryBean , Call
 
 	private final List<Integer> arguments;
 
-	private final List<Resolver<Boolean,T>> visitors = new ArrayList<Resolver<Boolean,T>>();
+	private final List<Chain<Object,T>> visitors = new ArrayList<Chain<Object,T>>();
 	
 	private List<CallContextHandlerChainBuilderCallback<T>> callbacks;
 	
@@ -82,7 +83,7 @@ public class CallContextHandlerChainFactoryBean<T> implements FactoryBean , Call
 	}
 
 	public Object getObject() throws Exception {
-		return visitors.toArray( EMPTY_RESOLVER_ARRAY );
+		return visitors.toArray( EMPTY_CHAIN_ARRAY );
 	}
 
 	public Class<?> getObjectType() {
@@ -93,11 +94,11 @@ public class CallContextHandlerChainFactoryBean<T> implements FactoryBean , Call
 		return true;
 	}
 
-	public void addAndConsume( Resolver<Boolean, T> contextVisitor, int... argIndexes) {
+	public void addAndConsume( Chain<Object, T> contextChain, int... argIndexes) {
 		if ( log.isDebugEnabled() )
-			log.debug( "addAndConsume( " + contextVisitor + "," + Arrays.toString( argIndexes ) );
-		if ( contextVisitor != null)
-			this.visitors.add(contextVisitor);
+			log.debug( "addAndConsume( " + contextChain + "," + Arrays.toString( argIndexes ) );
+		if ( contextChain != null)
+			this.visitors.add(contextChain);
 		if ( argIndexes != null )
 			for ( int i : argIndexes )
 				this.arguments.remove( Integer.valueOf( i ));

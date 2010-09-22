@@ -27,13 +27,11 @@ public interface Resource {
    
 	/**
 	 * The class loader used to load the resource.
-	 * @return
 	 */
     ClassLoader getClassLoader();
 
     /**
      * Retrieve the URL of the resource.
-     * @return
      */
 	URL toUrl();
     

@@ -43,8 +43,6 @@ public @interface Extends {
 
     /** 
      * Base class to use when implementing an interface.
-     * 
-     * @return
      */
     Class<?> superclass();
     

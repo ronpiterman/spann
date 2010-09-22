@@ -72,8 +72,9 @@ public interface AnnotationMetadata extends Metadata {
     
     /**
      * Retrieve the metadata of the element which is annotated by this annotation.
-     * This can be a ClassMetadata, FieldMetadata, MethodMetadata or ParameterMetadata
-     * @return
+     * This can be a ClassMetadata, FieldMetadata, MethodMetadata or ParameterMetadata.
+     * <p>
+     * May return null if this annotation represents an annotation attribute value.
      */
     AnnotatedElementMetadata getAnnotatedElement();
     

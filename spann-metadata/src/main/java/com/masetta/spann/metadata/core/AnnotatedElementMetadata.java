@@ -21,16 +21,23 @@ import java.util.List;
 /**
  * Common super interrface for metadata elements which support annotaions:
  * {@link ClassMetadata}, {@link MethodMetadata}, {@link FieldMetadata} and {@link ParameterMetadata}.
- * @author Ron Piterman    
  *
+ * @author Ron Piterman
+ * @version $Id: $
  */
 public interface AnnotatedElementMetadata extends Metadata {
 
+    /**
+     * <p>getAnnotation</p>
+     *
+     * @param cannonicalClassName a {@link java.lang.String} object.
+     * @return a {@link com.masetta.spann.metadata.core.AnnotationMetadata} object.
+     */
     AnnotationMetadata getAnnotation( String cannonicalClassName );
     
     /**
      * Retrieve all paths to the given (meta-) annotation ordered by path length (smaller first).
-     * 
+     *
      * @param annotationCannonicalClassName annotation to find the paths to.
      * @return all paths to the given (meta-) annotation.
      * @see AnnotationPath

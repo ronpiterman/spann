@@ -41,24 +41,45 @@ class FieldMetadataImpl extends AnnotatedElementMetadataImpl implements FieldMet
         this.signature = signature;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean equals(AbstractMetadataImpl obj, EqualsBuilder b) {
         return super.equals(obj, b)
             && b.eq( modifier.isStatic() , ((FieldMetadata)obj).getModifier().isStatic() );
     }
 
+    /**
+     * <p>Getter for the field <code>fieldClass</code>.</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     */
     public ClassMetadata getFieldClass() {
         return fieldClass;
     }
 
+    /**
+     * <p>Getter for the field <code>modifier</code>.</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.modifier.FieldModifier} object.
+     */
     public FieldModifier getModifier() {
         return modifier;
     }
 
+    /**
+     * <p>Getter for the field <code>signature</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getSignature() {
         return signature;
     }
 
+    /**
+     * <p>Getter for the field <code>fieldType</code>.</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.GenericType} object.
+     */
     public GenericType getFieldType() {
         load( ArtifactElement.SIGNATURE );
         return fieldType;

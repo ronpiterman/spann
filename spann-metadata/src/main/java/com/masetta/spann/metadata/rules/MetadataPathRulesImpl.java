@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.rules;
@@ -20,16 +24,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.masetta.spann.metadata.core.ArtifactPath;
-
 public class MetadataPathRulesImpl implements MetadataPathRules {
     
     private final List<MetadataPathRule> rules;
     
+    /**
+     * <p>Constructor for MetadataPathRulesImpl.</p>
+     *
+     * @param rules a {@link java.util.List} object.
+     */
     public MetadataPathRulesImpl(List<MetadataPathRule> rules) {
         super();
         this.rules = new ArrayList<MetadataPathRule>(rules);
     }
 
+    /** {@inheritDoc} */
     public int getElements( ArtifactPath path ) {
         int elements = 0;
         for ( MetadataPathRule rule : rules ) {

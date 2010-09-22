@@ -16,14 +16,28 @@
 
 package com.masetta.spann.metadata.reader;
 
+import com.masetta.spann.metadata.visitors.AnnotationVisitorImpl;
+import com.masetta.spann.metadata.visitors.ClassVisitorImpl;
+import com.masetta.spann.metadata.visitors.FieldVisitorImpl;
+import com.masetta.spann.metadata.visitors.MethodVisitorImpl;
+
 /**
- * Marker interface for visitors
- * @author Ron Piterman    
- *
- * @param <T>
+ * Generic adapter interface for class reader visitor interfaces.<p>
+ * 
+ * @author Ron Piterman
+ * @param <T> The delegate type, one of {@link ClassVisitorImpl}, {@link MethodVisitorImpl}, 
+ * 		{@link AnnotationVisitorImpl}, {@link FieldVisitorImpl}.
+ * @version $Id: $
  */
 public interface VisitorAdapter<T> {
     
+    /**
+     * Retrieve the spann delegate which handles the visitr callback methods.
+     * <p>
+     * 
+     * @return one of {@link ClassVisitorImpl}, {@link MethodVisitorImpl}, 
+ * 		{@link AnnotationVisitorImpl}, {@link FieldVisitorImpl}
+     */
     T getDelegate();
 
 }

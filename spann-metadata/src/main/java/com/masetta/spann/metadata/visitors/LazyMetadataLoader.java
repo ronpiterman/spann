@@ -21,6 +21,14 @@ import com.masetta.spann.metadata.core.ArtifactPath;
 
 interface LazyMetadataLoader {
     
+    /**
+     * <p>lazyload</p>
+     *
+     * @param classLoader a {@link java.lang.ClassLoader} object.
+     * @param className a {@link java.lang.String} object.
+     * @param path a {@link com.masetta.spann.metadata.core.ArtifactPath} object.
+     * @param element a {@link com.masetta.spann.metadata.common.ArtifactElement} object.
+     */
     void lazyload( ClassLoader classLoader, String className, ArtifactPath path , ArtifactElement element );
 
 }

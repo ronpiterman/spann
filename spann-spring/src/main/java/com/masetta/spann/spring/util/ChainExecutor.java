@@ -14,26 +14,21 @@
  * limitations under the License.
  */
 
-package com.masetta.spann.metadata.visitors;
+package com.masetta.spann.spring.util;
 
-import com.masetta.spann.metadata.core.ClassMetadata;
+public class ChainExecutor<T,P> {
+	
+	private final Chain<T,P>[] chains;
+	
+	private int current;
 
-class ArrayMetadataImpl extends ClassMetadataDelegate implements ClassMetadata {
-    
-    private final int dimensions;
+	public ChainExecutor(Chain<T, P>[] chains) {
+		super();
+		this.chains = chains;
+	}
 
-    ArrayMetadataImpl( ClassMetadata component , int dimensions ) {
-        super( component );
-        this.dimensions = dimensions;
-    }
-
-    /**
-     * <p>Getter for the field <code>dimensions</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getDimensions() {
-        return dimensions;
-    }
+	public T next( P param ) {
+		return chains[ current++ ].perform( param, this );
+	}
 
 }

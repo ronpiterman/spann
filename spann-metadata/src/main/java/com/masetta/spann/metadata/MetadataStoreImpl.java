@@ -26,9 +26,10 @@ import com.masetta.spann.metadata.core.support.ClassMetadataSupport;
 import com.masetta.spann.metadata.core.support.PrimitiveClassMetadata;
 
 /**
- * Default implementation of MetadataSource.
- * 
+ * Default implementation of {@link MetadataStore}.
+ *
  * @author Ron Piterman
+ * @version $Id: $
  */
 public class MetadataStoreImpl implements MetadataStore {
 	
@@ -48,12 +49,16 @@ public class MetadataStoreImpl implements MetadataStore {
 	private final Map<String,ClassMetadata> classMetadataByUrl =
 		new HashMap<String,ClassMetadata>();
 	
+	/**
+	 * <p>Constructor for MetadataStoreImpl.</p>
+	 */
 	public MetadataStoreImpl() {
 		for ( ClassMetadata cm : PRIMITIVE_METADATA ) {
 			classMetadataByClassName.put( cm.getName(), cm );
 		}
 	}
 
+	/** {@inheritDoc} */
 	public void store( Resource resource , ClassMetadata clsMetadata ) {
 		final String classname = ClassMetadataSupport.getNiceClassnameFor( clsMetadata.getName(), clsMetadata.getDimensions() );
 		if ( classMetadataByClassName.containsKey( classname ) ) {
@@ -70,10 +75,12 @@ public class MetadataStoreImpl implements MetadataStore {
 		}
 	}
 	
+	/** {@inheritDoc} */
 	public ClassMetadata getByClassname( String classname, int dimensions ) {
 		return classMetadataByClassName.get( ClassMetadataSupport.getNiceClassnameFor( classname , dimensions ) );
 	}
 	
+	/** {@inheritDoc} */
 	public ClassMetadata getByResource( Resource r ) {
 		return classMetadataByUrl.get( r.toUrl().toExternalForm() );
 	}

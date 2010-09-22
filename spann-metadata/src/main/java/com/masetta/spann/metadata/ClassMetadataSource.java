@@ -44,20 +44,20 @@ import com.masetta.spann.metadata.visitors.VisitorControllerImpl;
  * rules to load annotation methods default values).
  * <p>
  * If lazy loading is turned on (by passing any rules to the constructor)
- * all metadata which is not loaded explicitly will load on demand. 
+ * all metadata which is not loaded explicitly will load on demand.
  * This is transparent to the user and
  * does not involve the use of any additional API.
  * <p>
- * The metadata implementation classes are <b>not thread safe</b> and 
+ * The metadata implementation classes are <b>not thread safe</b> and
  * should only be used from a single thread.
- * 
+ *
  * @see MetadataPathRulesBuilder
  * @see LazyLoadingRulesFactoryImpl
  * @see Rules
  * @see AsmClassReaderAdapter
  * @see SpringClassReaderAdapter
- * 
  * @author Ron Piterman
+ * @version $Id: $
  */
 public class ClassMetadataSource {
     
@@ -67,11 +67,11 @@ public class ClassMetadataSource {
     
     /**
      * Create a new ClassMetadataSource.
-     * 
+     *
      * @param loadRules rules of what to load when a class is first visited.
      * @param lazyLoadRules rules of what to load when an element is lazy loaded.
      * @param classReaderAdapter adapter to implementation of ASM
-     * @param store map to store {@link ClassMetadata} objects. 
+     * @param store map to store {@link ClassMetadata} objects.
      */
     public ClassMetadataSource( MetadataPathRules loadRules,
             LazyLoadingRulesFactory lazyLoadRules , ClassReaderAdapter classReaderAdapter ,
@@ -83,16 +83,22 @@ public class ClassMetadataSource {
 
     /**
      * Create a new ClassMetadataSource with an internal store.
-     * 
+     *
      * @param loadRules rules of what to load when a class is first visited.
      * @param lazyLoadRules rules of what to load when an element is lazy loaded.
-     * @param classReaderAdapter 
+     * @param classReaderAdapter a {@link com.masetta.spann.metadata.reader.ClassReaderAdapter} object.
      */
     public ClassMetadataSource( MetadataPathRules loadRules , 
             LazyLoadingRulesFactory lazyLoadRules , ClassReaderAdapter classReaderAdapter ) {
         this( loadRules , lazyLoadRules , classReaderAdapter , new MetadataStoreImpl() );
     }
     
+    /**
+     * <p>getClassMetadata</p>
+     *
+     * @param resource a {@link com.masetta.spann.metadata.common.Resource} object.
+     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     */
     public ClassMetadata getClassMetadata( Resource resource ) {
         ClassMetadata cm = store.getByResource( resource );
         if ( cm == null ) {

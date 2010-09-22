@@ -85,33 +85,64 @@ class MethodMetadataImpl extends AnnotatedElementMetadataImpl implements MethodM
     }
     
 
+    /**
+     * <p>Getter for the field <code>modifier</code>.</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.modifier.MethodModifier} object.
+     */
     public MethodModifier getModifier() {
         return modifier;
     }
 
+    /**
+     * <p>Getter for the field <code>returnClass</code>.</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     */
     public ClassMetadata getReturnClass() {
         return returnClass;
     }
     
+    /**
+     * <p>Getter for the field <code>returnType</code>.</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.GenericType} object.
+     */
     public GenericType getReturnType() {
         load( ArtifactElement.SIGNATURE );
         return this.returnType;
     }
 
+    /**
+     * <p>Getter for the field <code>parameters</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<ParameterMetadata> getParameters() {
         return parameters;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean equals(AbstractMetadataImpl obj, EqualsBuilder b) {
         return super.equals(obj, b)
             && b.eq( parameters , ((MethodMetadata)obj).getParameters() );
     }
 
+    /**
+     * <p>Getter for the field <code>exceptions</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<ClassMetadata> getExceptions() {
         return exceptions;
     }
 
+    /**
+     * <p>Getter for the field <code>signature</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getSignature() {
         return signature;
     }
@@ -120,12 +151,18 @@ class MethodMetadataImpl extends AnnotatedElementMetadataImpl implements MethodM
         this.returnType = type;
     }
     
+    /** {@inheritDoc} */
     public void addTypeParameter(TypeParameter pc) {
         if ( this.typeParameter == null )
             this.typeParameter = Unmodifiable.list( new ArrayList<TypeParameter>() );
         this.typeParameter.getUnderlying().add( pc );
     }
     
+    /**
+     * <p>getTypeParameters</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<TypeParameter> getTypeParameters() {
         load( ArtifactElement.SIGNATURE );
         if ( this.typeParameter == null )
@@ -134,11 +171,21 @@ class MethodMetadataImpl extends AnnotatedElementMetadataImpl implements MethodM
             return this.typeParameter.getUnmodifable();
     }
     
+    /**
+     * <p>toString</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String toString() {
         return "method metdata [" + returnType + " " + getName() + "" 
             + Arrays.toString( getParameters().toArray() ) + "]";
     }
 
+    /**
+     * <p>getDefault</p>
+     *
+     * @return a {@link java.lang.Object} object.
+     */
     public Object getDefault() {
         load( ArtifactElement.DEFAULT_VALUE );
         return this.defaultValue;
@@ -148,6 +195,11 @@ class MethodMetadataImpl extends AnnotatedElementMetadataImpl implements MethodM
         this.defaultValue = def;
     }
     
+    /**
+     * <p>getParent</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     */
     public ClassMetadata getParent() {
     	return (ClassMetadata)super.getParent();
     }

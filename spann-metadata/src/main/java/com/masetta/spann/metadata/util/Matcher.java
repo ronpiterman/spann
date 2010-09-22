@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,12 +13,20 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.util;
-
 public interface Matcher<T> {
     
+    /**
+     * <p>matches</p>
+     *
+     * @param t a T object.
+     * @return a boolean.
+     */
     boolean matches( T t );
 
     /**
@@ -26,7 +35,7 @@ public interface Matcher<T> {
      * <p>
      * This should <b>not</b> indicate if the matcher is statefull but if it matches
      * against mutable or unmutable state of the T argument.
-     * 
+     *
      * @return true if this matcher only matches against
      *         <b>final state</b> of the given type object.
      */
