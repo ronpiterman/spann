@@ -38,7 +38,7 @@ package com.masetta.spann.metadata.core;
  * }
  * </pre></code>
  * </li></ul>
- * Note that only one of {@link #getContextBoundTypeParameter()} and {@link #getTypes()}
+ * Note that only one of {@link #getContextBoundTypeParameter()} and {@link #getType()}
  * will be set / return a non-null value.
  * 
  * @author Ron Piterman    
@@ -54,12 +54,14 @@ public interface GenericType extends TypeReference {
      *   ...
      * }</code></pre>
      *
-     * Mutually exclusive with {@link #getTypes()}
+     * Mutually exclusive with {@link #getType()}
      */
     String getContextBoundTypeParameter();
 
     /**
-     * A class/type metadata, as the field <code>bars</code> in: <br>
+     * A class/type metadata. <p>
+     * E.g., the {@link FieldMetadata#getFieldType() fieldType} of the field <code>bars</code> in 
+     * the following example will have a type of <code>List&lt;T></code><br>
      * <code><pre>
      * public class Foo&lt;T> {
      *   private List&lt;T> bars;

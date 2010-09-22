@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.visitors;
@@ -27,13 +31,17 @@ import com.masetta.spann.metadata.core.modifier.FieldModifier;
 import com.masetta.spann.metadata.core.modifier.MethodModifier;
 import com.masetta.spann.metadata.core.support.FieldMetadataSupport;
 import com.masetta.spann.metadata.reader.VisitorAdapter;
-
 public class ClassVisitorImpl extends AbstractVisitor<ClassMetadataImpl> {
 	
 	private VisitorAdapter<FieldVisitorImpl> emptyFieldVisitor;
 	
 	private VisitorAdapter<MethodVisitorImpl> emptyMethodVisitor;
 	
+    /**
+     * <p>Constructor for ClassVisitorImpl.</p>
+     *
+     * @param controller a {@link com.masetta.spann.metadata.visitors.VisitorController} object.
+     */
     @SuppressWarnings("unchecked")
 	public ClassVisitorImpl(VisitorController controller) {
         super(ClassMetadataImpl.class, controller);
@@ -43,6 +51,16 @@ public class ClassVisitorImpl extends AbstractVisitor<ClassMetadataImpl> {
         	controller.getEmptyVisitorAdapter( Artifact.METHOD );
     }
 
+    /**
+     * <p>visit</p>
+     *
+     * @param version a int.
+     * @param access a int.
+     * @param name a {@link java.lang.String} object.
+     * @param signature a {@link java.lang.String} object.
+     * @param superName a {@link java.lang.String} object.
+     * @param interfaces an array of {@link java.lang.String} objects.
+     */
     public void visit(int version, int access, String name, String signature,
             String superName, String[] interfaces) {
     	ClassMetadata clsMetadata = getClassMetadata( name, 0 );
@@ -52,6 +70,16 @@ public class ClassVisitorImpl extends AbstractVisitor<ClassMetadataImpl> {
                 getClassMetadata(interfaces));
     }
 
+    /**
+     * <p>visitField</p>
+     *
+     * @param access a int.
+     * @param name a {@link java.lang.String} object.
+     * @param desc a {@link java.lang.String} object.
+     * @param signature a {@link java.lang.String} object.
+     * @param value a {@link java.lang.Object} object.
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     public VisitorAdapter<FieldVisitorImpl> visitField(int access, String name, String desc,
             String signature, Object value) {
         if (!isVisit(ArtifactElement.FIELDS))
@@ -70,6 +98,14 @@ public class ClassVisitorImpl extends AbstractVisitor<ClassMetadataImpl> {
         return visit(FieldVisitorImpl.class, field, ArtifactElement.FIELDS);
     }
 
+    /**
+     * <p>visitInnerClass</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param outerName a {@link java.lang.String} object.
+     * @param innerName a {@link java.lang.String} object.
+     * @param access a int.
+     */
     public void visitInnerClass(String name, String outerName,
             String innerName, int access) {
         ClassMetadata cls = getClassMetadata(ResourceUtil.convertResourcePathToClassName(name),0);
@@ -84,6 +120,16 @@ public class ClassVisitorImpl extends AbstractVisitor<ClassMetadataImpl> {
         ((ClassMetadataImpl) cls).setInnerOf(modifier, outer);
     }
 
+    /**
+     * <p>visitMethod</p>
+     *
+     * @param access a int.
+     * @param name a {@link java.lang.String} object.
+     * @param desc a {@link java.lang.String} object.
+     * @param signature a {@link java.lang.String} object.
+     * @param exceptions an array of {@link java.lang.String} objects.
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     public VisitorAdapter<MethodVisitorImpl> visitMethod(int access, String name, String desc,
             String signature, String[] exceptions) {
         if (!isVisit(ArtifactElement.METHODS))
@@ -105,6 +151,13 @@ public class ClassVisitorImpl extends AbstractVisitor<ClassMetadataImpl> {
         return visit( MethodVisitorImpl.class , mm, ArtifactElement.METHODS );
     }
 
+    /**
+     * <p>visitOuterClass</p>
+     *
+     * @param owner a {@link java.lang.String} object.
+     * @param name a {@link java.lang.String} object.
+     * @param desc a {@link java.lang.String} object.
+     */
     public void visitOuterClass(String owner, String name, String desc) {
         if ( getMetadata().getOuterClass() == null )
             getMetadata().setInnerOf( null , getClassMetadata( 

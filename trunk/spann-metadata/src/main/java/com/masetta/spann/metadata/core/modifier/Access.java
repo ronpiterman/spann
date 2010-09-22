@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,10 +13,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.core.modifier;
-
 public enum Access {
     
     PRIVATE,
@@ -26,18 +29,38 @@ public enum Access {
     
     PUBLIC;
     
+    /**
+     * <p>isPrivate</p>
+     *
+     * @return a boolean.
+     */
     public boolean isPrivate() {
         return equals( PRIVATE );
     }
     
+    /**
+     * <p>isProtected</p>
+     *
+     * @return a boolean.
+     */
     public boolean isProtected() {
         return equals( PROTECTED );
     }
     
+    /**
+     * <p>isDefault</p>
+     *
+     * @return a boolean.
+     */
     public boolean isDefault() {
         return equals( DEFAULT );
     }
     
+    /**
+     * <p>isPublic</p>
+     *
+     * @return a boolean.
+     */
     public boolean isPublic() {
         return equals( PUBLIC );
     }

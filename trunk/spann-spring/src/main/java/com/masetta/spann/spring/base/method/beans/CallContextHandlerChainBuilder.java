@@ -16,7 +16,7 @@
 
 package com.masetta.spann.spring.base.method.beans;
 
-import com.masetta.spann.spring.util.Resolver;
+import com.masetta.spann.spring.util.Chain;
 
 /**
  * Builder for a list of Resolver&lt;Boolean,T> based on a list of method arguments.
@@ -39,7 +39,7 @@ public interface CallContextHandlerChainBuilder<T> {
 	 * Add the given context handler to the chain and consume the arguments 
 	 * with the given indexes.
 	 */
-	void addAndConsume( Resolver<Boolean,T> contextHandler , int ...argIndexes );
+	void addAndConsume( Chain<Object,T> contextHandler , int ...argIndexes );
 	
 
 }

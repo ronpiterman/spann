@@ -18,9 +18,10 @@ package com.masetta.spann.orm.jpa.beans.handler;
 
 
 import com.masetta.spann.orm.jpa.beans.QueryCallContext;
-import com.masetta.spann.spring.util.Resolver;
+import com.masetta.spann.spring.util.Chain;
+import com.masetta.spann.spring.util.ChainExecutor;
 
-public class PositionalArgumentSetter implements Resolver<Boolean,QueryCallContext> {
+public class PositionalArgumentSetter implements Chain<Object,QueryCallContext> {
 	
 	private int queryParamPosition;
 	
@@ -33,9 +34,9 @@ public class PositionalArgumentSetter implements Resolver<Boolean,QueryCallConte
 		this.methodArgIndex = methodArgIndex;
 	}
 
-	public Boolean resolve(QueryCallContext param) {
+	public Object perform(QueryCallContext param, ChainExecutor<Object, QueryCallContext> next) {
 		param.getQuery().setParameter( queryParamPosition + 1, param.getArgument( methodArgIndex ) );
-		return false;
+		return next.next( param );
 	}
 	
 	public String toString() {

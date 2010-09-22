@@ -18,6 +18,11 @@ package com.masetta.spann.metadata.visitors;
 
 interface SignatureOwner {
     
+    /**
+     * <p>getSignature</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     String getSignature();
 
 }

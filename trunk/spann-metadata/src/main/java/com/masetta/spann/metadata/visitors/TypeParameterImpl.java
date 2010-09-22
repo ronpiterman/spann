@@ -27,14 +27,25 @@ class TypeParameterImpl extends TypeReferenceImpl implements TypeParameter , Nam
         this.name = name;
     }
 
+    /**
+     * <p>Getter for the field <code>name</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getName() {
         return name;
     }
 
+    /** {@inheritDoc} */
     public void setName(String name) {
         this.name = name;
     }
     
+    /**
+     * <p>toString</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String toString() {
         return getClass().getSimpleName() + "[name=" + name + ",type=" + getType() +"]";
     }

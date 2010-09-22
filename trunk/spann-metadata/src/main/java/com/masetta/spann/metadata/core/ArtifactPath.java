@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,14 +13,17 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.core;
 
 import java.util.Iterator;
-
 public final class ArtifactPath implements Iterable<Metadata> {
     
+    /** Constant <code>EMPTY_PATH</code> */
     public static final ArtifactPath EMPTY_PATH = new ArtifactPath();
     
     private final Metadata metadata;
@@ -36,24 +40,50 @@ public final class ArtifactPath implements Iterable<Metadata> {
         this.parent = parent;
     }
     
+    /**
+     * <p>append</p>
+     *
+     * @param metadata a {@link com.masetta.spann.metadata.core.Metadata} object.
+     * @return a {@link com.masetta.spann.metadata.core.ArtifactPath} object.
+     */
     public ArtifactPath append( Metadata metadata ) {
         return new ArtifactPath( this , metadata );
     }
     
+    /**
+     * <p>size</p>
+     *
+     * @return a int.
+     */
     public int size() {
         if ( parent == null )
             return 0;
         return 1 + parent.size();
     }
     
+    /**
+     * <p>iterator</p>
+     *
+     * @return a {@link java.util.Iterator} object.
+     */
     public Iterator<Metadata> iterator() {
         return new PathIterator( this );
     }
     
+    /**
+     * <p>Getter for the field <code>metadata</code>.</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.Metadata} object.
+     */
     public Metadata getMetadata() {
         return this.metadata;
     }
 
+    /**
+     * <p>Getter for the field <code>parent</code>.</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.ArtifactPath} object.
+     */
     public ArtifactPath getParent() {
         return parent;
     }
@@ -83,6 +113,11 @@ public final class ArtifactPath implements Iterable<Metadata> {
         
     }
     
+    /**
+     * <p>toString</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String toString() {
         return "ArtifactPath [" + toStringInternal( "" ) + "]";
     }

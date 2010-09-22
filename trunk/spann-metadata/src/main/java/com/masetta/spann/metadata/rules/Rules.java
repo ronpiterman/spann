@@ -24,8 +24,9 @@ import com.masetta.spann.metadata.core.ArtifactPath;
 
 /**
  * Useful constants for lazy loading rules.
- * 
- * @author Ron Piterman    
+ *
+ * @author Ron Piterman
+ * @version $Id: $
  */
 public final class Rules {
     
@@ -69,12 +70,16 @@ public final class Rules {
      */
     public static final LazyLoadingRulesFactory LAZY_EAGER_DEEP_SINGLE_ARTIFACT = createEager( true , false , true );
     
+    /** Constant <code>RULES_LAZY</code> */
     public static final MetadataPathRules RULES_LAZY = creareRules( Artifact.CLASS , ArtifactElement.SELF );
     
+    /** Constant <code>RULES_CLASS_ANNOTATIONS</code> */
     public static final MetadataPathRules RULES_CLASS_ANNOTATIONS = creareRules( Artifact.CLASS , ArtifactElement.ANNOTATIONS );
 
+    /** Constant <code>RULES_CLASS_ALL</code> */
     public static final MetadataPathRules RULES_CLASS_ALL = creareRules( Artifact.CLASS , ArtifactElement.ANNOTATIONS , ArtifactElement.FIELDS, ArtifactElement.METHODS );
     
+    /** Constant <code>RULES_EAGER</code> */
     public static final MetadataPathRules RULES_EAGER = creareRules(
     		Artifact.CLASS , ArtifactElement.ANNOTATIONS , 
     		Artifact.FIELD, ArtifactElement.ANNOTATIONS ,

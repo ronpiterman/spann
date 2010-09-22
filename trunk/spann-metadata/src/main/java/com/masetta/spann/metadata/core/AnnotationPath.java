@@ -20,24 +20,24 @@ package com.masetta.spann.metadata.core;
  * A path of annotations from an annotated element to a (meta-)annotation.
  * <p>
  * Meta-Annotation is an annotation of an annotation interface, see example in {@link #getPath()}.
- * 
- * @author Ron Piterman    
  *
+ * @author Ron Piterman
+ * @version $Id: $
  */
 public interface AnnotationPath {
     
     /**
      * Returns the path to the annotation.
-     * 
+     *
      * <p>
      * For example:
      * </p>
      * <pre>
-     * &#64;interface AnnA { String value(); } 
-     * 
+     * &#64;interface AnnA { String value(); }
+     *
      * &#64;AnnA("foo")
      * &#64;interface AnnB {}
-     * 
+     *
      * &#64;AnnB
      * &#64;interface AnnC {}
      *
@@ -46,10 +46,10 @@ public interface AnnotationPath {
      * </pre>
      * <p>
      * The path from Foo to AnnA will be: <br/>
-     * 
+     *
      * [AnnA, AnnB, AnnC]
      * </p>
-     * 
+     *
      * @return array of AnnotationMetadata, first element is the target annotation,
      * last is an annotation on the source AnnotatedElement.
      */
@@ -57,9 +57,9 @@ public interface AnnotationPath {
     
     /**
      * Convenience method to retrieve the annotation attribute of the n'th element with in the path.
-     * 
-     * @param index 0 based index of the annotation in the path. Note that the first element (0) 
-     *         is the target annotation of the path, the last element is the  
+     *
+     * @param index 0 based index of the annotation in the path. Note that the first element (0)
+     *         is the target annotation of the path, the last element is the
      * @param name attribute name
      * @param nullsafe if to retrieve default value if attribute is not explicitly set.
      * @return Attribute value.
@@ -69,13 +69,15 @@ public interface AnnotationPath {
     
     /**
      * Convenience method to retrieve the annotation attribute of the n'th element with in the path.
-     * 
-     * @param index 0 based index of the annotation in the path. Note that the first element (0) 
-     *         is the target annotation of the path, the last element is the  
+     *
+     * @param index 0 based index of the annotation in the path. Note that the first element (0)
+     *         is the target annotation of the path, the last element is the
      * @param name attribute name
      * @param nullsafe if to retrieve default value if attribute is not explicitly set.
      * @return Attribute value.
      * @see AnnotationMetadata#getAttribute(String, boolean)
+     * @param type a {@link java.lang.Class} object.
+     * @param <T> a T object.
      */
     <T> T getAttribute( int index , Class<T> type , String name , boolean nullsafe );
     

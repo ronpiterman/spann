@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.core;
@@ -20,19 +24,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.masetta.spann.metadata.util.EmptyArrays;
-
 public final class EmptyMetadataArrays {
     
+    /** Constant <code>CLASS_METADATA</code> */
     public static final ClassMetadata[] CLASS_METADATA = {};
     
+    /** Constant <code>ENUM_VALUE</code> */
     public static final EnumValue[] ENUM_VALUE = {};
     
+    /** Constant <code>ANNOTATION_METADATA</code> */
     public static final AnnotationMetadata[] ANNOTATION_METADATA = {};
     
     private static final Map<Class<?>,Object> EMPTY_ARRAYS = emptyArrays();
     
     private EmptyMetadataArrays() {}
     
+    /**
+     * <p>getEmptyArray</p>
+     *
+     * @param componentType a {@link java.lang.Class} object.
+     * @return a {@link java.lang.Object} object.
+     */
     public static Object getEmptyArray( Class<?> componentType ) {
     	return EMPTY_ARRAYS.get( componentType );
     }

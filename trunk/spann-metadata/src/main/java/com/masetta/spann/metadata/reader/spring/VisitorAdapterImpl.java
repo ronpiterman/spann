@@ -12,6 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.reader.spring;
@@ -32,222 +35,435 @@ import com.masetta.spann.metadata.visitors.MethodVisitorImpl;
 import com.masetta.spann.metadata.visitors.SignatureVisitorImpl;
 import com.masetta.spann.metadata.visitors.VisitEndSupport;
 
-public class VisitorAdapterImpl<T> implements ClassVisitor, MethodVisitor ,  FieldVisitor , 
-    AnnotationVisitor , SignatureVisitor , VisitorAdapter<T> {
-    
-    private final T delegate;
-    
-    public VisitorAdapterImpl( T visitor ) {
-        this.delegate = visitor;
-    }
-    
-    // ---------------------------------------------------------------------------------------------
-    // common
-    // ---------------------------------------------------------------------------------------------
-    
-    public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
-        return (AnnotationVisitor) ((AbstractVisitor<?>)delegate).visitAnnotation(desc, visible);
-    }
-    
-    public void visitAttribute(Attribute attr) {
-    }
-    
-    public void visitEnd() {
-        ((VisitEndSupport)delegate).visitEnd();
-    }
-    
-    // ---------------------------------------------------------------------------------------------
-    // signature visitor 
-    // ---------------------------------------------------------------------------------------------
-    
-    public SignatureVisitor visitArrayType() {
-        return (SignatureVisitor) ((SignatureVisitorImpl)delegate).visitArrayType();
-    }
+public class VisitorAdapterImpl<T> implements ClassVisitor, MethodVisitor, FieldVisitor,
+		AnnotationVisitor, SignatureVisitor, VisitorAdapter<T> {
 
-    public void visitBaseType(char descriptor) {
-        ((SignatureVisitorImpl)delegate).visitBaseType(descriptor);
-    }
+	private final T delegate;
 
-    public SignatureVisitor visitClassBound() {
-        return (SignatureVisitor) ((SignatureVisitorImpl)delegate).visitClassBound();
-    }
+	/**
+	 * <p>
+	 * Constructor for VisitorAdapterImpl.
+	 * </p>
+	 * 
+	 * @param visitor
+	 *            the visitor delegate which contains the actual
+	 *            implementations.
+	 */
+	public VisitorAdapterImpl(T visitor) {
+		this.delegate = visitor;
+	}
 
-    public void visitClassType(String name) {
-        ((SignatureVisitorImpl)delegate).visitClassType(name);
-    }
+	// ---------------------------------------------------------------------------------------------
+	// common
+	// ---------------------------------------------------------------------------------------------
 
-    public SignatureVisitor visitExceptionType() {
-        return (SignatureVisitor) ((SignatureVisitorImpl)delegate).visitExceptionType();
-    }
+	/** {@inheritDoc} */
+	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+		return (AnnotationVisitor) ((AbstractVisitor<?>) delegate).visitAnnotation(desc, visible);
+	}
 
-    public void visitFormalTypeParameter(String name) {
-        ((SignatureVisitorImpl)delegate).visitFormalTypeParameter(name);
-    }
+	/** {@inheritDoc} */
+	public void visitAttribute(Attribute attr) {
+	}
 
-    public void visitInnerClassType(String name) {
-        ((SignatureVisitorImpl)delegate).visitInnerClassType(name);
-    }
+	/**
+	 * <p>
+	 * visitEnd
+	 * </p>
+	 */
+	public void visitEnd() {
+		((VisitEndSupport) delegate).visitEnd();
+	}
 
-    public SignatureVisitor visitInterface() {
-        return (SignatureVisitor) ((SignatureVisitorImpl)delegate).visitInterface();
-    }
+	// ---------------------------------------------------------------------------------------------
+	// signature visitor
+	// ---------------------------------------------------------------------------------------------
 
-    public SignatureVisitor visitInterfaceBound() {
-        return (SignatureVisitor) ((SignatureVisitorImpl)delegate).visitInterfaceBound();
-    }
+	/**
+	 * <p>
+	 * visitArrayType
+	 * </p>
+	 * 
+	 * @return a {@link org.springframework.asm.signature.SignatureVisitor}
+	 *         object.
+	 */
+	public SignatureVisitor visitArrayType() {
+		return (SignatureVisitor) ((SignatureVisitorImpl) delegate).visitArrayType();
+	}
 
-    public SignatureVisitor visitParameterType() {
-        return (SignatureVisitor) ((SignatureVisitorImpl)delegate).visitParameterType();
-    }
+	/** {@inheritDoc} */
+	public void visitBaseType(char descriptor) {
+		((SignatureVisitorImpl) delegate).visitBaseType(descriptor);
+	}
 
-    public SignatureVisitor visitReturnType() {
-        return (SignatureVisitor) ((SignatureVisitorImpl)delegate).visitReturnType();
-    }
+	/**
+	 * <p>
+	 * visitClassBound
+	 * </p>
+	 * 
+	 * @return a {@link org.springframework.asm.signature.SignatureVisitor}
+	 *         object.
+	 */
+	public SignatureVisitor visitClassBound() {
+		return (SignatureVisitor) ((SignatureVisitorImpl) delegate).visitClassBound();
+	}
 
-    public SignatureVisitor visitSuperclass() {
-        return (SignatureVisitor) ((SignatureVisitorImpl)delegate).visitSuperclass();
-    }
+	/** {@inheritDoc} */
+	public void visitClassType(String name) {
+		((SignatureVisitorImpl) delegate).visitClassType(name);
+	}
 
-    public void visitTypeArgument() {
-        ((SignatureVisitorImpl)delegate).visitTypeArgument();
-    }
+	/**
+	 * <p>
+	 * visitExceptionType
+	 * </p>
+	 * 
+	 * @return a {@link org.springframework.asm.signature.SignatureVisitor}
+	 *         object.
+	 */
+	public SignatureVisitor visitExceptionType() {
+		return (SignatureVisitor) ((SignatureVisitorImpl) delegate).visitExceptionType();
+	}
 
-    public SignatureVisitor visitTypeArgument(char wildcard) {
-        return (SignatureVisitor) ((SignatureVisitorImpl)delegate).visitTypeArgument(wildcard);
-    }
+	/** {@inheritDoc} */
+	public void visitFormalTypeParameter(String name) {
+		((SignatureVisitorImpl) delegate).visitFormalTypeParameter(name);
+	}
 
-    public void visitTypeVariable(String name) {
-        ((SignatureVisitorImpl)delegate).visitTypeVariable(name);
-    }
-    
-    // ---------------------------------------------------------------------------------------------
-    // annotation visitor 
-    // ---------------------------------------------------------------------------------------------
+	/** {@inheritDoc} */
+	public void visitInnerClassType(String name) {
+		((SignatureVisitorImpl) delegate).visitInnerClassType(name);
+	}
 
-    public void visit(String name, Object value) {
-        ((AnnotationVisitorImpl)delegate).visit(name, value);
-    }
+	/**
+	 * <p>
+	 * visitInterface
+	 * </p>
+	 * 
+	 * @return a {@link org.springframework.asm.signature.SignatureVisitor}
+	 *         object.
+	 */
+	public SignatureVisitor visitInterface() {
+		return (SignatureVisitor) ((SignatureVisitorImpl) delegate).visitInterface();
+	}
 
-    public AnnotationVisitor visitAnnotation(String name, String desc) {
-        return (AnnotationVisitor) ((AnnotationVisitorImpl)delegate).visitAnnotation(name, desc);
-    }
+	/**
+	 * <p>
+	 * visitInterfaceBound
+	 * </p>
+	 * 
+	 * @return a {@link org.springframework.asm.signature.SignatureVisitor}
+	 *         object.
+	 */
+	public SignatureVisitor visitInterfaceBound() {
+		return (SignatureVisitor) ((SignatureVisitorImpl) delegate).visitInterfaceBound();
+	}
 
-    public AnnotationVisitor visitArray(String name) {
-        return (AnnotationVisitor) ((AnnotationVisitorImpl)delegate).visitArray(name);
-    }
+	/**
+	 * <p>
+	 * visitParameterType
+	 * </p>
+	 * 
+	 * @return a {@link org.springframework.asm.signature.SignatureVisitor}
+	 *         object.
+	 */
+	public SignatureVisitor visitParameterType() {
+		return (SignatureVisitor) ((SignatureVisitorImpl) delegate).visitParameterType();
+	}
 
-    public void visitEnum(String name, String desc, String value) {
-        ((AnnotationVisitorImpl)delegate).visitEnum(name, desc, value);
-    }
-    
-    
-    // ---------------------------------------------------------------------------------------------
-    // field visitor 
-    // ---------------------------------------------------------------------------------------------
+	/**
+	 * <p>
+	 * visitReturnType
+	 * </p>
+	 * 
+	 * @return a {@link org.springframework.asm.signature.SignatureVisitor}
+	 *         object.
+	 */
+	public SignatureVisitor visitReturnType() {
+		return (SignatureVisitor) ((SignatureVisitorImpl) delegate).visitReturnType();
+	}
 
-    // ---------------------------------------------------------------------------------------------
-    // method visitor 
-    // ---------------------------------------------------------------------------------------------
+	/**
+	 * <p>
+	 * visitSuperclass
+	 * </p>
+	 * 
+	 * @return a {@link org.springframework.asm.signature.SignatureVisitor}
+	 *         object.
+	 */
+	public SignatureVisitor visitSuperclass() {
+		return (SignatureVisitor) ((SignatureVisitorImpl) delegate).visitSuperclass();
+	}
 
-    public AnnotationVisitor visitAnnotationDefault() {
-        return (AnnotationVisitor) ((MethodVisitorImpl)delegate).visitAnnotationDefault();
-    }
+	/**
+	 * <p>
+	 * visitTypeArgument
+	 * </p>
+	 */
+	public void visitTypeArgument() {
+		((SignatureVisitorImpl) delegate).visitTypeArgument();
+	}
 
-    public AnnotationVisitor visitParameterAnnotation(int parameter,
-            String desc, boolean visible) {
-        return (AnnotationVisitor) ((MethodVisitorImpl)delegate).visitParameterAnnotation(parameter, desc, visible);
-    }
+	/** {@inheritDoc} */
+	public SignatureVisitor visitTypeArgument(char wildcard) {
+		return (SignatureVisitor) ((SignatureVisitorImpl) delegate).visitTypeArgument(wildcard);
+	}
 
-    public void visitCode() {
-    }
+	/** {@inheritDoc} */
+	public void visitTypeVariable(String name) {
+		((SignatureVisitorImpl) delegate).visitTypeVariable(name);
+	}
 
-    public void visitFieldInsn(int opcode, String owner, String name, String desc) {
-    }
+	// ---------------------------------------------------------------------------------------------
+	// annotation visitor
+	// ---------------------------------------------------------------------------------------------
 
-    public void visitFrame(int type, int local, Object[] local2, int stack, Object[] stack2) {
-    }
+	/** {@inheritDoc} */
+	public void visit(String name, Object value) {
+		((AnnotationVisitorImpl) delegate).visit(name, value);
+	}
 
-    public void visitIincInsn(int var, int increment) {
-    }
+	/** {@inheritDoc} */
+	public AnnotationVisitor visitAnnotation(String name, String desc) {
+		return (AnnotationVisitor) ((AnnotationVisitorImpl) delegate).visitAnnotation(name, desc);
+	}
 
-    public void visitInsn(int opcode) {
-    }
+	/** {@inheritDoc} */
+	public AnnotationVisitor visitArray(String name) {
+		return (AnnotationVisitor) ((AnnotationVisitorImpl) delegate).visitArray(name);
+	}
 
-    public void visitIntInsn(int opcode, int operand) {
-    }
+	/** {@inheritDoc} */
+	public void visitEnum(String name, String desc, String value) {
+		((AnnotationVisitorImpl) delegate).visitEnum(name, desc, value);
+	}
 
-    public void visitJumpInsn(int opcode, Label label) {
-    }
+	// ---------------------------------------------------------------------------------------------
+	// field visitor
+	// ---------------------------------------------------------------------------------------------
 
-    public void visitLabel(Label label) {
-    }
+	// ---------------------------------------------------------------------------------------------
+	// method visitor
+	// ---------------------------------------------------------------------------------------------
 
-    public void visitLdcInsn(Object cst) {
-    }
+	/**
+	 * <p>
+	 * visitAnnotationDefault
+	 * </p>
+	 * 
+	 * @return a {@link org.springframework.asm.AnnotationVisitor} object.
+	 */
+	public AnnotationVisitor visitAnnotationDefault() {
+		return (AnnotationVisitor) ((MethodVisitorImpl) delegate).visitAnnotationDefault();
+	}
 
-    public void visitLineNumber(int line, Label start) {
-    }
+	/** {@inheritDoc} */
+	public AnnotationVisitor visitParameterAnnotation(int parameter, String desc, boolean visible) {
+		return (AnnotationVisitor) ((MethodVisitorImpl) delegate).visitParameterAnnotation(
+				parameter, desc, visible);
+	}
 
-    public void visitLocalVariable(String name, String desc, String signature, Label start,
-            Label end, int index) {
-    }
+	/**
+	 * <p>
+	 * visitCode
+	 * </p>
+	 */
+	public void visitCode() {
+	}
 
-    public void visitLookupSwitchInsn(Label dflt, int[] keys, Label[] labels) {
-    }
+	/** {@inheritDoc} */
+	public void visitFieldInsn(int opcode, String owner, String name, String desc) {
+	}
 
-    public void visitMaxs(int maxStack, int maxLocals) {
-    }
+	/**
+	 * <p>
+	 * visitFrame
+	 * </p>
+	 * 
+	 * @param type
+	 *            a int.
+	 * @param local
+	 *            a int.
+	 * @param local2
+	 *            an array of {@link java.lang.Object} objects.
+	 * @param stack
+	 *            a int.
+	 * @param stack2
+	 *            an array of {@link java.lang.Object} objects.
+	 */
+	public void visitFrame(int type, int local, Object[] local2, int stack, Object[] stack2) {
+	}
 
-    public void visitMethodInsn(int opcode, String owner, String name, String desc) {
-    }
+	/** {@inheritDoc} */
+	public void visitIincInsn(int var, int increment) {
+	}
 
-    public void visitMultiANewArrayInsn(String desc, int dims) {
-    }
+	/** {@inheritDoc} */
+	public void visitInsn(int opcode) {
+	}
 
-    public void visitTableSwitchInsn(int min, int max, Label dflt, Label[] labels) {
-    }
+	/** {@inheritDoc} */
+	public void visitIntInsn(int opcode, int operand) {
+	}
 
-    public void visitTryCatchBlock(Label start, Label end, Label handler, String type) {
-    }
+	/** {@inheritDoc} */
+	public void visitJumpInsn(int opcode, Label label) {
+	}
 
-    public void visitTypeInsn(int opcode, String type) {
-    }
+	/** {@inheritDoc} */
+	public void visitLabel(Label label) {
+	}
 
-    public void visitVarInsn(int opcode, int var) {
-    }
+	/** {@inheritDoc} */
+	public void visitLdcInsn(Object cst) {
+	}
 
-    // ---------------------------------------------------------------------------------------------
-    // class visitor
-    // ---------------------------------------------------------------------------------------------
+	/** {@inheritDoc} */
+	public void visitLineNumber(int line, Label start) {
+	}
 
-    public void visit(int version, int access, String name, String signature, String superName,
-            String[] interfaces) {
-        ((ClassVisitorImpl)delegate).visit(version, access, name, signature, superName, interfaces);
-    }
+	/** {@inheritDoc} */
+	public void visitLocalVariable(String name, String desc, String signature, Label start,
+			Label end, int index) {
+	}
 
-    public FieldVisitor visitField(int access, String name, String desc,
-            String signature, Object value) {
-        return (FieldVisitor) ((ClassVisitorImpl)delegate).visitField(access, name, desc, signature, value);
-    }
+	/**
+	 * <p>
+	 * visitLookupSwitchInsn
+	 * </p>
+	 * 
+	 * @param dflt
+	 *            a {@link org.springframework.asm.Label} object.
+	 * @param keys
+	 *            an array of int.
+	 * @param labels
+	 *            an array of {@link org.springframework.asm.Label} objects.
+	 */
+	public void visitLookupSwitchInsn(Label dflt, int[] keys, Label[] labels) {
+	}
 
-    public void visitInnerClass(String name, String outerName, String innerName, int access) {
-        ((ClassVisitorImpl)delegate).visitInnerClass(name, outerName, innerName, access);
-    }
+	/** {@inheritDoc} */
+	public void visitMaxs(int maxStack, int maxLocals) {
+	}
 
-    public MethodVisitor visitMethod(int access, String name, String desc,
-            String signature, String[] exceptions) {
-        return (MethodVisitor) ((ClassVisitorImpl)delegate).visitMethod(access, name, desc, signature, exceptions);
-    }
+	/** {@inheritDoc} */
+	public void visitMethodInsn(int opcode, String owner, String name, String desc) {
+	}
 
-    public void visitOuterClass(String owner, String name, String desc) {
-        ((ClassVisitorImpl)delegate).visitOuterClass(owner, name, desc);
-    }
+	/** {@inheritDoc} */
+	public void visitMultiANewArrayInsn(String desc, int dims) {
+	}
 
-    public void visitSource(String source, String debug) {
-    }
+	/**
+	 * <p>
+	 * visitTableSwitchInsn
+	 * </p>
+	 * 
+	 * @param min
+	 *            a int.
+	 * @param max
+	 *            a int.
+	 * @param dflt
+	 *            a {@link org.springframework.asm.Label} object.
+	 * @param labels
+	 *            an array of {@link org.springframework.asm.Label} objects.
+	 */
+	public void visitTableSwitchInsn(int min, int max, Label dflt, Label[] labels) {
+	}
 
-    public T getDelegate() {
-        return delegate;
-    }
+	/** {@inheritDoc} */
+	public void visitTryCatchBlock(Label start, Label end, Label handler, String type) {
+	}
+
+	/** {@inheritDoc} */
+	public void visitTypeInsn(int opcode, String type) {
+	}
+
+	/** {@inheritDoc} */
+	public void visitVarInsn(int opcode, int var) {
+	}
+
+	// ---------------------------------------------------------------------------------------------
+	// class visitor
+	// ---------------------------------------------------------------------------------------------
+
+	/**
+	 * <p>
+	 * visit
+	 * </p>
+	 * 
+	 * @param version
+	 *            a int.
+	 * @param access
+	 *            a int.
+	 * @param name
+	 *            a {@link java.lang.String} object.
+	 * @param signature
+	 *            a {@link java.lang.String} object.
+	 * @param superName
+	 *            a {@link java.lang.String} object.
+	 * @param interfaces
+	 *            an array of {@link java.lang.String} objects.
+	 */
+	public void visit(int version, int access, String name, String signature, String superName,
+			String[] interfaces) {
+		((ClassVisitorImpl) delegate)
+				.visit(version, access, name, signature, superName, interfaces);
+	}
+
+	/** {@inheritDoc} */
+	public FieldVisitor visitField(int access, String name, String desc, String signature,
+			Object value) {
+		return (FieldVisitor) ((ClassVisitorImpl) delegate).visitField(access, name, desc,
+				signature, value);
+	}
+
+	/** {@inheritDoc} */
+	public void visitInnerClass(String name, String outerName, String innerName, int access) {
+		((ClassVisitorImpl) delegate).visitInnerClass(name, outerName, innerName, access);
+	}
+
+	/**
+	 * <p>
+	 * visitMethod
+	 * </p>
+	 * 
+	 * @param access
+	 *            a int.
+	 * @param name
+	 *            a {@link java.lang.String} object.
+	 * @param desc
+	 *            a {@link java.lang.String} object.
+	 * @param signature
+	 *            a {@link java.lang.String} object.
+	 * @param exceptions
+	 *            an array of {@link java.lang.String} objects.
+	 * @return a {@link org.springframework.asm.MethodVisitor} object.
+	 */
+	public MethodVisitor visitMethod(int access, String name, String desc, String signature,
+			String[] exceptions) {
+		return (MethodVisitor) ((ClassVisitorImpl) delegate).visitMethod(access, name, desc,
+				signature, exceptions);
+	}
+
+	/** {@inheritDoc} */
+	public void visitOuterClass(String owner, String name, String desc) {
+		((ClassVisitorImpl) delegate).visitOuterClass(owner, name, desc);
+	}
+
+	/** {@inheritDoc} */
+	public void visitSource(String source, String debug) {
+	}
+
+	/**
+	 * <p>
+	 * Getter for the field <code>delegate</code>.
+	 * </p>
+	 * 
+	 * @return a T object.
+	 */
+	public T getDelegate() {
+		return delegate;
+	}
 
 }

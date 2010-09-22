@@ -22,25 +22,38 @@ import com.masetta.spann.metadata.core.modifier.MethodModifier;
 
 /**
  * Metadata of a method
- * @author Ron Piterman    
+ *
+ * @author Ron Piterman
+ * @version $Id: $
  */
 public interface MethodMetadata extends Metadata , AnnotatedElementMetadata {
     
-    /** Modifier */
+    /**
+     * Modifier
+     *
+     * @return a {@link com.masetta.spann.metadata.core.modifier.MethodModifier} object.
+     */
     MethodModifier getModifier();
     
-    /** Return type of the method. */
+    /**
+     * Return type of the method.
+     *
+     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     */
     ClassMetadata getReturnClass();
     
-    /** 
-     * Generic return type of the method. 
+    /**
+     * Generic return type of the method.
      * Note that this never indicates array dimensions. For array dimensions
      * use {@link #getReturnClass() getReturnType() }.{@link ClassMetadata#getDimensions() getDimensions()}
-     * @return
+     *
+     * @return a {@link com.masetta.spann.metadata.core.GenericType} object.
      */
     GenericType getReturnType();
 
     /**
+     * <p>getParameters</p>
+     *
      * @return Metadata of the parameters of the method.
      */
     List<ParameterMetadata> getParameters();
@@ -49,12 +62,23 @@ public interface MethodMetadata extends Metadata , AnnotatedElementMetadata {
      * Return the type parameters of this methods.
      * For exmaple, method <code>&lt;X> X get( String key , Class&lt;X> type);</code>
      * will have one type parameter with name 'X'.
-     * @return
+     *
+     * @return a {@link java.util.List} object.
      */
     List<TypeParameter> getTypeParameters();
     
+    /**
+     * <p>getDefault</p>
+     *
+     * @return a {@link java.lang.Object} object.
+     */
     Object getDefault();
     
+    /**
+     * <p>getParent</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     */
     ClassMetadata getParent();
     
 }

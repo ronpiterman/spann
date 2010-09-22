@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.reader.spring;
@@ -20,17 +24,26 @@ import org.springframework.asm.Opcodes;
 
 import com.masetta.spann.metadata.core.modifier.ClassModifier;
 import com.masetta.spann.metadata.core.modifier.ClassType;
-
 public class ClassModifierImpl extends ModifierImpl implements ClassModifier {
     
     private static final int TYPES = Opcodes.ACC_INTERFACE | Opcodes.ACC_ENUM | Opcodes.ACC_ANNOTATION;
     
     private static final int ANN = Opcodes.ACC_INTERFACE | Opcodes.ACC_ANNOTATION;
     
+    /**
+     * <p>Constructor for ClassModifierImpl.</p>
+     *
+     * @param modifier a int.
+     */
     public ClassModifierImpl(int modifier) {
         super(modifier);
     }
 
+    /**
+     * <p>getClassType</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.modifier.ClassType} object.
+     */
     public ClassType getClassType() {
         switch ( modifier & TYPES ) {
             case 0 : return ClassType.CLASS;
@@ -41,6 +54,11 @@ public class ClassModifierImpl extends ModifierImpl implements ClassModifier {
         throw new IllegalStateException("Unreachable");
     }
 
+    /**
+     * <p>isAbstract</p>
+     *
+     * @return a boolean.
+     */
     public boolean isAbstract() {
         return (modifier & Opcodes.ACC_ABSTRACT) != 0;
     }

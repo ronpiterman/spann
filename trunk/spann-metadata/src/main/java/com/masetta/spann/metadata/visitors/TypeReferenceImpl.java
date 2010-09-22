@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,17 +13,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.visitors;
 
 import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.TypeReference;
-
 public class TypeReferenceImpl implements TypeReference {
     
     private ClassMetadata type;
 
+    /**
+     * <p>Getter for the field <code>type</code>.</p>
+     *
+     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     */
     public ClassMetadata getType() {
         return type;
     }

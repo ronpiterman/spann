@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.core.support;
@@ -24,17 +28,17 @@ import java.util.Set;
 import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.MethodMetadata;
 import com.masetta.spann.metadata.core.ParameterMetadata;
-
 public abstract class MethodMetadataSupport {
 	
 	private MethodMetadataSupport() {}
 
 	/**
 	 * Find the first method parameter which is the given class or a subclass of it.
-	 * @param metadata
-	 * @param canonicalName
+	 *
+	 * @param metadata a {@link com.masetta.spann.metadata.core.MethodMetadata} object.
+	 * @param canonicalName a {@link java.lang.String} object.
 	 * @param dimension array dimension
-	 * @return
+	 * @return a int.
 	 */
 	public static int findParameterByType(MethodMetadata metadata, String canonicalName , int dimension ) {
 		int i = 0;
@@ -46,6 +50,12 @@ public abstract class MethodMetadataSupport {
 		return -1;
 	}
 
+	/**
+	 * <p>getMethodParameterClassnames</p>
+	 *
+	 * @param methodMetadata a {@link com.masetta.spann.metadata.core.MethodMetadata} object.
+	 * @return a {@link java.util.List} object.
+	 */
 	public static List<String> getMethodParameterClassnames(MethodMetadata methodMetadata) {
 		List<String> list = new ArrayList<String>( methodMetadata.getParameters().size() );
 		for ( ParameterMetadata pm : methodMetadata.getParameters() ) {
@@ -54,6 +64,12 @@ public abstract class MethodMetadataSupport {
 		return list;
 	}
 
+	/**
+	 * <p>findAbstractMethods</p>
+	 *
+	 * @param classMetadata a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+	 * @return a {@link java.util.Set} object.
+	 */
 	public static Set<MethodMetadata> findAbstractMethods(ClassMetadata classMetadata ) {
 		return collectAbstractMethods( classMetadata , new HashSet<MethodMetadata>() );
 	}

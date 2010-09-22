@@ -26,12 +26,12 @@ import com.masetta.spann.metadata.util.Provider;
 interface VisitorController extends LazyMetadataLoader {
     
     /**
-     * Return the metadata of the current visitor
-     * @param <T>
-     * @param type
-     * @return
+     * Retrieve the metadata object of the given type from the current process stack.
+     * @param <T> metadata type.
+     * @param type the type of the metadata to retrieve.
      */
     <T> T getCurrentMetadata( Class<T> type );
+
     
     <T> VisitorAdapter<T> visit( Class<T> visitorType, Metadata metadata, ArtifactElement element );
     
@@ -62,7 +62,6 @@ interface VisitorController extends LazyMetadataLoader {
     /** 
      * If the given element should be loaded for the current metadata.
      * @param e
-     * @return
      */
     boolean isVisit(ArtifactElement e);
 

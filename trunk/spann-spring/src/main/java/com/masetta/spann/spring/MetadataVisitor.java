@@ -40,7 +40,7 @@ public interface MetadataVisitor<T extends Metadata> {
      * Retrun true if this visitor supports the given metadata's type;
      * 
      * @param metadata
-     * @return
+     * @return true if this visitor supports the given metadata (by type).
      */
     <M extends Metadata> boolean supports( M metadata );
     

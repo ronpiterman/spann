@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.reader.asm3_2;
@@ -19,21 +23,40 @@ package com.masetta.spann.metadata.reader.asm3_2;
 import org.objectweb.asm.Opcodes;
 
 import com.masetta.spann.metadata.core.modifier.MethodModifier;
-
 public class MethodModifierImpl extends ModifierImpl implements MethodModifier {
 
+    /**
+     * <p>Constructor for MethodModifierImpl.</p>
+     *
+     * @param modifier a int.
+     */
     public MethodModifierImpl(int modifier) {
         super(modifier);
     }
 
+    /**
+     * <p>isBridge</p>
+     *
+     * @return a boolean.
+     */
     public boolean isBridge() {
         return (modifier & Opcodes.ACC_BRIDGE) != 0;
     }
 
+    /**
+     * <p>isSynchronized</p>
+     *
+     * @return a boolean.
+     */
     public boolean isSynchronized() {
         return (modifier & Opcodes.ACC_SYNCHRONIZED) != 0;
     }
 
+    /**
+     * <p>isAbstract</p>
+     *
+     * @return a boolean.
+     */
     public boolean isAbstract() {
         return (modifier & Opcodes.ACC_ABSTRACT) != 0;
     }

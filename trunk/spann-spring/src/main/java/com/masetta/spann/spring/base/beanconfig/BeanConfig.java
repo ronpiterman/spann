@@ -128,8 +128,6 @@ public @interface BeanConfig {
 	 * Default Handler of the annotation attributes. Every annotation attribute
 	 * which is not itself annotated by {@link AttributeHandlerDefinition} 
 	 * (on any meta-annotation level) will be handled by the given Handler.
-	 * 
-	 * @return
 	 */
 	Class<? extends AttributeHandler> defaultAttributeHandler() default DefaultAttributeHandler.class;
 	

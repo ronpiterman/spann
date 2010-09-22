@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.reader.spring;
@@ -42,17 +46,18 @@ import com.masetta.spann.metadata.util.SpannLog;
 import com.masetta.spann.metadata.util.SpannLogFactory;
 import com.masetta.spann.metadata.visitors.ClassVisitorImpl;
 import com.masetta.spann.metadata.visitors.SignatureVisitorImpl;
-
 public class SpringClassReaderAdapter extends AbstractClassReaderAdapter {
 
 	private SpannLog spannLog = SpannLogFactory.getLog(AbstractClassReaderAdapter.class);
 
+	/** {@inheritDoc} */
 	public void readClass(InputStream in, VisitorAdapter<ClassVisitorImpl> visitor)
 			throws IOException {
 		ClassReader reader = new ClassReader(in);
 		reader.accept((ClassVisitor) visitor, false);
 	}
 
+	/** {@inheritDoc} */
 	public void readSignature(String signature,
 			VisitorAdapter<SignatureVisitorImpl> signatureVisitor) {
 		if ( signature == null )
@@ -60,18 +65,22 @@ public class SpringClassReaderAdapter extends AbstractClassReaderAdapter {
 		new SignatureReader(signature).accept((SignatureVisitor) signatureVisitor);
 	}
 
+	/** {@inheritDoc} */
 	protected ClassModifier createClassModifierInternal(int argument) {
 		return new ClassModifierImpl(argument);
 	}
 
+	/** {@inheritDoc} */
 	protected FieldModifier createFieldModifierInternal(int argument) {
 		return new FieldModifierImpl(argument);
 	}
 
+	/** {@inheritDoc} */
 	protected MethodModifier createMethodModifierInternal(int argument) {
 		return new MethodModifierImpl(argument);
 	}
 
+	/** {@inheritDoc} */
 	public ClassMetadata[] getMethodArguments(ClassMetadataResolver resolver, String desc) {
 		Type[] args = Type.getArgumentTypes(desc);
 		return getClassMetadata(resolver, args);
@@ -93,20 +102,24 @@ public class SpringClassReaderAdapter extends AbstractClassReaderAdapter {
 			return resolver.resolve(type.getClassName(), 0);
 	}
 
+	/** {@inheritDoc} */
 	public ClassMetadata getMethodReturnType(ClassMetadataResolver resolver, String desc) {
 		return getClassMetadata(resolver, Type.getReturnType(desc), false);
 	}
 
+	/** {@inheritDoc} */
 	public ClassMetadata resolveDescriptor(ClassMetadataResolver resolver, String desc,
 			boolean ignoreArray) {
 		return getClassMetadata(resolver, Type.getType(desc), false);
 	}
 
+	/** {@inheritDoc} */
 	public String getClassForBaseType(char descriptor) {
 		Type type = Type.getType("" + descriptor);
 		return type.getClassName();
 	}
 
+	/** {@inheritDoc} */
 	public Object resolveAttributeValue(ClassMetadataResolver resolver, Object value) {
 		Type type = null;
 		if ( value instanceof Type )
@@ -118,6 +131,7 @@ public class SpringClassReaderAdapter extends AbstractClassReaderAdapter {
 		return getClassMetadata( resolver, type , true );
 	}
 
+	/** {@inheritDoc} */
 	public GenericCapture resolveCapture(char wildcard) {
 		switch ( wildcard ) {
 			case SignatureVisitor.EXTENDS:
@@ -130,6 +144,13 @@ public class SpringClassReaderAdapter extends AbstractClassReaderAdapter {
 		throw new IllegalArgumentException("Unknwon wildcard: " + wildcard);
 	}
 
+	/**
+	 * <p>createVisitorAdapter</p>
+	 *
+	 * @param t a T object.
+	 * @param <T> a T object.
+	 * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+	 */
 	@SuppressWarnings("unchecked")
 	public <T> VisitorAdapter<T> createVisitorAdapter(T t) {
 		VisitorAdapter<T> a = new VisitorAdapterImpl<T>(t);
@@ -138,6 +159,7 @@ public class SpringClassReaderAdapter extends AbstractClassReaderAdapter {
 				AnnotationVisitor.class, SignatureVisitor.class);
 	}
 
+	/** {@inheritDoc} */
 	public VisitorAdapter<?> createEmptyVisitor(Artifact artifact) {
 		switch ( artifact ) {
 			case ANNOTATION:

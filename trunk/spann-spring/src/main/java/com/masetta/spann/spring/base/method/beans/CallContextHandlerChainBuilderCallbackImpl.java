@@ -16,15 +16,15 @@
 
 package com.masetta.spann.spring.base.method.beans;
 
-import com.masetta.spann.spring.util.Resolver;
+import com.masetta.spann.spring.util.Chain;
 
 public class CallContextHandlerChainBuilderCallbackImpl<T> implements CallContextHandlerChainBuilderCallback<T> {
 	
-	private final Resolver<Boolean,T> handler;
+	private final Chain<Object,T> handler;
 	
 	private final int[] consumeArguments;
 	
-	public CallContextHandlerChainBuilderCallbackImpl(Resolver<Boolean, T> handler,
+	public CallContextHandlerChainBuilderCallbackImpl(Chain<Object, T> handler,
 			int ...consumeArguments) {
 		super();
 		this.handler = handler;

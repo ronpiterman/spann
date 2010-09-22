@@ -47,20 +47,19 @@ public interface ClassReaderAdapter {
     <T> VisitorAdapter<T> createVisitorAdapter( T t );
     
     /**
-     * What to use as empty visitor for the given artifact.
+     * Retrieve an empty visitor for the given artifact.
      * <p>
      * May return null if the implementation accepts a null.
      * <p>
-     * The 'empty visitor' was introduced because spring's ASM implementation 
-     * does not accept null as AnnotationVisitor, so an empty visitor must be used for
+     * The 'empty visitor' was introduced mainly to support spring's ASM implementation (probably 
+     * based on asm 2.x) which does not accept null as AnnotationVisitor, so an empty visitor must be used for
      * all visitAnnotation methods.
      * <p>
-     * For axample, ASM 3.2 adapter just returns null, 
-     * since ASM 3.2 always allows to return null visitors. 
+     * (ASM 3.2 adapter will always returns null, since the 3.2 implementation is null safe) 
      * 
-     * @param <T>
-     * @param t
-     * @return
+     * @param artifact
+     * @return a visitor to use as empty visitor or null, if supported by the asm implementation
+     * 	underlying this adapter.
      */
     VisitorAdapter<?> createEmptyVisitor( Artifact artifact );
     

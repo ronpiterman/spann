@@ -26,7 +26,6 @@ public interface LazyLoadingRulesFactory {
      * 
      * @param path the path of the metadata which is requesting to lazy load the given element.
      * @param element the element of the last artifact in the path which is requested to load.
-     * @return
      */
     MetadataPathRules createRules( ArtifactPath path , ArtifactElement element );
 

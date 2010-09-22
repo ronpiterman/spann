@@ -40,24 +40,24 @@ import com.masetta.spann.metadata.util.Pair;
  * <p>
  * <h2>How to use the builder</h2>
  * <p>
- * To add rules, multiple series of one or more calls to {@link #add(Artifact, String, Matcher...) add} 
- * should be called which together define a matchable "path"; 
+ * To add rules, multiple series of one or more calls to {@link #add(Artifact, String, Matcher...) add}
+ * should be called which together define a matchable "path";
  * each series ending with a single call to {@link #load(ArtifactElement...)}.
- * 
+ *
  * <p>
  * Every call to {@link #add(Artifact, String, Matcher...)} must be made after the <i>parent</i>
  * of the given Artifact is already in the path. So, the first call (after creating the builder)
  * must define a class rule (<code>add( Artifact.CLASS, ...) </code>)
  * and be followed by a call to <code>add( Artifact.CLASS, ...)</code> etc.
- * 
+ *
  * <p>
  * The {@link #add(Artifact, String, Matcher...) add(...)} calls define a match pattern for an <i>artifact path</i>,
  * the {@link #load(ArtifactElement...)} call defines which elements should be loaded for any path which
  * matches.
- * 
+ *
  * <p>
- * After calling {@link #load(ArtifactElement...)}, a new series of 
- * {@link #add(Artifact, String, Matcher...) add(...)} calls can be made, 
+ * After calling {@link #load(ArtifactElement...)}, a new series of
+ * {@link #add(Artifact, String, Matcher...) add(...)} calls can be made,
  * again ending with a call to {@link #load(ArtifactElement...) load(...)} etc.
  * <p>
  * The new series does not start with <code>Artifact.PACKAGE</code>. The builder
@@ -73,7 +73,7 @@ import com.masetta.spann.metadata.util.Pair;
  *      .add( Artifact.METHOD , null )               // ...all methods
  *      ,load( ArtifactElement.ANNOTATIONS ,         // ...load annotations
  *          ArtifactElement.PARAMETER_ANNOTATIONS ); // ...and parameter annotations.
- *         
+ *
  * </pre></code>
  * <p>
  * <h3>Implicit rules</h3>
@@ -82,10 +82,10 @@ import com.masetta.spann.metadata.util.Pair;
  * However, as soon as we call add( Artifact.METHOD, ...), the builder adds
  * a load rule for ArtifactElement.METHODS in the current path, thus
  * loading all methods of class Foo in the example above.
- * <p> 
- * 
- * @author Ron Piterman    
+ * <p>
  *
+ * @author Ron Piterman
+ * @version $Id: $
  */
 public class MetadataPathRulesBuilder {
     
@@ -121,13 +121,13 @@ public class MetadataPathRulesBuilder {
     /**
      * Add matcher for the given artifact. The rule will apply for any artifact which
      * matches any of the given rules.
-     * 
-     * @param artifact the artifact to add matcher for. The artifact's parent must be in the path 
+     *
+     * @param artifact the artifact to add matcher for. The artifact's parent must be in the path
      *         (except for PACKAGE)
-     * @param name shortcut for creating a name rule. If null will be ignored. 
+     * @param name shortcut for creating a name rule. If null will be ignored.
      * @param matcher other matcher to apply.
      * @return this builder
-     * @throws IllegalStateException if the parent of the given artifact is not in the path
+     * @throws java.lang.IllegalStateException if the parent of the given artifact is not in the path
      *         (for example, adding an ARGUMENT is only allowed if METHOD is in the path )
      */
     public MetadataPathRulesBuilder add( Artifact artifact , String name , Matcher<Metadata> ...matcher ) {
@@ -178,6 +178,11 @@ public class MetadataPathRulesBuilder {
         }
     }
     
+    /**
+     * <p>load</p>
+     *
+     * @param elements a {@link com.masetta.spann.metadata.common.ArtifactElement} object.
+     */
     public void load( ArtifactElement ...elements ) {
         if ( currentPath.isEmpty() )
             throw new IllegalStateException("Need to add at least a class rule before adding scan elements." );
@@ -196,6 +201,8 @@ public class MetadataPathRulesBuilder {
     
     /**
      * Builds rules for the added rules and resets this builder.
+     *
+     * @return a {@link com.masetta.spann.metadata.rules.MetadataPathRulesImpl} object.
      */
     public MetadataPathRulesImpl build() {
         MetadataPathRulesImpl result = new MetadataPathRulesImpl( this.rules );

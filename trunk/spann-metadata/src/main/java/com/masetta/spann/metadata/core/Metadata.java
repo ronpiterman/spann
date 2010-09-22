@@ -20,27 +20,38 @@ import com.masetta.spann.metadata.common.Artifact;
 
 /**
  * Base interface for all metadata elements.
- * @author Ron Piterman    
+ *
+ * @author Ron Piterman
+ * @version $Id: $
  */
 public interface Metadata {
     
-    /** The artifact path of this element */
+    /**
+     * The artifact path of this element
+     *
+     * @return a {@link com.masetta.spann.metadata.core.ArtifactPath} object.
+     */
     ArtifactPath getPath();
     
-    /** The type of artifact this metadata represents */
+    /**
+     * The type of artifact this metadata represents
+     *
+     * @return a {@link com.masetta.spann.metadata.common.Artifact} object.
+     */
     Artifact getArtifact();
     
     /**
      * Name of the artifact.
      * For example: full qualified name of class, name of field or method, etc.
-     * @return
+     *
+     * @return a {@link java.lang.String} object.
      */
     String getName();
     
     /**
      * Retrieve the parent metadata of this metadata.
      * For exmaple, the class parent of a method.
-     * 
+     *
      * @return the parent metadata of this metadata or null, if this metadata
      * 	is a package metadata.
      */

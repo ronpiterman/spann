@@ -19,9 +19,10 @@ package com.masetta.spann.orm.jpa.beans.handler;
 
 import com.masetta.spann.orm.jpa.beans.QueryCallContext;
 import com.masetta.spann.orm.jpa.support.QueryPosition;
-import com.masetta.spann.spring.util.Resolver;
+import com.masetta.spann.spring.util.Chain;
+import com.masetta.spann.spring.util.ChainExecutor;
 
-public class QueryPositionSetter implements Resolver<Boolean, QueryCallContext> {
+public class QueryPositionSetter implements Chain<Object, QueryCallContext> {
 
 	private int queryPositionArgumentIndex;
 
@@ -30,7 +31,7 @@ public class QueryPositionSetter implements Resolver<Boolean, QueryCallContext> 
 		this.queryPositionArgumentIndex = queryPositionArgumentIndex;
 	}
 
-	public Boolean resolve(QueryCallContext ctx) {
+	public Object perform(QueryCallContext ctx, ChainExecutor<Object, QueryCallContext> next) {
 		QueryPosition qp = (QueryPosition) ctx.getArgument(queryPositionArgumentIndex);
 
 		if ( qp != null ) {
@@ -41,7 +42,7 @@ public class QueryPositionSetter implements Resolver<Boolean, QueryCallContext> 
 				ctx.getQuery().setMaxResults(qp.getMaxResults());
 			}
 		}
-		return false;
+		return next.next( ctx );
 	}
 
 }

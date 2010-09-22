@@ -20,16 +20,32 @@ import java.util.Arrays;
 
 /**
  * Simple equals builder for internal use.
+ *
  * @author Ron Piterman
+ * @version $Id: $
  */
 public class EqualsBuilder {
     
     private boolean equals = true;
     
+    /**
+     * <p>eq</p>
+     *
+     * @param o1 a {@link java.lang.Object} object.
+     * @param o2 a {@link java.lang.Object} object.
+     * @return a boolean.
+     */
     public boolean eq( Object o1 , Object o2 ) {
         return eq( o1 == null ? o2 == null : o1.equals( o2 ) );
     }
     
+    /**
+     * <p>eq</p>
+     *
+     * @param o1 an array of {@link java.lang.Object} objects.
+     * @param o2 an array of {@link java.lang.Object} objects.
+     * @return a boolean.
+     */
     public boolean eq( Object[] o1 , Object[] o2 ) {
         return eq( Arrays.equals( o1, o2 ) );
     }

@@ -24,7 +24,6 @@ import java.util.Set;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
-import org.springframework.beans.factory.support.BeanDefinitionDefaults;
 
 import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.util.EmptyArrays;
@@ -34,11 +33,10 @@ import com.masetta.spann.spring.core.ClassPathScanner;
 public class ClasspathScanTestUtil {
 
     /**
-     * Convinience method to create and configure a ClassPathScanner for testing
+     * Convenience method to create and configure a ClassPathScanner for testing
      * 
-     * @param addSpringVisitors
-     * @param useDefaultVisitor
      * @param visitors
+     * @param packages
      * 
      * @return a ClassPathScanner configured with visitors as specified by the given
      *     arguments.
@@ -61,10 +59,9 @@ public class ClasspathScanTestUtil {
      * names in the form "test:SimpleClassName".
      * 
      * @param cls a single class to scan.
-     * @param defaultVisitors
-     * @param springVisitors
+     * @param existingBeanDefinitions
      * @param visitors
-     * @return
+     * @return all bean definition holders created in the spann scan.
      */
     public static Set<BeanDefinitionHolder> visit( Class<?> cls , Map<String,BeanDefinition> existingBeanDefinitions, MetadataVisitor<ClassMetadata> ...visitors ) {
     	try {

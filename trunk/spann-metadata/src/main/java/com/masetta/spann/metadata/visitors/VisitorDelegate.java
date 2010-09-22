@@ -28,6 +28,11 @@ import com.masetta.spann.metadata.reader.ClassMetadataResolver;
 import com.masetta.spann.metadata.reader.ClassReaderAdapter;
 import com.masetta.spann.metadata.reader.VisitorAdapter;
 
+/**
+ * Intermediary between visitor classes and the asm implementation adapter.
+ * 
+ * @author Ron Piterman
+ */
 class VisitorDelegate {
     
     private final ClassReaderAdapter classReaderAdapter; 

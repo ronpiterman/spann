@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,10 +13,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.core.modifier;
-
 public enum ClassType {
     
     CLASS,
@@ -26,18 +29,38 @@ public enum ClassType {
     
     ANNOTATION;
     
+    /**
+     * <p>isInterface</p>
+     *
+     * @return a boolean.
+     */
     public boolean isInterface() {
         return equals( INTERFACE );
     }
     
+    /**
+     * <p>isEnum</p>
+     *
+     * @return a boolean.
+     */
     public boolean isEnum() {
         return equals( ENUM );
     }
     
+    /**
+     * <p>isAnnotation</p>
+     *
+     * @return a boolean.
+     */
     public boolean isAnnotation() {
         return equals( ANNOTATION );
     }
     
+    /**
+     * <p>isClass</p>
+     *
+     * @return a boolean.
+     */
     public boolean isClass() {
         return equals( CLASS );
     }

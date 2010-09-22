@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author rpt
+ * @version $Id: $
  */
 
 package com.masetta.spann.metadata.visitors;
@@ -24,7 +28,6 @@ import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.EnumValue;
 import com.masetta.spann.metadata.reader.VisitorAdapter;
 import com.masetta.spann.metadata.util.EmptyArrays;
-
 public class AnnotationVisitorImpl extends AbstractVisitor<AbstractMetadataImpl> {
     
     private final Stack<Object> stack = new Stack<Object>();
@@ -41,6 +44,12 @@ public class AnnotationVisitorImpl extends AbstractVisitor<AbstractMetadataImpl>
         this.adapter = adapter;
     }
     
+    /**
+     * <p>visit</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param value a {@link java.lang.Object} object.
+     */
     public void visit(String name, Object value) {
         Object v = null;
         if ( isSimple(value) ) {
@@ -75,6 +84,13 @@ public class AnnotationVisitorImpl extends AbstractVisitor<AbstractMetadataImpl>
         }
     }
 
+    /**
+     * <p>visitAnnotation</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param desc a {@link java.lang.String} object.
+     * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	public VisitorAdapter<AnnotationVisitorImpl> visitAnnotation(String name, String desc) {
         ClassMetadata annotationCls = getClassMetadataFromType( desc, true );
@@ -94,18 +110,32 @@ public class AnnotationVisitorImpl extends AbstractVisitor<AbstractMetadataImpl>
         return adapter;
     }
 
+	/**
+	 * <p>visitArray</p>
+	 *
+	 * @param name a {@link java.lang.String} object.
+	 * @return a {@link com.masetta.spann.metadata.reader.VisitorAdapter} object.
+	 */
 	public VisitorAdapter<AnnotationVisitorImpl> visitArray(String name) {
         this.stack.push( name );
         this.stack.push( new ArrayList<Object>() );
         return adapter;
     }
 
+    /**
+     * <p>visitEnum</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param desc a {@link java.lang.String} object.
+     * @param value a {@link java.lang.String} object.
+     */
     public void visitEnum(String name, String desc, String value) {
         ClassMetadata cm = getClassMetadataFromType( desc, true );
         EnumValue ev = new EnumValue( cm , value );
         set( name , ev );
     }
 
+    /** {@inheritDoc} */
     @Override
     protected AbstractMetadataImpl getMetadata() {
         if ( metadataStack.isEmpty() )
@@ -113,6 +143,7 @@ public class AnnotationVisitorImpl extends AbstractVisitor<AbstractMetadataImpl>
         return metadataStack.peek();
     }
     
+    /** {@inheritDoc} */
     @Override
     public void visitEnd() {
         if ( this.stack.isEmpty() ) {

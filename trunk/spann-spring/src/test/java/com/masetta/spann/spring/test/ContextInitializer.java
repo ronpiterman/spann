@@ -36,10 +36,10 @@ public class ContextInitializer {
      * 
      * Autowire the given test object - eithe by type, or by name.
      * 
-     * @param test
-     * @param autowireByName
-     * @param xmlLocation
-     * @return
+     * @param test test object to autowire.
+     * @param autowireMode autowire mode for the given test object 
+     * @param xmlLocation spring xml configuration locations.
+     * @return an ApplicationContext configured by the given xmlLocations.
      */
     public static ApplicationContext setupApplicationContext( Object test , int autowireMode, 
     		String ...xmlLocation ) {

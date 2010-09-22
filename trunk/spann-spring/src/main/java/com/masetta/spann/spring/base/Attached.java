@@ -32,8 +32,6 @@ public @interface Attached {
 	/**
 	 * The attach scope. UNDEFINED ( the default ) represents the global scope.
 	 * UNKNOWN represents the current metadata scope.
-	 * 
-	 * @return
 	 */
 	Artifact scope() default Artifact.UNDEFINED;
 	
