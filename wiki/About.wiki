@@ -2,36 +2,36 @@
 
 <wiki:toc/>
 
-= About Spann =
+= About Spnn =
 
-Spann is an extension library for the [http://www.springsource.org Spring Framework]. 
+_Spann_ is an extension library for the [http://www.springsource.org Spring Framework]. 
 It provides an API for configuring spring beans based on annotation or any other class metadata, 
 without (almost) any XML.
 
 It's target is to reduce boilerplate code and configuration. It can be seen as a counterpart API 
 to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] 
 (introduced in Spring 2.0): while the latter simplifies XML configuration via XML Schemas 
-and allows creating complex bean structures with simple XML, spann allows developers do it 
+and allows creating complex bean structures with simple XML, _spann_ allows developers do it 
 using annotations or any other class metadata (classes, generics, fields, methods).
 
 Spann adds *meta programming* capabilities to the spring container without (almost) any bytecode engineering. 
 
-*But is'nt there a built-in annotation support in spring?*
+*But is'nt there a native annotation support in spring?*
 
-Spring built-in annotation support is limited to very simple usecases. In spring 2.5, four 
-annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Controller ).
+Spring's native annotation support is limited to very simple usecases. In spring 2.5, four 
+annotations are predefined for different types of beans (@Component, @Service, @Repository and @Controller).
 
 For Spring 3.0, further annotations were introduced, but spring is still missing an API to 
 allow advanced bean configuration via arbitrary annotations or any other class metadata.  
-Without spann, using custom annotations to configure beans (beyond the basic create, inject aso) 
+Without _spann_, using custom annotations to configure beans (beyond the basic create, inject aso) 
 is very demanding and requires knowledge of container internals. 
 
 = How it works : A bird's-eye view =
 
-Similar to spring's component scan, spann scans classes by name pattern under selected packages and 
-creates *class metadata* objects. Instead of processing this metadata itself, spann passes this 
+Similar to spring's component scan, _spann_ scans classes by name pattern under selected packages and 
+creates *class metadata* objects. Instead of processing this metadata itself, _spann_ passes this 
 metadata to *`MetadataVisitor`s*. Through the `ScanContext`, `MetadataVisitor`s can create arbitrary
- bean definitions.
+bean definitions.
  
 The `ScanContext` also provides an API for sharing references to `BeanDeifnition`s between 
 `MetadataVisitor`s. This allows simple implementation of *annotation composition*.
@@ -64,10 +64,11 @@ The [SpannMetadata spann-metadata] module has its own documentation [SpannMetada
 *JPA*
 
   The following example is implemented in [spann-orm].
-  Using this code, spann will implement the `UserDao` interface and
+  Using this code, _spann_ will implement the `UserDao` interface and
   the annotated methods. This is done via CGLib (mostly by spring itself) and is very efficient at runtime.
 
-  (This is inspired by the  excellent 'polyforms' library. Polyforms provides similar   functionality but relies on aspects. It uses XML and implements solutions for specific usecases. spann-spring and spann-metadata on the other hand provide an API for creating beans via annotations)
+  (This is inspired by the  excellent 'polyforms' library. Polyforms provides similar   functionality but relies on aspects. 
+  It uses XML and implements solutions for specific usecases. spann-spring and spann-metadata on the other hand provide an API for creating beans via annotations)
   {{{
 @Dao
 public interface UserDao extends BaseDao<User,Long> {
@@ -127,7 +128,8 @@ public class MyValidators {
 
   This is not implemented yet, but shows the intent...
 
-  With XML, configuration is quite cumbersome, with spann it can be as simple as:
+  With XML, configuration of JMS listener container is quite cumbersome, 
+  with _spann_ it can be as simple as:
   {{{
 @Service
 @Implement
