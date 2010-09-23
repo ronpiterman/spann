@@ -4,46 +4,62 @@
 
 = About Spann =
 
-Spann is an extension library for the [http://www.springsource.org Spring Framework]. It provides an API for configuring spring beans based on annotation or any other class metadata, without (almost) any XML.
+Spann is an extension library for the [http://www.springsource.org Spring Framework]. 
+It provides an API for configuring spring beans based on annotation or any other class metadata, 
+without (almost) any XML.
 
-It's target is to reduce boilerplate code and configuration. It can be seen as a counterpart API to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] (introduced in Spring 2.0): while the latter simplifies XML configuration via XML Schemas 
-and allows creating complex bean structures with simple XML, spann allows developers do it using annotations or any other class metadata (classes, generics, fields, methods).
+It's target is to reduce boilerplate code and configuration. It can be seen as a counterpart API 
+to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] 
+(introduced in Spring 2.0): while the latter simplifies XML configuration via XML Schemas 
+and allows creating complex bean structures with simple XML, spann allows developers do it 
+using annotations or any other class metadata (classes, generics, fields, methods).
 
 Spann adds *meta programming* capabilities to the spring container without (almost) any bytecode engineering. 
 
 *But is'nt there a built-in annotation support in spring?*
 
-Spring built-in annotation support is limited to very simple usecases. In spring 2.5, four annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Conroller ).
+Spring built-in annotation support is limited to very simple usecases. In spring 2.5, four 
+annotations are predefined for different types of beans ( @Component, @Service, @Repository and @Controller ).
 
 For Spring 3.0, further annotations were introduced, but spring is still missing an API to 
-allow advanced bean configuration via arbitrary annotations or any other class metadata.  Without spann, using custom annotations to configure beans (beyond the basic create, inject aso) is very demanding and requires knowledge of container internals. 
+allow advanced bean configuration via arbitrary annotations or any other class metadata.  
+Without spann, using custom annotations to configure beans (beyond the basic create, inject aso) 
+is very demanding and requires knowledge of container internals. 
 
 = How it works : A bird's-eye view =
 
-Similar to spring's component scan, spann scans classes by name pattern under selected packages and creates *class metadata* objects. Instead of processing this metadata itself, spann passes this metadata to *visitors*. Through the `ScanContext`, the visitors can create arbitrary bean definitions.
+Similar to spring's component scan, spann scans classes by name pattern under selected packages and 
+creates *class metadata* objects. Instead of processing this metadata itself, spann passes this 
+metadata to *`MetadataVisitor`s*. Through the `ScanContext`, `MetadataVisitor`s can create arbitrary
+ bean definitions.
+ 
+The `ScanContext` also provides an API for sharing references to `BeanDeifnition`s between 
+`MetadataVisitor`s. This allows simple implementation of *annotation composition*.
 
-*The Default Visitor* searches classes for the `@Visitor` meta-annotation. The `@Visitor` annotation specifies a delegate visitor. This allows annotations to be self-contained and reduces XML configuration: to define a new annotation ,developers do not need to change configuration; instead they use the ‘@Visitor‘ annotation which maps a `MetadataVisitor` implementation to an annotation type.
+Spann is non-intrusive, works well with spring's native annotation support and is simple to use 
+yet very flexible and powerful. 
 
-*The Scan Context* provides a simple API for accessing and creating bean definitions. To allow different visitors to "play together", it allows giving semantics to bean definitions by "attaching" them to a "role" in a "scope". This allows other visitors to mutate previously created bean definitions, create singleton collaborators and share dependencies.
-
-The [SpannSpring spann-spring] module includes custom visitors and annotations for some common use-cases, for example:
- * Creating beans from abstract classes or interfaces.
- * Using spring method replacing facilities via annotations.
- * Creating synthetic method adapters.
+To get started take a look at [SpannSpring the spann-spring guide].
 
 *The [SpannMetadata spann-metadata] Module*
 
-The [SpannMetadata spann-metadata] module was developed to provide metadata visitors access to *any class metadata* in any depth, also outside the scanned classes. It provides an API to access the complete class metadata information (internally using [http://asm.ow2.org/ ASM]), without loading the classes.
+The [SpannMetadata spann-metadata] module provides an API to access the complete class metadata 
+information (internally using [http://asm.ow2.org/ ASM]), without loading the classes.
 
-Initially, [SpannMetadata spann-metadata] reads only a small part of the available class metadata, making everything else transparently available via on demand lazy loading. 
+Highlights:
+ 
+ * Simple API to access class metadata, including Class, Generics, Methods, Fields and Annotations.
+ * Rule based class metadata loading allows to pre-load only the a small set of required meta data.
+ * Transparent lazy loading on demand of any metadata, recursivly loading metadata
+   of any class referenced by any metadata (super-classes and interfaces, field types etc).
+ * Portable across different ASM versions. Spann-metadata uses a thin adapter layer on top of ASM.
+   This allows it to use different versions of ASM: it is independent of spring and can
+   be used with (almost?) any ASM version; when used with spring it uses the spring-asm implementation, 
+   without introducing new dependencies.
+   
+The [SpannMetadata spann-metadata] module has its own documentation [SpannMetadata here]. 
 
-It is independent of spring and can be used by any application which needs simple access to class metadata information.
-
-To define which metadata is read and which is lazy-loaded, [SpannMetadata spann-metadata] uses a simple rule engine.
-
-The metadata API is portable across different ASM versions and is not dependent on spring. When used with spring, [SpannMetadata spann-metadata] uses the asm implementation delivered with spring, and does not introduce new dependencies.
-
-= Usecase examples =
+= Examples of spann uses =
 
 *JPA*
 
@@ -57,25 +73,21 @@ The metadata API is portable across different ASM versions and is not dependent 
 public interface UserDao extends BaseDao<User,Long> {
 
   // will perform "FROM User WHERE username = ?"
-  @DaoMethod
   @ByMethodName
   User findByUsername( String username );
 
   // will perform "FROM User WHERE enabled = ?"
   // with the given position
-  @DaoMethod
   @ByMethodName
   List<User> findByEnabled( boolean enabled , QueryPosition pos );
 
   // simple jpql
-  @DaoMethod
   @Jpql("FROM User AS u WHERE email = ?")
   User getUserByEmail( String email );
 
   // More advanced usage with MessageFormat arguments in the jpql.
   // calling findByRegdateOp( "username" , "<" , date );
   // will perform 'FROM User AS u WHERE u.regdate < ? ORDER BY u.username'
-  @DaoMethod
   @Jpql("FROM User AS u WHERE u.regdate {1} ? ORDER BY u.{0}")
   List<User> findByRegdateOp( String sortfield , String regdateOp, Date minRegdate );
 
@@ -83,58 +95,51 @@ public interface UserDao extends BaseDao<User,Long> {
 
   }}}
 
-  spann-orm contains many other features, you can take a look [SpannOrm here]
+  [SpannOrm spann-orm] contains many other features, you can take a look [SpannOrm here]
 
-*JMS*
+* Synthetic adapters *
 
-  This is not implemented yet, but shows the direction.
+  The following example may be very easily via the `@SyntheticAdapter` meta-annotation.
 
-  With XML, one needs to create a jms listener container, and a listener adapter.
-  In spann it as simple as:
-  {{{
-@Component
-public class MyListener {
-
-  @JmsListener(queue="queue-name")
-  public void doSomethingWithMessage( TranslatedMessageObject in ) {
-    ...
-  }
-}
-  }}}
-
-  With XML it is the above code (without the @JmsListener annotation) with some extra configuration (taken from the spring reference):
-  {{{
-<bean id="messageListener"   class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
-    <constructor-arg>
-        <bean class="jmsexample.MyListener"/>
-    </constructor-arg>
-    <property name="defaultListenerMethod" value="doSomethingWithMessage"/>
-</bean>
-
-<bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-  <property name="connectionFactory" ref="connectionFactory"/>
-  <property name="destination" ref="destination"/>
-  <property name="messageListener" ref="messageListener" />
-</bean>
-
-  }}}
-
-*A simple interface*
-
-  Again, this is not implemented yet, but shows the direction...
-
-  Wrap an interface implementation bean around a method, for example for a very simple validator implementation.
+  It creates an adapter bean, implementing an abstract class or an interface, delegating
+  the abstract method to the annotated method, and optionaly using method signature 
+  to configure the adapter.
+  
   {{{
 @Component
 public class MyValidators {
 
-  @Validator
+  @Autowired
+  private SomeColaborator foo;
+
+  @Validator(adapterBeanName="personValidator")
   public void validate( Person person , Errors errors ) { ... }
 
-  @Validator
+  @Validator(adapterBeanName="addressValidator")
   public void validate( Address address , Errors errors ) { ... }
 
   ...
 
 } 
+  }}}
+
+* JMS *
+
+  This is not implemented yet, but shows the intent...
+
+  With XML, configuration is quite cumbersome, with spann it can be as simple as:
+  {{{
+@Service
+@Implement
+public abstract class MyListener {
+
+  @JmsListener(queue="queue-name")
+  public void doSomethingWithMessage( TranslatedMessageObject in ) {
+    ...
+  }
+  
+  @JmsDispatcher(queue="queue-name")
+  public abstract sendSomeMessage( TranslatedMessageObject out ); 
+  
+}
   }}}
