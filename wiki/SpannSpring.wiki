@@ -1,22 +1,21 @@
 
 = spann-spring =
 
-*spann-spring* provides an API to create and configure spring beans via annotations. 
-On top of this API, spann-spring also includes some Annotations and base classes which
-can be used for common use cases.
+*spann-spring* provides an API for creating and configuring spring beans via annotations. 
+On top of this API, spann-spring also delivers with some useful Annotations for common use cases.
 
 The annotations included with spann-spring are listed and documented [SpannSpringAnnotations here]. 
 
 == How spann works ==
 
 Similar to spring's component scan, spann-spring creates `ClassMetadata` object for all classes under 
-given packages (matching a given resource name pattern). Instead of processing the `ClassMetadata` 
+given packages (and matching a given resource name pattern). Instead of processing the `ClassMetadata` 
 itself, spann passes it to a list of `MetadataVisitor`s, which in turn may configure spring beans via 
 the `ScanContext`.
 
 == Getting started ==
 
-There are two methods to configure spann: (1) using spann xml schema extension and (2) as a 
+There are two methods to configure spann: (1) using the xml schema extension and (2) as a 
 normal spring bean.
 
 === Configuration spann using xml schema extension === 

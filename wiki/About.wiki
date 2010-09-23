@@ -6,15 +6,16 @@
 
 _Spann_ is an extension library for the [http://www.springsource.org Spring Framework]. 
 It provides an API for configuring spring beans based on annotation or any other class metadata, 
-without (almost) any XML.
+without (almost) any XML. It's target is to *reduce boilerplate code and configuration*. 
 
-It's target is to reduce boilerplate code and configuration. It can be seen as a counterpart API 
-to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] 
+_Spann_ can be seen as a counterpart API to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] 
 (introduced in Spring 2.0): while the latter simplifies XML configuration via XML Schemas 
-and allows creating complex bean structures with simple XML, _spann_ allows developers do it 
-using annotations or any other class metadata (classes, generics, fields, methods).
+and allows creating complex bean structures with simple XML, _spann_ simplifies bean configuration  
+by using annotations or any other class metadata (classes, generics, fields, methods). Further, 
+the spann-API is very straightforward and requires practically no configuration to introduce
+new annotations: just an annotation and a `MetadataVisitor` implementation to process it.
 
-Spann adds *meta programming* capabilities to the spring container without (almost) any bytecode engineering. 
+Spann adds *meta programming* capabilities to the spring container without (almost) any bytecode engineering.
 
 *But is'nt there a native annotation support in spring?*
 
@@ -28,8 +29,9 @@ is very demanding and requires knowledge of container internals.
 
 = How it works : A bird's-eye view =
 
-Similar to spring's component scan, _spann_ scans classes by name pattern under selected packages and 
-creates *class metadata* objects. Instead of processing this metadata itself, _spann_ passes this 
+Similar to spring's component scan, _spann_ scans the classpath for classes under selected packages
+(filtered by resource by name pattern) and creates *class metadata* objects. 
+Instead of processing this metadata itself (like spring does), _spann_ passes this 
 metadata to *`MetadataVisitor`s*. Through the `ScanContext`, `MetadataVisitor`s can create arbitrary
 bean definitions.
  
@@ -46,29 +48,34 @@ To get started take a look at [SpannSpring the spann-spring guide].
 The [SpannMetadata spann-metadata] module provides an API to access the complete class metadata 
 information (internally using [http://asm.ow2.org/ ASM]), without loading the classes.
 
-Highlights:
+Main features:
  
- * Simple API to access class metadata, including Class, Generics, Methods, Fields and Annotations.
- * Rule based class metadata loading allows to pre-load only the a small set of required meta data.
- * Transparent lazy loading on demand of any metadata, recursivly loading metadata
-   of any class referenced by any metadata (super-classes and interfaces, field types etc).
+ * Simple API to access class metadata, including Class, Methods, Fields, Generics and Annotations.
+ * Rule based class metadata loading allows pre-loading a small set of required meta data.
+ * Transparent lazy loading on demand of any metadata not loaded previously, 
+recursivly loading metadata of any class referenced by any metadata (super-classes and interfaces, 
+field types, annotation types etc).
  * Portable across different ASM versions. Spann-metadata uses a thin adapter layer on top of ASM.
-   This allows it to use different versions of ASM: it is independent of spring and can
-   be used with (almost?) any ASM version; when used with spring it uses the spring-asm implementation, 
-   without introducing new dependencies.
+This allows it to use different versions of ASM: it is independent of spring and can
+be used with (almost?) any ASM version; when used with spring it uses the spring-asm implementation, 
+without introducing new dependencies.
    
 The [SpannMetadata spann-metadata] module has its own documentation [SpannMetadata here]. 
+
 
 = Examples of spann uses =
 
 *JPA*
 
-  The following example is implemented in [spann-orm].
-  Using this code, _spann_ will implement the `UserDao` interface and
-  the annotated methods. This is done via CGLib (mostly by spring itself) and is very efficient at runtime.
+  The following example is implemented in [SpannOrm spann-orm].
+  The example shows an abstract UserDao which will be completly implemented by _spann_.
+  This is done via CGLib (mostly by spring itself) and is very efficient at runtime.
 
-  (This is inspired by the  excellent 'polyforms' library. Polyforms provides similar   functionality but relies on aspects. 
-  It uses XML and implements solutions for specific usecases. spann-spring and spann-metadata on the other hand provide an API for creating beans via annotations)
+  Spann-dao is inspired by the  excellent 'polyforms' library. Polyforms provides similar  
+  functionality but relies on aspects. It uses XML and implements solutions for specific usecases. 
+  _spann_ on the other hand provides an API for creating beans via annotations and does not use
+  aspects, which pays in terms of performance and avoiding bean instantiation order conflicts.
+  
   {{{
 @Dao
 public interface UserDao extends BaseDao<User,Long> {
