@@ -1,4 +1,4 @@
-
+#labels Featured
 = spann-spring =
 
 *spann-spring* provides an API for creating and configuring spring beans via annotations. 
@@ -74,7 +74,7 @@ Spann component scan supports the following properties / attributes:
 || scoped-proxy-resolver || ( scopeProxyModeResolver ) || a full qualified class name of a ScopeProxyModeResolver implementation. Consult spring documentation for details || 
 || scoped-proxy-mode || -none- || one of `'targetClass'`, `'interfaces'` or `'no'`. This is a convenience method to setup a "constant" resolver. ||
 || resource-pattern || ( resourcePattern ) || Ant style resource pattern to be used under the given packages. The default pattern is '**/*.class'. ||  
-||Êname-generator || (  ) || A full qualified class name ( A BeanNameGenerator implementation ) of a name generator to use for auto generating bean names. The default generator is conform to the spring default name generator. <br/>*Note* that this object will be "consulted", but spann will add '#n' to the generated bean names on demand to avoid conflicting bean names. || 
+||ï¿½name-generator || (  ) || A full qualified class name ( A BeanNameGenerator implementation ) of a name generator to use for auto generating bean names. The default generator is conform to the spring default name generator. <br/>*Note* that this object will be "consulted", but spann will add '#n' to the generated bean names on demand to avoid conflicting bean names. || 
 
 *Visitors*
 
