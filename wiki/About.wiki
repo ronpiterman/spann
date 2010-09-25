@@ -2,7 +2,7 @@
 
 <wiki:toc/>
 
-= About Spnn =
+= About Spann =
 
 _Spann_ is an extension library for the [http://www.springsource.org Spring Framework]. 
 It provides an API for configuring spring beans based on annotation or any other class metadata, 
