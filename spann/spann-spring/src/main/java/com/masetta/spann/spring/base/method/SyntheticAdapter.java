@@ -62,8 +62,8 @@ public @interface SyntheticAdapter {
 	String adapterBeanName() default "";
 	
 	/**
-	 * Indicate properties of type Class in the adapter class, which should be
-	 * set accoding to the method signature.
+	 * Indicate properties in the adapter class, which should be
+	 * set according to the method signature (return type and parameter types).
 	 * @return
 	 */
 	ClassTypeProperty[] classTypeProperties() default {};
