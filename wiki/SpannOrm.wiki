@@ -1,4 +1,5 @@
 #summary spann-orm module
+#labels Featured
 <wiki:toc/>
 
 = Introduction =
