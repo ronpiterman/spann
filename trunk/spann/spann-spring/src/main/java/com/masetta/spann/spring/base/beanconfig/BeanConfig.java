@@ -21,7 +21,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.masetta.spann.spring.base.Attached;
 import com.masetta.spann.spring.base.beanconfig.impl.Def;
 import com.masetta.spann.spring.base.beanconfig.impl.Ignore;
 import com.masetta.spann.spring.base.beanconfig.impl.Ref;

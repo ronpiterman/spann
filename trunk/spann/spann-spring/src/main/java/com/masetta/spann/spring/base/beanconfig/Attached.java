@@ -14,33 +14,27 @@
  * limitations under the License.
  */
 
-package com.masetta.spann.spring.integration.beanconfig;
+package com.masetta.spann.spring.base.beanconfig;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
+import java.lang.annotation.Target;
 
 import com.masetta.spann.metadata.common.Artifact;
-import com.masetta.spann.spring.base.Attached;
-import com.masetta.spann.spring.base.beanconfig.BeanConfig;
-import com.masetta.spann.spring.base.beanconfig.SpannReference;
-import com.masetta.spann.spring.base.beanconfig.impl.Ignore;
 
 @Retention(RetentionPolicy.RUNTIME)
-@BeanConfig(attached=@Attached(role="bean-config-test",scope=Artifact.UNKNOWN),create=ConfBean.class,
-		explicit=true,references={@SpannReference(scope=Artifact.CLASS, role="main",property="parent")})
-public @interface Ann {
+@Target({})
+public @interface Attached {
 	
-	int integer() default 0;
+	String SCOPE_ATTRIBUTE = "scope";
+	String ROLE_ATTRIBTUE = "role";
 	
-	String string() default "";
+	/**
+	 * The attach scope. UNDEFINED ( the default ) represents the global scope.
+	 * UNKNOWN represents the current metadata scope.
+	 */
+	Artifact scope() default Artifact.UNDEFINED;
 	
-	Class<?> type() default Void.class;
-	
-	boolean bool() default false;
-	
-	@Ignore String someOtherProp() default "other"; 
-	
-	int[] integers() default {};
+	String role() default "main";
 
 }

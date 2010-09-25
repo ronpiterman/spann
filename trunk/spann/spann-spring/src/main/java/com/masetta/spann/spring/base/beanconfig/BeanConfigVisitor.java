@@ -35,7 +35,6 @@ import com.masetta.spann.metadata.core.support.ClassMetadataSupport;
 import com.masetta.spann.spring.RuntimeSpannReference;
 import com.masetta.spann.spring.ScanContext;
 import com.masetta.spann.spring.base.AnnotationPathMetadataVisitor;
-import com.masetta.spann.spring.base.Attached;
 import com.masetta.spann.spring.core.visitor.DefSupport;
 
 public class BeanConfigVisitor extends AnnotationPathMetadataVisitor<AnnotatedElementMetadata> {
