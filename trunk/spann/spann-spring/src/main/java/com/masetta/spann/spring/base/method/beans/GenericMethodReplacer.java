@@ -38,7 +38,7 @@ import com.masetta.spann.spring.util.Resolver2;
  *   <li>Transform the result via a resultTransformer (optional)</li>
  * </ol>
  * 
- * For creating the call context visitors, the factory bean {@link CallContextHandlerChainFactoryBean}
+ * For creating the call context visitors, the factory bean {@link CallContextChainFactoryBean}
  * is used.
  * 
  * @author Ron Piterman

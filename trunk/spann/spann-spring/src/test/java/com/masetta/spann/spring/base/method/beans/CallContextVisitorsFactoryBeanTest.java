@@ -19,13 +19,13 @@ package com.masetta.spann.spring.base.method.beans;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.masetta.spann.spring.base.method.beans.CallContextHandlerChainFactoryBean;
+import com.masetta.spann.spring.base.method.beans.CallContextChainFactoryBean;
 
 public class CallContextVisitorsFactoryBeanTest {
 	
 	@Test
 	public void testBuilder() {
-		CallContextHandlerChainFactoryBean<?> impl = new CallContextHandlerChainFactoryBean<Object>( 1 );
+		CallContextChainFactoryBean<?> impl = new CallContextChainFactoryBean<Object>( 1 );
 		Assert.assertEquals( impl.getUnconsumedArguments() , new Integer[] { 0 } );
 		
 		impl.addAndConsume( null, 0 );
@@ -34,7 +34,7 @@ public class CallContextVisitorsFactoryBeanTest {
 	
 	@Test
 	public void testBuilder2() {
-		CallContextHandlerChainFactoryBean<?> impl = new CallContextHandlerChainFactoryBean<Object>(3);
+		CallContextChainFactoryBean<?> impl = new CallContextChainFactoryBean<Object>(3);
 		Assert.assertEquals( impl.getUnconsumedArguments() , new Integer[] { 0 , 1 , 2} );
 		
 		impl.addAndConsume( null, 1 );

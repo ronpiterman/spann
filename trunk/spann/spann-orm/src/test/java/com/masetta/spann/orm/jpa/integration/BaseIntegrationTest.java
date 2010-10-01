@@ -101,7 +101,7 @@ public abstract class BaseIntegrationTest extends AbstractSpringTest {
 		expectSingle( q , result );
 	}
 
-	private void expectResult(Query q, List<?> result) {
+	protected void expectResult(Query q, List<?> result) {
 		EasyMock.expect(q.getResultList()).andReturn( result );
 	}
 	
@@ -109,7 +109,7 @@ public abstract class BaseIntegrationTest extends AbstractSpringTest {
 		EasyMock.expect(q.getSingleResult()).andReturn( result );
 	}
 
-	private void expectPositional(Query q, Object ...args) {
+	protected void expectPositional(Query q, Object ...args) {
 		for ( int i = 0; i < args.length ; i++ ) {
 			q.setParameter( i + 1, args[i] );
 			EasyMock.expectLastCall().andReturn( q );
@@ -129,7 +129,7 @@ public abstract class BaseIntegrationTest extends AbstractSpringTest {
 		}
 	}
 
-	private Query expectJpql(String q) {
+	protected Query expectJpql(String q) {
 		Query query= createMock( Query.class );
 		EasyMock.expect( entityManager.createQuery( q ) ).andReturn( query );
 		return query;
@@ -155,7 +155,7 @@ public abstract class BaseIntegrationTest extends AbstractSpringTest {
 		return em;
 	}
 	
-	private <T> T createMock( Class<T> type ) {
+	protected <T> T createMock( Class<T> type ) {
 		T t = EasyMock.createStrictMock( type );
 		this.mocks.add( t );
 		return t;

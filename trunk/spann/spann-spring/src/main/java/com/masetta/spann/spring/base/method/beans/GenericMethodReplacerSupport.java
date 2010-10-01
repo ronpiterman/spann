@@ -16,11 +16,11 @@
 
 package com.masetta.spann.spring.base.method.beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
+import org.springframework.beans.factory.support.ManagedList;
 
 import com.masetta.spann.metadata.common.Artifact;
 import com.masetta.spann.metadata.core.AnnotationPath;
@@ -29,6 +29,7 @@ import com.masetta.spann.spring.ScanContext;
 import com.masetta.spann.spring.base.method.ReplaceVisitor;
 import com.masetta.spann.spring.core.visitor.DefSupport;
 import com.masetta.spann.spring.core.visitor.VisitorSupport;
+import com.masetta.spann.spring.util.Handler;
 
 public final class GenericMethodReplacerSupport {
 	
@@ -56,9 +57,9 @@ public final class GenericMethodReplacerSupport {
 			MethodMetadata metadata, ScanContext context , AnnotationPath path ) {
 		
 		BeanDefinitionHolder callbacks = context.builder( metadata , 
-				CallContextHandlerChainFactoryBean.class.getCanonicalName() , path )
+				CallContextChainFactoryBean.class.getCanonicalName() , path )
 				.addConstructorArgument( metadata.getParameters().size() )
-				.set( CallContextHandlerChainFactoryBean.CALLBACKS_PROPERTY, new ArrayList<Object>() )
+				.set( CallContextChainFactoryBean.CALLBACKS_PROPERTY, new ManagedList() )
 				.attach( Artifact.METHOD , CONTEXT_VISITORS_FACTORY_BEAN_ROLE );
 		
 		BeanDefinitionHolder replacer = context.builder( metadata, 
@@ -90,31 +91,35 @@ public final class GenericMethodReplacerSupport {
 	 * @param callContextVisitorsFactoryBean BDH of CallContextHandlerChainFactoryBean
 	 * @param index index to add the callback to. Negative values are used ruby/groovy style (relative
 	 * 	to <code>list.size() + 1</code>)
-	 * @param callback
+	 * @param callback a bean definition, reference or an implementation of 
+	 * 		CallContextHandlerChainBuilderCallback
+	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	public static void addCallContextVisitorsBuilderCallback( BeanDefinitionHolder callContextVisitorsFactoryBean,
-			int index , CallContextHandlerChainBuilderCallback<?> callback ) {
-		List<CallContextHandlerChainBuilderCallback<?>> list = getCallbacks(callContextVisitorsFactoryBean);
+			int index , Object callback ) {
+		@SuppressWarnings("rawtypes")
+		List list = getCallbacks(callContextVisitorsFactoryBean);
 		list.add( relIndex( index , list , 0 ) , callback );
 	}
 
-	private static int relIndex( int index, List<CallContextHandlerChainBuilderCallback<?>> list, int negativeOffs) {
+	private static int relIndex( int index, List<?> list, int negativeOffs) {
 		return index < 0 ? list.size() + 1 + index + negativeOffs : index;
 	}
 
 
 	@SuppressWarnings("unchecked")
-	private static List<CallContextHandlerChainBuilderCallback<?>> getCallbacks(
+	private static List<Handler<CallContextChainBuilder<?>>> getCallbacks(
 			BeanDefinitionHolder callContextVisitorsFactoryBean) {
-		List<CallContextHandlerChainBuilderCallback<?>> list =
+		List<Handler<CallContextChainBuilder<?>>> list =
 			DefSupport.getProperty( callContextVisitorsFactoryBean , 
-					CallContextHandlerChainFactoryBean.CALLBACKS_PROPERTY , List.class );
+					CallContextChainFactoryBean.CALLBACKS_PROPERTY , List.class );
 		return list;
 	}
 	
 	public static void setCallContextVisitorsBuilderCallback( BeanDefinitionHolder callContextVisitorsFactoryBean,
-			int index , CallContextHandlerChainBuilderCallback<?> callback ) {
-		List<CallContextHandlerChainBuilderCallback<?>> list = getCallbacks(callContextVisitorsFactoryBean);
+			int index , Handler<CallContextChainBuilder<?>> callback ) {
+		 List<Handler<CallContextChainBuilder<?>>> list = getCallbacks(callContextVisitorsFactoryBean);
 		list.set( relIndex(index, list, -1), callback );
 	}
 
@@ -150,7 +155,7 @@ public final class GenericMethodReplacerSupport {
 		BeanDefinitionHolder contextVisitorsFactoryBean = 
 			VisitorSupport.getOrCreateAndAttach( context, metadata, Artifact.METHOD, 
 					CONTEXT_VISITORS_FACTORY_BEAN_ROLE, path, 
-					CallContextHandlerChainFactoryBean.class.getCanonicalName() );
+					CallContextChainFactoryBean.class.getCanonicalName() );
 		return contextVisitorsFactoryBean;
 	}
 

@@ -14,24 +14,10 @@
  * limitations under the License.
  */
 
-package com.masetta.spann.spring.base.method.beans;
+package com.masetta.spann.spring.util;
 
-import com.masetta.spann.spring.util.Chain;
+public interface Handler<T> {
+	
+	void handle( T t );
 
-public class CallContextHandlerChainBuilderCallbackImpl<T> implements CallContextHandlerChainBuilderCallback<T> {
-	
-	private final Chain<Object,T> handler;
-	
-	private final int[] consumeArguments;
-	
-	public CallContextHandlerChainBuilderCallbackImpl(Chain<Object, T> handler,
-			int ...consumeArguments) {
-		super();
-		this.handler = handler;
-		this.consumeArguments = consumeArguments;
-	}
-
-	public void perform(CallContextHandlerChainBuilder<T> builder) {
-		builder.addAndConsume( handler, consumeArguments );
-	}
 }

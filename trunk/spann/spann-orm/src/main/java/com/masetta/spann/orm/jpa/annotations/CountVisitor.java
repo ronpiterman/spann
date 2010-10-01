@@ -25,7 +25,7 @@ import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.MethodMetadata;
 import com.masetta.spann.metadata.core.support.MethodMetadataSupport;
 import com.masetta.spann.orm.jpa.beans.CountMethodReplacer;
-import com.masetta.spann.orm.jpa.beans.callbacks.ConsumeCallback;
+import com.masetta.spann.orm.jpa.beans.callbacks.ConsumeHandler;
 import com.masetta.spann.orm.jpa.beans.factories.AbstractQueryCallContextFactory;
 import com.masetta.spann.orm.jpa.support.QueryCount;
 import com.masetta.spann.spring.ScanContext;
@@ -73,7 +73,7 @@ public class CountVisitor extends AbstractGenericReplacerAnnotationVisitor {
 				countPositionIndex );
 		
 		GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( callContextVisitorsFactoryBean, 
-				0 , new ConsumeCallback( countPositionIndex ) );
+				0 , new ConsumeHandler( countPositionIndex ) );
 		
 	}
 

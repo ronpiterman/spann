@@ -31,12 +31,12 @@ import com.masetta.spann.metadata.core.support.MethodMetadataSupport;
 import com.masetta.spann.orm.jpa.annotations.DaoMethod.Op;
 import com.masetta.spann.orm.jpa.beans.QueryCallContext;
 import com.masetta.spann.orm.jpa.beans.ResultStrategies;
-import com.masetta.spann.orm.jpa.beans.callbacks.QueryArgumentsCallback;
+import com.masetta.spann.orm.jpa.beans.callbacks.QueryArgumentsHandlers;
 import com.masetta.spann.orm.jpa.beans.handler.QueryPositionSetter;
 import com.masetta.spann.orm.jpa.support.QueryPosition;
 import com.masetta.spann.spring.ScanContext;
 import com.masetta.spann.spring.base.AnnotationPathMetadataVisitor;
-import com.masetta.spann.spring.base.method.beans.CallContextHandlerChainBuilderCallbackImpl;
+import com.masetta.spann.spring.base.method.beans.CallContextChainBuilderHandler;
 import com.masetta.spann.spring.base.method.beans.GenericMethodReplacerSupport;
 import com.masetta.spann.spring.util.Resolver;
 
@@ -87,13 +87,13 @@ public class DaoMethodVisitor extends AnnotationPathMetadataVisitor<MethodMetada
 		int queryPositionIndex = MethodMetadataSupport.findParameterByType( metadata, QueryPosition.class.getCanonicalName() , 0 );
 		if ( queryPositionIndex > -1 ) {
 			GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( contextVisitorsFactoryBean, 0, 
-					new CallContextHandlerChainBuilderCallbackImpl<QueryCallContext>( 
+					new CallContextChainBuilderHandler<QueryCallContext>( 
 							new QueryPositionSetter( queryPositionIndex ) , queryPositionIndex ) );
 		}
 		
 		// per default use positional parameters
 		GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( contextVisitorsFactoryBean, -1, 
-				QueryArgumentsCallback.Positional.INSTANCE );
+				QueryArgumentsHandlers.Positional.INSTANCE );
 		
 	}
 

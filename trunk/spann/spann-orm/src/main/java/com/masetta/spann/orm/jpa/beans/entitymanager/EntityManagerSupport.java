@@ -33,7 +33,7 @@ public class EntityManagerSupport implements ApplicationContextAware , Initializ
 	
 	private Resolver<EntityManager,String> entityManagerResolver;
 	
-	protected EntityManager getEntityManager() {
+	public EntityManager getEntityManager() {
 		return entityManagerResolver.resolve( persistenceUnit );
 	}
 
@@ -47,6 +47,10 @@ public class EntityManagerSupport implements ApplicationContextAware , Initializ
 
 	public void afterPropertiesSet() throws Exception {
 		this.entityManagerResolver = EntityManagerResolverSupport.getEntityManagerResolver( applicationContext );
+	}
+	
+	public void setPersistenceUnit(String persistenceUnit) {
+		this.persistenceUnit = persistenceUnit;
 	}
 
 }

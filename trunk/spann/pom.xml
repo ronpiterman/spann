@@ -9,7 +9,7 @@
 	<version>0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>spann-aggregator</name>
-	<description>Aggregator POM for spann
+	<description>Aggregator POM of spann
     </description>
 	<modules>
 		<module>spann-parent</module>
@@ -19,10 +19,10 @@
 	</modules>
 	<scm>
 		<connection>
-            scm:svn:http://spann.googlecode.com/svn/trunk/${pom.artifactId}
+            scm:svn:http://spann.googlecode.com/svn/trunk
         </connection>
 		<developerConnection>
-            scm:svn:https://spann.googlecode.com/svn/trunk/${pom.artifactId}
+            scm:svn:https://spann.googlecode.com/svn/trunk
         </developerConnection>
 		<tag>HEAD</tag>
 		<url>http://code.google.com/p/spann/source/checkout
@@ -51,14 +51,14 @@
 				</executions>
 			</plugin>
 		</plugins>
-        <extensions>
-            <!-- uncomment this one (or next) if you use maven >= 2.1.0  -->
-	        <extension>
+		<extensions>
+			<!-- uncomment this one (or next) if you use maven >= 2.1.0 -->
+			<extension>
 				<groupId>org.mod4j.patched</groupId>
 				<artifactId>wagon-ftp</artifactId>
 				<version>1.0-beta-5-PATCHED-v1</version>
-	        </extension>
-        </extensions>
+			</extension>
+		</extensions>
 	</build>
 	<reporting>
 		<plugins>
@@ -84,11 +84,16 @@
 		</plugins>
 	</reporting>
 	<distributionManagement>
-	    <repository>
-	       <id>spann-site</id>
-	       <name>http://os.masetta.com/spann</name>
-	       <url>ftp://os.masetta.com/spann</url>
-	    </repository>
-    </distributionManagement>
-	
+		<repository>
+			<id>spann-site</id>
+			<name>http://os.masetta.com/spann</name>
+			<url>ftp://os.masetta.com/spann</url>
+		</repository>
+
+		<site>
+			<id>masetta.org</id>
+			<url>ftp://srv3.sysproserver.de/html/spann/site</url>
+		</site>
+	</distributionManagement>
+
 </project>
