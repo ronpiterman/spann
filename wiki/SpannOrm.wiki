@@ -182,6 +182,8 @@ The `DaoMethodInvoker` gives access to the DAO class, the DAO bean, the method a
 
 == Creating new annotations ==
 
+<font color="red">Note this section is outdated</font>
+
 New annotations can be created for new use cases. You need to get familiar with the *spann-metadata* and *spann-spring* API, but these are quite straight forward.
 
 The most tricky part is understanding the `GenericMethodReplacer` and its 2-phase configuration (configuration-time, bean-creation-time and method-call-time). 
