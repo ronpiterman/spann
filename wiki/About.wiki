@@ -51,13 +51,9 @@ Main features:
  
  * Simple API to access class metadata, including Class, Methods, Fields, Generics and Annotations.
  * Rule based class metadata loading allows pre-loading a small set of required meta data.
- * Transparent lazy loading on demand of any metadata not loaded previously, 
-recursivly loading metadata of any class referenced by any metadata (super-classes and interfaces, 
+ * Transparent lazy loading on demand of any metadata not loaded previously, recursivly loading metadata of any class referenced by any metadata (super-classes and interfaces, 
 field types, annotation types etc).
- * Portable across different ASM versions. Spann-metadata uses a thin adapter layer on top of ASM.
-This allows it to use different versions of ASM: it is independent of spring and can
-be used with (almost?) any ASM version; when used with spring it uses the spring-asm implementation, 
-without introducing new dependencies.
+ * Portable across different ASM versions. Spann-metadata uses a thin adapter layer on top of ASM. This allows it to use different versions of ASM: it is independent of spring and can be used with (almost?) any ASM version; when used with spring it uses the spring-asm implementation, without introducing new dependencies.
    
 The [SpannMetadata spann-metadata] module has its own documentation [SpannMetadata here]. 
 
