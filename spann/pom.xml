@@ -28,16 +28,6 @@
 		<url>http://code.google.com/p/spann/source/checkout
         </url>
 	</scm>
-	<distributionManagement>
-       <repository>
-           <id>masetta-oss-nexus-repository</id>
-           <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-       </repository>
-       <snapshotRepository>
-           <id>masetta-oss-nexus-snapshots-repository</id>
-           <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-       </snapshotRepository>
-    </distributionManagement>
 	<build>
 		<plugins>
 			<plugin>
@@ -61,11 +51,11 @@
 				</executions>
 			</plugin>
 			<plugin>
-			     <groupId>org.apache.maven.plugins</groupId>
-			     <artifactId>maven-deploy-plugin</artifactId>
-			     <configuration>
-			         <skip>true</skip>
-			     </configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
 			</plugin>
 		</plugins>
 		<extensions>
@@ -101,6 +91,14 @@
 		</plugins>
 	</reporting>
 	<distributionManagement>
+		<repository>
+			<id>masetta-oss-nexus-repository</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+		<snapshotRepository>
+			<id>masetta-oss-nexus-snapshots-repository</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
 		<site>
 			<id>masetta.org</id>
 			<url>ftp://srv3.sysproserver.de/html/spann/site</url>
