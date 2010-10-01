@@ -16,6 +16,7 @@
 
 package com.masetta.spann.metadata.visitors.classes;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ClassWithInnerType<T> {
@@ -59,7 +60,6 @@ public class ClassWithInnerType<T> {
     }
     
     private class NonGeneric {
-        
     }
     
     private static class InnerStaticClass<V> {}
@@ -67,5 +67,16 @@ public class ClassWithInnerType<T> {
     private static interface InnerInterface {
         String interfaceMethod();
     }
+    
+    public void someMethod() {
+    	new Serializable() {
+		};
+    }
+    
+    public static void someStaticMethod() {
+    	new Serializable() {
+		};
+    }
+
 
 }

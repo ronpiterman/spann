@@ -108,7 +108,12 @@ public class ClassVisitorImpl extends AbstractVisitor<ClassMetadataImpl> {
      */
     public void visitInnerClass(String name, String outerName,
             String innerName, int access) {
-        ClassMetadata cls = getClassMetadata(ResourceUtil.convertResourcePathToClassName(name),0);
+    	
+    	if ( outerName == null ) {
+    		return;
+    	}
+    	
+    	ClassMetadata cls = getClassMetadata(ResourceUtil.convertResourcePathToClassName(name),0);
         getMetadata().addInnerClass(cls);
         if (cls.getOuterClass() != null) {
             return;

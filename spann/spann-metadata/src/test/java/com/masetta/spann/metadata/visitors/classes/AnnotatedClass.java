@@ -16,6 +16,7 @@
 
 package com.masetta.spann.metadata.visitors.classes;
 
+import java.io.Serializable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
