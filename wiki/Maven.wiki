@@ -19,7 +19,7 @@ To use spann in a maven project, use the following settings
         <enabled>true</enabled>
       </snapshots>
       <id>nexus-oss</id>
-      <name>Nexus Open Source Hosted Repository</name>
+      <name>Nexus Open Source Staging Repository</name>
       <url>https://oss.sonatype.org/content/groups/staging</url>
     </repository>
   </repositories>
@@ -32,7 +32,7 @@ To use spann in a maven project, use the following settings
       <!--  <artifactId>spann-metadata</artifactId> -->
       <!--  <artifactId>spann-spring</artifactId> -->
       <!--  <artifactId>spann-orm</artifactId> -->
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.1.0</version>
     </dependency>
   
   </dependencies>
