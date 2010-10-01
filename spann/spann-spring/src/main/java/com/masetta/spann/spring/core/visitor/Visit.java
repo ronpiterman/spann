@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package com.masetta.spann.spring.core.annotations;
+package com.masetta.spann.spring.core.visitor;
 
-public interface Order {
-    
-    int INIT = -200;
-    
-    int BEFORE = -100;
-    
-    int CREATE_BEAN = 0;
-    
-    int AFTER_CREATE = 100;
-    
-    int FINALIZE = 200;
-    
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Visit {
+	
+	Class<? extends VisitCallback> value();
+	
 }
