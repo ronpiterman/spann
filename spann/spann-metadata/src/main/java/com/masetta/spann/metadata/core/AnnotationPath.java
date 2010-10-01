@@ -74,10 +74,11 @@ public interface AnnotationPath {
      *         is the target annotation of the path, the last element is the
      * @param name attribute name
      * @param nullsafe if to retrieve default value if attribute is not explicitly set.
-     * @return Attribute value.
-     * @see AnnotationMetadata#getAttribute(String, boolean)
      * @param type a {@link java.lang.Class} object.
      * @param <T> a T object.
+     * 
+     * @return Attribute value.
+     * @see AnnotationMetadata#getAttribute(String, boolean)
      */
     <T> T getAttribute( int index , Class<T> type , String name , boolean nullsafe );
     

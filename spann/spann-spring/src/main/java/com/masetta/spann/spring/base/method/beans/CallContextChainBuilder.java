@@ -16,8 +16,30 @@
 
 package com.masetta.spann.spring.base.method.beans;
 
-public interface CallContextHandlerChainBuilderCallback<T> {
+import com.masetta.spann.spring.util.Chain;
+
+/**
+ * Builder for a list of Resolver&lt;Boolean,T> based on a list of method arguments.
+ * 
+ * The builder is passed to callbacks which may "consume" method arguments by index,
+ * and add handler to the chain.
+ * 
+ * @author Ron Piterman
+ *
+ * @param <T>
+ */
+public interface CallContextChainBuilder<T> {
 	
-	void perform( CallContextHandlerChainBuilder<T> builder );
+	/** 
+	 * Return the indexes of the arguments which were not yet consumed 
+	 */
+	Integer[] getUnconsumedArguments();
+	
+	/**
+	 * Add the given context handler to the chain and consume the arguments 
+	 * with the given indexes.
+	 */
+	void addAndConsume( Chain<Object,T> contextHandler , int ...argIndexes );
+	
 
 }

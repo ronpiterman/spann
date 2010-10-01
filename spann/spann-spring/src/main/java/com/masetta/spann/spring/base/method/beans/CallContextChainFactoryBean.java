@@ -26,6 +26,7 @@ import org.springframework.beans.factory.InitializingBean;
 import com.masetta.spann.metadata.util.SpannLog;
 import com.masetta.spann.metadata.util.SpannLogFactory;
 import com.masetta.spann.spring.util.Chain;
+import com.masetta.spann.spring.util.Handler;
 import com.masetta.spann.spring.util.Resolver;
 
 /**
@@ -58,9 +59,9 @@ import com.masetta.spann.spring.util.Resolver;
  *
  * @param <T> type of the method call context.
  */
-public class CallContextHandlerChainFactoryBean<T> implements FactoryBean , CallContextHandlerChainBuilder<T> , InitializingBean {
+public class CallContextChainFactoryBean<T> implements FactoryBean , CallContextChainBuilder<T> , InitializingBean {
 	
-	private SpannLog log = SpannLogFactory.getLog( CallContextHandlerChainFactoryBean.class );
+	private SpannLog log = SpannLogFactory.getLog( CallContextChainFactoryBean.class );
 	
 	private static final Chain<?,?>[] EMPTY_CHAIN_ARRAY = {}; 
 	
@@ -72,9 +73,9 @@ public class CallContextHandlerChainFactoryBean<T> implements FactoryBean , Call
 
 	private final List<Chain<Object,T>> visitors = new ArrayList<Chain<Object,T>>();
 	
-	private List<CallContextHandlerChainBuilderCallback<T>> callbacks;
+	private List<Handler<CallContextChainBuilder<T>>> callbacks;
 	
-	public CallContextHandlerChainFactoryBean( int argumentsCount ) {
+	public CallContextChainFactoryBean( int argumentsCount ) {
 		if ( log.isDebugEnabled() )
 			log.debug( "create new QueryVisitorListBuilderImpl(" + argumentsCount + ")" );
 		this.arguments = new ArrayList<Integer>(argumentsCount);
@@ -109,12 +110,12 @@ public class CallContextHandlerChainFactoryBean<T> implements FactoryBean , Call
 	}
 
 	public void afterPropertiesSet() throws Exception {
-		for ( CallContextHandlerChainBuilderCallback<T> c : callbacks ) {
-			c.perform( this );
+		for ( Handler<CallContextChainBuilder<T>> c : callbacks ) {
+			c.handle( this );
 		}
 	}
 
-	public void setCallbacks(List<CallContextHandlerChainBuilderCallback<T>> callbacks) {
+	public void setCallbacks(List<Handler<CallContextChainBuilder<T>>> callbacks) {
 		this.callbacks = callbacks;
 	}
 

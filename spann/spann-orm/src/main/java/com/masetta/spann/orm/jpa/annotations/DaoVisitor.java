@@ -48,8 +48,6 @@ public class DaoVisitor extends AnnotationPathMetadataVisitor<ClassMetadata> {
 					"No generic argument specified for BaseDao<E,PK> - is the class / interface extending BaseDao?" );
 		}
 		DefSupport.setProperty( dao, "entityType" , entity.getName() );
-				
-
 	}
 
 }

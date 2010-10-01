@@ -24,7 +24,7 @@ import org.springframework.beans.factory.config.BeanDefinitionHolder;
 
 import com.masetta.spann.metadata.core.AnnotationPath;
 import com.masetta.spann.metadata.core.MethodMetadata;
-import com.masetta.spann.orm.jpa.beans.callbacks.ConsumeCallback;
+import com.masetta.spann.orm.jpa.beans.callbacks.ConsumeHandler;
 import com.masetta.spann.orm.jpa.beans.factories.JpqlDynamicQueryFactory;
 import com.masetta.spann.orm.jpa.beans.factories.JpqlSimpleQueryFactory;
 import com.masetta.spann.orm.jpa.beans.factories.NamedQueryFactory;
@@ -60,7 +60,7 @@ public class JpqlVisitor extends AbstractGenericReplacerAnnotationVisitor {
 				.addFinal(); 
 			
 			GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( 
-					callContextVisitorsFactoryBean, 0, new ConsumeCallback( argsToConsume ) );
+					callContextVisitorsFactoryBean, 0, new ConsumeHandler( argsToConsume ) );
 		} else {
 			h = context.builder( metadata, 
 					JpqlSimpleQueryFactory.class.getCanonicalName() , path )

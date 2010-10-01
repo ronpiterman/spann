@@ -20,17 +20,16 @@ package com.masetta.spann.orm.jpa.beans.callbacks;
 import com.masetta.spann.orm.jpa.beans.QueryCallContext;
 import com.masetta.spann.orm.jpa.beans.handler.NamedArgumentSetter;
 import com.masetta.spann.orm.jpa.beans.handler.PositionalArgumentSetter;
-import com.masetta.spann.spring.base.method.beans.CallContextHandlerChainBuilder;
-import com.masetta.spann.spring.base.method.beans.CallContextHandlerChainBuilderCallback;
+import com.masetta.spann.spring.base.method.beans.CallContextChainBuilder;
 import com.masetta.spann.spring.util.Chain;
-import com.masetta.spann.spring.util.Resolver;
+import com.masetta.spann.spring.util.Handler;
 
-public final class QueryArgumentsCallback {
+public final class QueryArgumentsHandlers {
 	
-	private QueryArgumentsCallback() {}
+	private QueryArgumentsHandlers() {}
 	
-	private abstract static class Abstract implements CallContextHandlerChainBuilderCallback<QueryCallContext>  {
-		public void perform(CallContextHandlerChainBuilder<QueryCallContext> builder) {
+	private abstract static class Abstract implements Handler<CallContextChainBuilder<QueryCallContext>> {
+		public void handle(CallContextChainBuilder<QueryCallContext> builder) {
 			Integer[] available = builder.getUnconsumedArguments();
 			for ( int i = 0; i < available.length; i++ ) {
 				builder.addAndConsume( createVisitor( i, available[i] ), available[i] );
@@ -41,7 +40,7 @@ public final class QueryArgumentsCallback {
 	
 	public final static class Positional extends Abstract {
 		
-		public static final CallContextHandlerChainBuilderCallback<QueryCallContext> INSTANCE = new Positional();
+		public static final Handler<CallContextChainBuilder<QueryCallContext>> INSTANCE = new Positional();
 		
 		private Positional() {}
 	

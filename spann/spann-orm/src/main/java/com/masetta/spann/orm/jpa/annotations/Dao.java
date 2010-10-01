@@ -23,9 +23,13 @@ import java.lang.annotation.Target;
 
 import org.springframework.stereotype.Repository;
 
+import com.masetta.spann.metadata.common.Artifact;
 import com.masetta.spann.orm.jpa.beans.BaseDaoImpl;
 import com.masetta.spann.spring.base.Extends;
 import com.masetta.spann.spring.base.Implement;
+import com.masetta.spann.spring.base.beanconfig.Attached;
+import com.masetta.spann.spring.base.beanconfig.BeanConfig;
+import com.masetta.spann.spring.base.beanconfig.impl.Ignore;
 import com.masetta.spann.spring.core.annotations.Order;
 import com.masetta.spann.spring.core.annotations.VisitMethods;
 import com.masetta.spann.spring.core.annotations.Visitor;
@@ -42,9 +46,12 @@ import com.masetta.spann.spring.core.annotations.Visitor;
 @VisitMethods
 @Extends(superclass=BaseDaoImpl.class)
 @Visitor(value=DaoVisitor.class,order=Order.AFTER_CREATE)
+@BeanConfig(attached=@Attached(role="main",scope=Artifact.CLASS))
 public @interface Dao {
 	
 	/** Dao Implement name */
-	String value() default "";
+	@Ignore String value() default "";
+	
+	String persistenceUnit() default "";
 
 }

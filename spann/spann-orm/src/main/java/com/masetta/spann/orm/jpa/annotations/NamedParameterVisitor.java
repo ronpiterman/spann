@@ -20,12 +20,11 @@ import org.springframework.beans.factory.config.BeanDefinitionHolder;
 
 import com.masetta.spann.metadata.core.AnnotationPath;
 import com.masetta.spann.metadata.core.MethodMetadata;
-import com.masetta.spann.orm.jpa.beans.QueryCallContext;
-import com.masetta.spann.orm.jpa.beans.callbacks.QueryArgumentsCallback;
+import com.masetta.spann.orm.jpa.beans.callbacks.QueryArgumentsHandlers;
 import com.masetta.spann.spring.ScanContext;
 import com.masetta.spann.spring.base.method.beans.AbstractGenericReplacerAnnotationVisitor;
-import com.masetta.spann.spring.base.method.beans.CallContextHandlerChainBuilderCallback;
 import com.masetta.spann.spring.base.method.beans.GenericMethodReplacerSupport;
+import com.masetta.spann.spring.util.Handler;
 
 public class NamedParameterVisitor extends AbstractGenericReplacerAnnotationVisitor {
 
@@ -35,11 +34,13 @@ public class NamedParameterVisitor extends AbstractGenericReplacerAnnotationVisi
 		super(NAMED_PARAMETER, true);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void process(MethodMetadata metadata, ScanContext context, AnnotationPath path,
 			BeanDefinitionHolder methodReplacer, BeanDefinitionHolder callContextVisitorsFactoryBean) {
 		String[] names = path.getAttribute( 0, String[].class, "value", false );
-		CallContextHandlerChainBuilderCallback<QueryCallContext> setter = new QueryArgumentsCallback.Named( names );
+		@SuppressWarnings("rawtypes")
+		Handler setter = new QueryArgumentsHandlers.Named( names );
 		GenericMethodReplacerSupport.setCallContextVisitorsBuilderCallback(
 				callContextVisitorsFactoryBean, -1 , setter );
 	}

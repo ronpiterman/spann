@@ -18,23 +18,23 @@ package com.masetta.spann.orm.jpa.beans.callbacks;
 
 
 import com.masetta.spann.orm.jpa.beans.QueryCallContext;
-import com.masetta.spann.spring.base.method.beans.CallContextHandlerChainBuilder;
-import com.masetta.spann.spring.base.method.beans.CallContextHandlerChainBuilderCallback;
+import com.masetta.spann.spring.base.method.beans.CallContextChainBuilder;
+import com.masetta.spann.spring.util.Handler;
 
 /**
  * Callback which consumes method arguments without adding any visitors.
  * @author Ron Piterman
  */
-public class ConsumeCallback implements CallContextHandlerChainBuilderCallback<QueryCallContext> {
+public class ConsumeHandler implements Handler<CallContextChainBuilder<QueryCallContext>> {
 	
 	private int[] consume;
 	
-	public ConsumeCallback(int ...consume) {
+	public ConsumeHandler(int ...consume) {
 		super();
 		this.consume = consume;
 	}
 
-	public void perform(CallContextHandlerChainBuilder<QueryCallContext> builder) {
+	public void handle(CallContextChainBuilder<QueryCallContext> builder) {
 		builder.addAndConsume( null, consume );
 	}
 
