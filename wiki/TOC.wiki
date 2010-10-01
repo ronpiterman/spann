@@ -1,11 +1,17 @@
 #summary Table of content
-[http://code.google.com/p/spann/ Spann Home] <br/>
-[Releases Release Log] <br/>
-[Maven Maven] <br/>
 
+[http://code.google.com/p/spann/ Spann Home]
 
-*Modules* <br/>
-[ModuleOverview Modules Overview] <br/>
-[SpannMetadata spann-metadata (API)] <br/>
-[SpannSpring spann-spring (API)] <br/>
-[SpannOrm spann-orm] (_[DaoExample example])_ <br/>
+[About About spann]
+
+[ModuleOverview Module Overview]
+
+[SpannMetadata spann-metadata]
+
+[SpannSpring spann-spring]
+
+[SpannOrm spann-orm] (_[DaoExample example])_
+
+[Releases Release Log]
+
+[Maven Maven]
