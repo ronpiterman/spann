@@ -20,7 +20,7 @@ To use spann in a maven project, use the following settings
       </snapshots>
       <id>nexus-oss</id>
       <name>Nexus Open Source Hosted Repository</name>
-      <url>https://oss.sonatype.org/content/groups/public/</url>
+      <url>https://oss.sonatype.org/content/groups/staging</url>
     </repository>
   </repositories>
   ...
