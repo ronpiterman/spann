@@ -6,11 +6,21 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.masetta.spann</groupId>
 	<artifactId>spann-parent</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>spann-parent</name>
 	<description>Parent POM for spann
 	</description>
+	<distributionManagement>
+	   <repository>
+	       <id>masetta-oss-nexus-repository</id>
+	       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+	   </repository>
+	   <snapshotRepository>
+	       <id>masetta-oss-nexus-snapshots-repository</id>
+	       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+	   </snapshotRepository>
+	</distributionManagement>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
