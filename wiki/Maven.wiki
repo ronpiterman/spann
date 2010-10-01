@@ -1,5 +1,6 @@
-
 To use spann in a maven project, use the following settings
+
+[https://oss.sonatype.org/content/groups/staging/com/masetta/spann Download manually]
 
 {{{
 <project>
