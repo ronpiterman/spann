@@ -1,6 +1,4 @@
-#summary About spann
 #labels Featured
-
 <wiki:toc/>
 
 = About Spann =
