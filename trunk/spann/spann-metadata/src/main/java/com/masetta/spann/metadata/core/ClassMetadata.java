@@ -26,6 +26,7 @@ import java.util.Set;
 
 import com.masetta.spann.metadata.core.modifier.ClassModifier;
 import com.masetta.spann.metadata.core.modifier.Modifier;
+
 public interface ClassMetadata extends Metadata , AnnotatedElementMetadata {
     
     /**
