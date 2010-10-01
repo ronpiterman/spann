@@ -1,6 +1,6 @@
 #summary Table of content
 [http://code.google.com/p/spann/ Spann Home] <br/>
-[ChangeLog Change log] <br/>
+[Releases Release Log] <br/>
 [Maven Maven] <br/>
 
 
