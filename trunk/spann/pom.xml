@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.masetta.spann</groupId>
 	<artifactId>spann</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>spann-aggregator</name>
 	<description>Aggregator POM of spann
@@ -17,13 +17,12 @@
 	</modules>
 	<scm>
 		<connection>
-            scm:svn:http://spann.googlecode.com/svn/tags/spann-0.1.0
+            scm:svn:http://spann.googlecode.com/svn/trunk
         </connection>
 		<developerConnection>
-            scm:svn:https://spann.googlecode.com/svn/tags/spann-0.1.0
+            scm:svn:https://spann.googlecode.com/svn/trunk
         </developerConnection>
-		<tag>HEAD</tag>
-		<url>http://code.google.com/p/spann/source/checkout/tags/spann-0.1.0
+		<url>http://code.google.com/p/spann/source/checkout
         </url>
 	</scm>
 	<build>
