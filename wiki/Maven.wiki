@@ -8,21 +8,36 @@ Previous versions: none.
 To use spann in a maven project, use the following settings
 
 {{{
-<repository>
-  <id>spann</id>
-  <url>repos</url>
-</repository>
+<project>
+  ...
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>nexus-oss</id>
+      <name>Nexus Open Source Hosted Repository</name>
+      <url>https://oss.sonatype.org/content/groups/public/</url>
+    </repository>
+  </repositories>
+  ...
+  <dependencies>
 
-<depednency>
-  <groupId>org.spann</groupId>
-<!--  uncomment one.. -->
-<!--  <artifactId>spann-metadata</artifactId> -->
-<!--  <artifactId>spann-spring</artifactId> -->
-<!--  <artifactId>spann-orm</artifactId> -->
-  <version>0.1</version>
-</dependency>
-
+    <dependency>
+      <groupId>com.masetta.spann</groupId>
+      <!-- uncomment one.. -->
+      <!--  <artifactId>spann-metadata</artifactId> -->
+      <!--  <artifactId>spann-spring</artifactId> -->
+      <!--  <artifactId>spann-orm</artifactId> -->
+        <version>0.1.0-SNAPSHOT</version>
+    </dependency>
+  
+  </dependencies>
+  ...
+</project>
 }}}
 
-If using spann-metadata directly, you will also need to add an ASM implementation to your
-project.
+*Note*: if using spann-metadata directly, you will also need to add an ASM implementation to your project. (for example `asm:asm:3.2`)
