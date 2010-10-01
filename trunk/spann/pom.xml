@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.masetta.spann</groupId>
 	<artifactId>spann</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>spann-aggregator</name>
 	<description>Aggregator POM of spann
@@ -50,6 +50,13 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+			     <groupId>org.apache.maven.plugins</groupId>
+			     <artifactId>maven-deploy-plugin</artifactId>
+			     <configuration>
+			         <skip>true</skip>
+			     </configuration>
+			</plugin>
 		</plugins>
 		<extensions>
 			<!-- uncomment this one (or next) if you use maven >= 2.1.0 -->
@@ -84,12 +91,6 @@
 		</plugins>
 	</reporting>
 	<distributionManagement>
-		<repository>
-			<id>spann-site</id>
-			<name>http://os.masetta.com/spann</name>
-			<url>ftp://os.masetta.com/spann</url>
-		</repository>
-
 		<site>
 			<id>masetta.org</id>
 			<url>ftp://srv3.sysproserver.de/html/spann/site</url>
