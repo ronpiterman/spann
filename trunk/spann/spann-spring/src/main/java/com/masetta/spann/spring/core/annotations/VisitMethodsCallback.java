@@ -16,16 +16,18 @@
 
 package com.masetta.spann.spring.core.annotations;
 
-public interface Order {
-    
-    int INIT = -200;
-    
-    int BEFORE = -100;
-    
-    int CREATE_BEAN = 0;
-    
-    int AFTER_CREATE = 100;
-    
-    int FINALIZE = 200;
-    
+import com.masetta.spann.metadata.core.AnnotatedElementMetadata;
+import com.masetta.spann.metadata.core.ClassMetadata;
+import com.masetta.spann.metadata.core.MethodMetadata;
+import com.masetta.spann.spring.core.visitor.VisitCallback;
+import com.masetta.spann.spring.util.Handler;
+
+public class VisitMethodsCallback implements VisitCallback<ClassMetadata> {
+
+	public void perform(Handler<AnnotatedElementMetadata> visitor, ClassMetadata metadata) {
+		for ( MethodMetadata methodMetadata : metadata.getMethods() ) {
+			visitor.handle( methodMetadata );
+    	}
+	}
+
 }

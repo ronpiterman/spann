@@ -14,18 +14,10 @@
  * limitations under the License.
  */
 
-package com.masetta.spann.spring.core.annotations;
+package com.masetta.spann.spring.core.visitor;
 
-public interface Order {
-    
-    int INIT = -200;
-    
-    int BEFORE = -100;
-    
-    int CREATE_BEAN = 0;
-    
-    int AFTER_CREATE = 100;
-    
-    int FINALIZE = 200;
-    
+public interface VisitOrder {
+	
+	int PRE_CLASS = 0;
+
 }

@@ -22,6 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import com.masetta.spann.spring.core.visitor.DefaultVisitor;
+import com.masetta.spann.spring.core.visitor.Visit;
 
 
 /** 
@@ -35,6 +36,7 @@ import com.masetta.spann.spring.core.visitor.DefaultVisitor;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.ANNOTATION_TYPE,ElementType.TYPE})
+@Visit(VisitMethodsCallback.class)
 public @interface VisitMethods {
 
 }
