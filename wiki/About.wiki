@@ -145,11 +145,14 @@ public abstract class MyListener {
 
   @JmsListener(queue="queue-name")
   public void doSomethingWithMessage( TranslatedMessageObject in ) {
+    // process message...
     ...
+    // and queue for further processing... 
+    sendSomeMessage( transformed );
   }
   
-  @JmsDispatcher(queue="queue-name")
-  public abstract sendSomeMessage( TranslatedMessageObject out ); 
+  @JmsDispatcher(queue="other-queue-name")
+  public abstract sendSomeMessage( SomeOtherMessageObject out ); 
   
 }
   }}}
