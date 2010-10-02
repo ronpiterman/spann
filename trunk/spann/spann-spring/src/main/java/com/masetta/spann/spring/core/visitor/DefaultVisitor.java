@@ -31,6 +31,7 @@ import com.masetta.spann.metadata.core.AnnotationPath;
 import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.Metadata;
 import com.masetta.spann.metadata.core.MethodMetadata;
+import com.masetta.spann.metadata.core.modifier.ClassModifier;
 import com.masetta.spann.metadata.core.support.AnnotationMetadataSupport;
 import com.masetta.spann.metadata.core.support.ClassMetadataSupport;
 import com.masetta.spann.metadata.util.SpannLog;
@@ -93,6 +94,12 @@ public class DefaultVisitor implements MetadataVisitor<ClassMetadata> {
      * @see com.masetta.spann.spring.MetadataVisitor#visit(com.masetta.spann.spring.core.asm.metadata.ExtendedClassMetadata, com.masetta.spann.spring.ScanContext)
      */
     public void visit( ClassMetadata metadata, ScanContext context) {
+    	
+    	switch ( metadata.getModifier().getClassType() ) {
+    		case ANNOTATION:
+    		case ENUM:
+    			return;
+    	}
     	
     	Set<Metadata> visited = new HashSet<Metadata>();
     	

@@ -20,6 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.orm.jpa.EntityManagerFactoryUtils;
 
 import com.masetta.spann.spring.util.Resolver;
 
@@ -87,7 +88,11 @@ public final class EntityManagerResolverSupport  {
 			this.entityManagerFactory = entityManagerFactory;
 		}
 		public EntityManager resolve(String param) {
-			return entityManagerFactory.createEntityManager();
+			EntityManager em = EntityManagerFactoryUtils.getTransactionalEntityManager( entityManagerFactory );
+			if ( em == null ) {
+				em = entityManagerFactory.createEntityManager();
+			}
+			return em;
 		}
 	}
 

@@ -29,7 +29,6 @@ public class TempTest extends BaseTestMetadata {
     @Test
     public void test() {
         ClassMetadata cm = getMetadata();
-        System.out.println( cm );
     }
 
 }
