@@ -39,6 +39,7 @@ import com.masetta.spann.spring.base.AnnotationPathMetadataVisitor;
 import com.masetta.spann.spring.base.method.beans.CallContextChainBuilderHandler;
 import com.masetta.spann.spring.base.method.beans.GenericMethodReplacerSupport;
 import com.masetta.spann.spring.util.Resolver;
+import com.masetta.spann.spring.util.Resolver2;
 
 public class DaoMethodVisitor extends AnnotationPathMetadataVisitor<MethodMetadata> {
 
@@ -52,11 +53,12 @@ public class DaoMethodVisitor extends AnnotationPathMetadataVisitor<MethodMetada
 
 	private static final Pattern DETECT_UPDATE_PATTERN = Pattern.compile("^update[A-Z]");
 
-	private static final Resolver<Object, Object> VOID_RESOLVER = new Resolver<Object, Object>() {
-		public Object resolve(Object result) {
-			return null;
-		}
-	};
+	private static final Resolver2<Object, Object, QueryCallContext> VOID_RESOLVER = 
+		new Resolver2<Object, Object, QueryCallContext>() {
+			public Object resolve(Object result,QueryCallContext ctx) {
+				return null;
+			}
+		};
 
 	public DaoMethodVisitor() {
 		super( MethodMetadata.class, JPA, false, true );
@@ -66,7 +68,7 @@ public class DaoMethodVisitor extends AnnotationPathMetadataVisitor<MethodMetada
 	protected void visit(MethodMetadata metadata, ScanContext context, AnnotationPath path) {
 
 		// create result resolver
-		Resolver<Object, Object> resultTransformer = null;
+		Resolver2<Object, Object, QueryCallContext> resultTransformer = null;
 		if ( metadata.getReturnClass() == null || metadata.getReturnClass().equals(VOID) )
 			resultTransformer = VOID_RESOLVER;
 

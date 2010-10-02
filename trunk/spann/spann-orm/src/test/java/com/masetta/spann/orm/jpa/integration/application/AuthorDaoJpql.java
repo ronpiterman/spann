@@ -103,6 +103,6 @@ public interface AuthorDaoJpql extends BaseDao<Author,Long> {
 	@DaoMethod(op=Op.UPDATE)
 	@Jpql("UPDATE Author SET name = :name WHERE id = :id")
 	@NamedParameter({"name","id"})
-	public int setNameById( String name , Long id );
+	public void setNameById( String name , Long id );
 
 }
