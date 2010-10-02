@@ -36,9 +36,10 @@ public interface MethodMetadata extends Metadata , AnnotatedElementMetadata {
     MethodModifier getModifier();
     
     /**
-     * Return type of the method.
+     * Return type of the method, or null for void methods.
      *
-     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} representing the return
+     * 		class of the method, or null if the method is void.
      */
     ClassMetadata getReturnClass();
     

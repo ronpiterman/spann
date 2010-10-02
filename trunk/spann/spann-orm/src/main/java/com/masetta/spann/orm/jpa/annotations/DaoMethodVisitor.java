@@ -67,7 +67,7 @@ public class DaoMethodVisitor extends AnnotationPathMetadataVisitor<MethodMetada
 
 		// create result resolver
 		Resolver<Object, Object> resultTransformer = null;
-		if ( metadata.getReturnClass().getName().equals(VOID) )
+		if ( metadata.getReturnClass() == null || metadata.getReturnClass().equals(VOID) )
 			resultTransformer = VOID_RESOLVER;
 
 		// create query factory
