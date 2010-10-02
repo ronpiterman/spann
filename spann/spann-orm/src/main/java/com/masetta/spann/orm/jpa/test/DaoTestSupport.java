@@ -32,6 +32,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.ListableBeanFactory;
 
+import com.masetta.spann.metadata.util.SpannLog;
+import com.masetta.spann.metadata.util.SpannLogFactory;
 import com.masetta.spann.orm.jpa.annotations.Dao;
 import com.masetta.spann.orm.jpa.annotations.DaoMethod;
 import com.masetta.spann.orm.jpa.beans.BaseDao;
@@ -48,6 +50,8 @@ public final class DaoTestSupport {
 	public static final Object SKIP = new Object();
 	
 	public static final Object NULL = new Object();
+	
+	private static final SpannLog log = SpannLogFactory.getLog( DaoTestSupport.class );
 	
 	private static final Resolver<Object,Object> SAME = new Resolver<Object, Object>() {
 		public Object resolve(Object param) {
@@ -105,12 +109,23 @@ public final class DaoTestSupport {
 		if ( ! isInPackages( daoClass , packages ) ) {
 			return;
 		}
+
+		if ( log.isDebugEnabled() )
+			log.debug( "Detecting dao methods to test in " + dao.getClass() );
 		
 		for ( Method method : daoClass.getDeclaredMethods() ) {
+			if ( log.isDebugEnabled() ) 
+				log.debug("Checking dao method " + method );
 			if ( isAnnotationPresent( method, DaoMethod.class , new HashSet<AnnotatedElement>()) ) {
+				if ( log.isDebugEnabled() ) 
+					log.debug("Creating test invoker for method " + method );
 				DaoMethodInvoker c = createInvoker( daoClass, method , dao , parameterResolver );
-				if  ( c != null )
+				if  ( c != null ) {
 					invokers.add( c );
+				}
+				else {
+					log.debug("Skipping method " + method );
+				}
 			}
  		}
 		

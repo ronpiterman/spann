@@ -32,11 +32,24 @@ public class MapArgumentResolver extends HashMap<Class<?>,Object> implements Res
 
 	private static final long serialVersionUID = 1L;
 	
+	private boolean autoResolveEnums;
+	
 	public MapArgumentResolver() {
+		this( true );
+	}
+	
+	public MapArgumentResolver( boolean autoResolveEnums ) {
+		this.autoResolveEnums = autoResolveEnums;
 		initTypes();
 	}
 	
 	public Object resolve(Class<?> param) {
+		if ( autoResolveEnums && Enum.class.isAssignableFrom( param ) ) {
+			if ( param.getEnumConstants().length > 0 )
+				return param.getEnumConstants()[0];
+			else
+				return DaoTestSupport.NULL;
+		}
 		return get( param );
 	}
 	

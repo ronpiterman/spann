@@ -92,7 +92,6 @@ public abstract class BaseTestMetadata { //implements ITest {
         }
         
         ClassMetadata metadata = store.getByClassname( className, 0 );
-        System.out.println( metadata );
         return metadata;
     }
 

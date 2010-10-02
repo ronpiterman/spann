@@ -20,9 +20,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
+
+import org.springframework.orm.jpa.JpaCallback;
+
 import com.masetta.spann.spring.util.Factory;
 
-public class DaoMethodInvoker  {
+public class DaoMethodInvoker implements JpaCallback {
 	
 	private final Class<?> daoClass;
 	
@@ -38,6 +43,11 @@ public class DaoMethodInvoker  {
 		this.daoMethod = daoMethod;
 		this.dao = dao;
 		this.arguments = arguments;
+	}
+	
+	public Object doInJpa(EntityManager em) throws PersistenceException {
+		invoke();
+		return null;
 	}
 
 	public void invoke() {

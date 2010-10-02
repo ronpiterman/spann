@@ -40,7 +40,6 @@ public final class SpannLogFactory {
 	}
 
     public static SpannLog getLog(String name) {
-    	System.out.println(name);
         try {
             return Slf4JLogFactory.createLog(name);
         } catch (Throwable t) {
