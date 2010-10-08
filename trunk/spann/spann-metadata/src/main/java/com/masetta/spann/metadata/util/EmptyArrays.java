@@ -49,6 +49,9 @@ public final class EmptyArrays {
     /** Constant <code>INT={}</code> */
     public static final int[] INT = {};
     
+    /** Constant <code>INTEGER={}</code> */
+    public static final Integer[] INTEGER = {};
+    
     /** Constant <code>LONG={}</code> */
     public static final long[] LONG = {};
     

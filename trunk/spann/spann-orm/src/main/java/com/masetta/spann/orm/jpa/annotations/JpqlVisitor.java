@@ -62,7 +62,7 @@ public class JpqlVisitor extends AbstractGenericReplacerAnnotationVisitor {
 				.set( NamedQueryFactory.ENTITY_MANAGER_SUPPORT_PROPERTY , dao )
 				.addFinal(); 
 			
-			GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( 
+			GenericMethodReplacerSupport.addCallContextChainFactoryCallback( 
 					callContextVisitorsFactoryBean, 0, new ConsumeHandler( argsToConsume ) );
 		} else {
 			h = context.builder( metadata, 
