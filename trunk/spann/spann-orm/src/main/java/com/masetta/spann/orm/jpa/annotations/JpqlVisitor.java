@@ -51,12 +51,15 @@ public class JpqlVisitor extends AbstractGenericReplacerAnnotationVisitor {
 		String query = path.getAttribute( 0, String.class, "value", false );
 		MessageFormat format = createMessageFormat( query ) ;
 		
+		BeanDefinitionHolder dao = DaoVisitor.getDao( context , metadata );
+		
 		BeanDefinitionHolder h = null;
 		if ( format != null ) {
 			int[] argsToConsume = getMessageArguments( format );
 			h = context.builder( metadata, 
 					JpqlDynamicQueryFactory.class.getCanonicalName() , path )
 				.set( JpqlDynamicQueryFactory.QUERY_PROPERTY, query )
+				.set( NamedQueryFactory.ENTITY_MANAGER_SUPPORT_PROPERTY , dao )
 				.addFinal(); 
 			
 			GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( 
@@ -65,6 +68,7 @@ public class JpqlVisitor extends AbstractGenericReplacerAnnotationVisitor {
 			h = context.builder( metadata, 
 					JpqlSimpleQueryFactory.class.getCanonicalName() , path )
 					.set( NamedQueryFactory.QUERY_PROPERTY, query )
+					.set( NamedQueryFactory.ENTITY_MANAGER_SUPPORT_PROPERTY , dao )
 					.addFinal();
 		}
 		

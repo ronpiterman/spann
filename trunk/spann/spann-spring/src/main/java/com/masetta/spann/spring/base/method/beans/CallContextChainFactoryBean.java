@@ -110,6 +110,9 @@ public class CallContextChainFactoryBean<T> implements FactoryBean , CallContext
 	}
 
 	public void afterPropertiesSet() throws Exception {
+		if ( log.isDebugEnabled() ) {
+			log.debug( this.callbacks );
+		}
 		for ( Handler<CallContextChainBuilder<T>> c : callbacks ) {
 			c.handle( this );
 		}

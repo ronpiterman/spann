@@ -18,7 +18,11 @@ package com.masetta.spann.orm.jpa.test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
@@ -53,7 +57,7 @@ public class DaoMethodInvoker implements JpaCallback {
 	public void invoke() {
 		try {
 			Object[] args = process( arguments );
-			daoMethod.invoke( dao, arguments );
+			daoMethod.invoke( dao, args );
 		} catch (IllegalArgumentException e) {
 			throw new RuntimeException( e );
 		} catch (IllegalAccessException e) {
@@ -66,9 +70,35 @@ public class DaoMethodInvoker implements JpaCallback {
 	private Object[] process(Object[] a) {
 		Object[] resolved = new Object[a.length];
 		for ( int i = 0; i < a.length; i++ ) {
-			resolved[i] = ( a[i] instanceof Factory ) ? ((Factory<?>)a[i]).create() : a[i];
+			resolved[i] = resolve( a[i] );
 		}
 		return resolved;
+	}
+
+	private Object resolve(Object object) {
+		if ( object instanceof Factory ) {
+			return ((Factory<?>)object).create();
+		}
+		else if ( object instanceof Collection ) {
+			return resolveCollection( (Collection<?>) object);
+		}
+		else {
+			return object;
+		}
+	}
+
+	private Object resolveCollection(Iterable<?> i) {
+		Collection<Object> c;
+		if ( i instanceof List ) {
+			c = new ArrayList<Object>();
+		}
+		else c = new HashSet<Object>();
+		
+		for ( Object o : i ) {
+			c.add( resolve( o ) );
+		}
+		
+		return c;
 	}
 
 	public String toString() {

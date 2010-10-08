@@ -75,6 +75,10 @@ public interface ScanContext {
      * Other visitor can later retrieve the BDH either by metadata and role, 
      * or by scope and class name.
      * 
+     * @param bdh the {@link BeanDefinitionHolder} to attach
+     * @param metadata the current metadata
+     * @param scope the scope to attach to, or null for global scope.
+     * @param role the role to attach to.
      * 
      */
     void attach( BeanDefinitionHolder bdh, Metadata metadata , Artifact attachScope, String role );

@@ -20,7 +20,6 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import javax.persistence.Query;
-import javax.sql.rowset.CachedRowSet;
 
 import com.masetta.spann.orm.jpa.support.QueryCount;
 import com.masetta.spann.spring.base.method.beans.GenericMethodReplacer;

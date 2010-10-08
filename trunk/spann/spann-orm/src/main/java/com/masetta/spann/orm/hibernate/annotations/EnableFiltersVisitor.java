@@ -37,7 +37,7 @@ import com.masetta.spann.spring.MetadataVisitor;
 import com.masetta.spann.spring.ScanContext;
 import com.masetta.spann.spring.base.method.beans.GenericMethodReplacerSupport;
 
-public class FilterVisitor implements MetadataVisitor<MethodMetadata> {
+public class EnableFiltersVisitor implements MetadataVisitor<MethodMetadata> {
 
 	private static final String FILTER_ACTIVATIONS = FilterActivations.class.getCanonicalName();
 	private static final String FILTER_LIST_HANDLER = FilterListEnablerChainBuilderHandler.class.getCanonicalName();
@@ -60,7 +60,8 @@ public class FilterVisitor implements MetadataVisitor<MethodMetadata> {
 			for ( AnnotationMetadata enableFilter : enableFilters ) {
 				activations.add( createFilterActivation( enableFilter ) );
 			}
-			addHandler(metadata, context, DYNAMIC_FILTER_HANDLER, dao, activations);
+			if ( ! activations.isEmpty() )
+				addHandler(metadata, context, DYNAMIC_FILTER_HANDLER, dao, activations);
 		}
 	}
 

@@ -48,4 +48,9 @@ public class DynamicFilterEnablerChainBuilderHandler implements Handler<CallCont
 		builder.addAndConsume( new DynamicFilterEnabler(entityManagerSupport, filters) );
 	}
 
+	@Override
+	public String toString() {
+		return "DynamicFilterEnablerChainBuilderHandler [filters=" + filters + "]";
+	}
+	
 }

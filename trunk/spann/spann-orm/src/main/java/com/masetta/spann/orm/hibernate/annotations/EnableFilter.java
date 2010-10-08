@@ -27,7 +27,7 @@ import com.masetta.spann.spring.core.annotations.Visitor;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({})
-@Visitor(value=FilterVisitor.class,order=Order.AFTER_CREATE)
+@Visitor(value=EnableFiltersVisitor.class,order=Order.AFTER_CREATE)
 @DaoMethod
 @Documented
 public @interface EnableFilter {

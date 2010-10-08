@@ -21,11 +21,13 @@ import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import com.masetta.spann.metadata.common.Artifact;
 import com.masetta.spann.metadata.core.AnnotationPath;
 import com.masetta.spann.metadata.core.ClassMetadata;
+import com.masetta.spann.metadata.core.MethodMetadata;
 import com.masetta.spann.metadata.core.support.ClassMetadataSupport;
 import com.masetta.spann.orm.jpa.beans.BaseDao;
 import com.masetta.spann.spring.ScanContext;
 import com.masetta.spann.spring.base.AnnotationPathMetadataVisitor;
 import com.masetta.spann.spring.core.visitor.DefSupport;
+import com.masetta.spann.spring.core.visitor.VisitorSupport;
 import com.masetta.spann.spring.exceptions.IllegalConfigurationException;
 
 public class DaoVisitor extends AnnotationPathMetadataVisitor<ClassMetadata> {
@@ -48,6 +50,11 @@ public class DaoVisitor extends AnnotationPathMetadataVisitor<ClassMetadata> {
 					"No generic argument specified for BaseDao<E,PK> - is the class / interface extending BaseDao?" );
 		}
 		DefSupport.setProperty( dao, "entityType" , entity.getName() );
+		
+	}
+
+	public static BeanDefinitionHolder getDao(ScanContext context, MethodMetadata metadata) {
+		return context.getAttachedBean(metadata, Artifact.CLASS, "main" );
 	}
 
 }

@@ -60,17 +60,23 @@ public final class GenericMethodReplacerSupport {
 				CallContextChainFactoryBean.class.getCanonicalName() , path )
 				.addConstructorArgument( metadata.getParameters().size() )
 				.set( CallContextChainFactoryBean.CALLBACKS_PROPERTY, new ManagedList() )
+				.setBeanName( beanName(metadata, "#chain"))
 				.attach( Artifact.METHOD , CONTEXT_VISITORS_FACTORY_BEAN_ROLE );
 		
 		BeanDefinitionHolder replacer = context.builder( metadata, 
 				GenericMethodReplacer.class.getCanonicalName(), path )
 				.setReference( GenericMethodReplacer.CONTEXT_HANDLER_CHAIN_PROPERTY, callbacks.getBeanName() )
 				.set( GenericMethodReplacer.DESCRIPTION_PROPERTY , metadata.toString() + ":" + path.toString() )
+				.setBeanName( beanName(metadata , "" ) )
 				.attach( Artifact.METHOD , ReplaceVisitor.METHOD_REPLACER_ROLE );
 		
 		DefSupport.replaceMethod( methodOwnerBean, metadata, replacer.getBeanName() );
 		return replacer;
 		
+	}
+
+	private static String beanName(MethodMetadata metadata, String suffix) {
+		return metadata.getParent().getSimpleName()+"#"+metadata.getName() + suffix;
 	}
 	
 	

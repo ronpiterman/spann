@@ -43,4 +43,14 @@ public class BeanClass implements ReplacedMethods {
 		return "!";
 	}
 
+	@Replace( methodReplacerBean="methodReplacerBean")
+	public String overloaded(String string , Long l ) {
+		return "string";
+	}
+
+	@Replace( methodReplacerBean="methodReplacerBean2")
+	public String overloaded(String string , Integer i) {
+		return "long";
+	}
+
 }

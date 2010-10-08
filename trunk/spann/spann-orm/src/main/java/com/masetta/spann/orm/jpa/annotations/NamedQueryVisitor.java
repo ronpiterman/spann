@@ -46,9 +46,12 @@ public class NamedQueryVisitor extends AbstractGenericReplacerAnnotationVisitor 
 			name = getDefaultName( metadata );
 		}
 		
+		BeanDefinitionHolder dao = DaoVisitor.getDao( context , metadata );
+		
 		BeanDefinitionHolder h = 
 			context.builder( metadata, NamedQueryFactory.class.getCanonicalName() , path )
 			.set( NamedQueryFactory.QUERY_PROPERTY, name )
+			.set( NamedQueryFactory.ENTITY_MANAGER_SUPPORT_PROPERTY , dao )
 			.addFinal();
 		
 		GenericMethodReplacerSupport.setCallContextFactory( methodReplacer, h );

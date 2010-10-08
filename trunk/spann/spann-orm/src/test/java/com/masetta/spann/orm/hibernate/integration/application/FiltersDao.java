@@ -16,13 +16,19 @@
 
 package com.masetta.spann.orm.hibernate.integration.application;
 
+import java.util.List;
+
 import com.masetta.spann.orm.hibernate.annotations.EnableFilter;
 import com.masetta.spann.orm.hibernate.annotations.EnableFilters;
 import com.masetta.spann.orm.hibernate.annotations.FilterParam;
 import com.masetta.spann.orm.hibernate.support.FilterActivations;
 import com.masetta.spann.orm.jpa.annotations.ByMethodName;
 import com.masetta.spann.orm.jpa.annotations.Dao;
+import com.masetta.spann.orm.jpa.annotations.DaoMethod;
+import com.masetta.spann.orm.jpa.annotations.DaoMethod.Op;
 import com.masetta.spann.orm.jpa.annotations.Jpql;
+import com.masetta.spann.orm.jpa.annotations.NamedParameter;
+import com.masetta.spann.orm.jpa.annotations.NamedQuery;
 import com.masetta.spann.orm.jpa.beans.BaseDao;
 import com.masetta.spann.orm.jpa.integration.application.Author;
 
@@ -32,6 +38,23 @@ public interface FiltersDao extends BaseDao<Author, Long> {
 	@EnableFilters
 	@ByMethodName
 	Author findByName( String name , FilterActivations fa );
+	
+	/**
+	 * Returns product statistics related to a given contributor.
+	 * The statistic is grouped by product type and contributor role 
+	 * and analyses the contribution of the given contributor to different
+	 * product types and with different roles.
+	 * 
+	 * @param contributorId
+	 * @return
+	 * @see ContributorProductStatistic
+	 */
+	@DaoMethod(op=Op.FIND)
+	@NamedQuery
+	@NamedParameter("someid")
+	@EnableFilters
+	List<Author> getAuthors( Long someId , FilterActivations filters );
+	
 	
 	@EnableFilters({@EnableFilter(name="age",parameters=@FilterParam(name="age",index=1))})
 	@Jpql("FROM Author AS e WHERE e.name = ?")
