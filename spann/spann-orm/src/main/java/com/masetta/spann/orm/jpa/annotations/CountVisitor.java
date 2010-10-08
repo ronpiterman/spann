@@ -72,7 +72,7 @@ public class CountVisitor extends AbstractGenericReplacerAnnotationVisitor {
 		DefSupport.setProperty(methodReplacer , CountMethodReplacer.COUNT_ARGUMENT_INDEX_PROPERTY,
 				countPositionIndex );
 		
-		GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( callContextVisitorsFactoryBean, 
+		GenericMethodReplacerSupport.addCallContextChainFactoryCallback( callContextVisitorsFactoryBean, 
 				0 , new ConsumeHandler( countPositionIndex ) );
 		
 	}

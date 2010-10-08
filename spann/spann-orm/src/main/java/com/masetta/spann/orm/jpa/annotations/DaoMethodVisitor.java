@@ -53,17 +53,16 @@ public class DaoMethodVisitor extends AnnotationPathMetadataVisitor<MethodMetada
 
 	private static final Pattern DETECT_UPDATE_PATTERN = Pattern.compile("^update[A-Z]");
 
-	private static final Resolver2<Object, Object, QueryCallContext> VOID_RESOLVER = 
-		new Resolver2<Object, Object, QueryCallContext>() {
-			public Object resolve(Object result,QueryCallContext ctx) {
-				return null;
-			}
-		};
+	private static final Resolver2<Object, Object, QueryCallContext> VOID_RESOLVER = new Resolver2<Object, Object, QueryCallContext>() {
+		public Object resolve(Object result, QueryCallContext ctx) {
+			return null;
+		}
+	};
 
 	public DaoMethodVisitor() {
-		super( MethodMetadata.class, JPA, false, true );
+		super(MethodMetadata.class, JPA, false, true);
 	}
-	
+
 	@Override
 	protected void visit(MethodMetadata metadata, ScanContext context, AnnotationPath path) {
 
@@ -73,46 +72,39 @@ public class DaoMethodVisitor extends AnnotationPathMetadataVisitor<MethodMetada
 			resultTransformer = VOID_RESOLVER;
 
 		// create query factory
-		Resolver<? extends Object, QueryCallContext> queryExecutor = createQueryExecutor(metadata, path);
-		
-		BeanDefinitionHolder dao = context.getAttachedBean(metadata, Artifact.CLASS, "main" );
+		Resolver<? extends Object, QueryCallContext> queryExecutor = createQueryExecutor(metadata,
+				path);
+
+		BeanDefinitionHolder dao = context.getAttachedBean(metadata, Artifact.CLASS, "main");
 
 		BeanDefinitionHolder replacer = GenericMethodReplacerSupport.replaceMethod(
-				dao.getBeanDefinition(), metadata, context, path );
-		
-		GenericMethodReplacerSupport.setResultFactory( replacer, queryExecutor );
-		GenericMethodReplacerSupport.setResultTransformer( replacer, resultTransformer );
-		
-		BeanDefinitionHolder contextVisitorsFactoryBean = GenericMethodReplacerSupport.findContextVisitorsFactoryBean(metadata,
-				context, path);
-		
-		int queryPositionIndex = MethodMetadataSupport.findParameterByType( metadata, QueryPosition.class.getCanonicalName() , 0 );
+				dao.getBeanDefinition(), metadata, context, path);
+
+		GenericMethodReplacerSupport.setResultFactory(replacer, queryExecutor);
+		GenericMethodReplacerSupport.setResultTransformer(replacer, resultTransformer);
+
+		BeanDefinitionHolder contextVisitorsFactoryBean = GenericMethodReplacerSupport
+				.findCallContextChainFactoryBean(metadata, context, path);
+
+		int queryPositionIndex = MethodMetadataSupport.findParameterByType(metadata,
+				QueryPosition.class.getCanonicalName(), 0);
 		if ( queryPositionIndex > -1 ) {
-			GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( contextVisitorsFactoryBean, 0, 
-					new CallContextChainBuilderHandler<QueryCallContext>( 
-							new QueryPositionSetter( queryPositionIndex ) , queryPositionIndex ) );
+			GenericMethodReplacerSupport.addCallContextChainFactoryCallback(
+					contextVisitorsFactoryBean, 0,
+					new CallContextChainBuilderHandler<QueryCallContext>(new QueryPositionSetter(
+							queryPositionIndex), queryPositionIndex));
 		}
-		
+
 		// per default use positional parameters
-		GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( contextVisitorsFactoryBean, -1, 
-				QueryArgumentsHandlers.Positional.INSTANCE );
-		
+		GenericMethodReplacerSupport.addCallContextChainFactoryCallback(
+				contextVisitorsFactoryBean, -1, QueryArgumentsHandlers.Positional.INSTANCE);
+
 	}
 
-	private Resolver<? extends Object, QueryCallContext> createQueryExecutor(MethodMetadata metadata,
-			AnnotationPath path) {
-		Op op = path.getAttribute(0, EnumValue.class, DaoMethod.OP_ATTRIBUTE, true).resolve(
-				Op.class);
+	private Resolver<? extends Object, QueryCallContext> createQueryExecutor(
+			MethodMetadata metadata, AnnotationPath path) {
+		Op op = getOp( metadata , path );
 		switch ( op ) {
-			case DETECT:
-				String name = metadata.getName();
-				if ( DETECT_GET_PATTERN.matcher(name).find() ) {
-					return ResultStrategies.GET;
-				}
-				if ( DETECT_UPDATE_PATTERN.matcher(name).find() ) {
-					return ResultStrategies.UPDATE;
-				}
-				// else return find (so no switch break here...)
 			case FIND:
 				if ( isCollection(metadata.getReturnClass()) ) {
 					return ResultStrategies.FIND;
@@ -125,6 +117,24 @@ public class DaoMethodVisitor extends AnnotationPathMetadataVisitor<MethodMetada
 				return ResultStrategies.UPDATE;
 		}
 		throw new IllegalArgumentException("Unknown op value: " + op);
+	}
+
+	public static Op getOp(MethodMetadata metadata, AnnotationPath path) {
+		Op op = path.getAttribute(0, EnumValue.class, DaoMethod.OP_ATTRIBUTE, true).resolve(
+				Op.class);
+		switch ( op ) {
+			case DETECT:
+				String name = metadata.getName();
+				if ( DETECT_GET_PATTERN.matcher(name).find() ) {
+					return Op.GET;
+				}
+				if ( DETECT_UPDATE_PATTERN.matcher(name).find() ) {
+					return Op.UPDATE;
+				}
+				return Op.FIND;
+			default :
+				return op;
+		}
 	}
 
 	private boolean isCollection(ClassMetadata returnClass) {

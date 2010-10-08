@@ -80,14 +80,14 @@ public class EnableFiltersVisitor implements MetadataVisitor<MethodMetadata> {
 
 	private void addHandler(MethodMetadata metadata, ScanContext context, String classname,
 			Object... ctorArguments) {
-		BeanDefinitionHolder builder = GenericMethodReplacerSupport.findContextVisitorsFactoryBean( 
+		BeanDefinitionHolder builder = GenericMethodReplacerSupport.findCallContextChainFactoryBean( 
 				metadata, context , null ); 
 		BeanDefinitionBuilder bdb = context.builder( metadata, classname, this );
 		for ( Object ctorArg : ctorArguments )
 			bdb.addConstructorArgument( ctorArg );
 		
 		BeanDefinitionHolder callback = bdb.addFinal();
-		GenericMethodReplacerSupport.addCallContextVisitorsBuilderCallback( builder, 0 , 
+		GenericMethodReplacerSupport.addCallContextChainFactoryCallback( builder, 0 , 
 				new RuntimeBeanReference( callback.getBeanName() ) );
 	}
 

@@ -102,10 +102,10 @@ public final class GenericMethodReplacerSupport {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	public static void addCallContextVisitorsBuilderCallback( BeanDefinitionHolder callContextVisitorsFactoryBean,
+	public static void addCallContextChainFactoryCallback( BeanDefinitionHolder callContextChainFactoryBean,
 			int index , Object callback ) {
 		@SuppressWarnings("rawtypes")
-		List list = getCallbacks(callContextVisitorsFactoryBean);
+		List list = getCallbacks(callContextChainFactoryBean);
 		list.add( relIndex( index , list , 0 ) , callback );
 	}
 
@@ -156,7 +156,7 @@ public final class GenericMethodReplacerSupport {
 	}
 
 
-	public static BeanDefinitionHolder findContextVisitorsFactoryBean(MethodMetadata metadata,
+	public static BeanDefinitionHolder findCallContextChainFactoryBean(MethodMetadata metadata,
 			ScanContext context, AnnotationPath path) {
 		BeanDefinitionHolder contextVisitorsFactoryBean = 
 			VisitorSupport.getOrCreateAndAttach( context, metadata, Artifact.METHOD, 

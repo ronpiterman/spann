@@ -51,7 +51,7 @@ public abstract class AbstractGenericReplacerAnnotationVisitor extends Annotatio
 		}
 		
 		// find CallContextHandlerChainFactoryBean or create one
-		BeanDefinitionHolder contextVisitorsFactoryBean = GenericMethodReplacerSupport.findContextVisitorsFactoryBean(metadata,
+		BeanDefinitionHolder contextVisitorsFactoryBean = GenericMethodReplacerSupport.findCallContextChainFactoryBean(metadata,
 				context, path);
 		
 		DefSupport.setBeanReference( replacer, GenericMethodReplacer.CONTEXT_HANDLER_CHAIN_PROPERTY,
