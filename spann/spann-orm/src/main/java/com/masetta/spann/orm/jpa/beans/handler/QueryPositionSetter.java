@@ -45,4 +45,10 @@ public class QueryPositionSetter implements Chain<Object, QueryCallContext> {
 		return next.next( ctx );
 	}
 
+	@Override
+	public String toString() {
+		return "QueryPositionSetter [queryPositionArgumentIndex=" + queryPositionArgumentIndex
+				+ "]";
+	}
+	
 }

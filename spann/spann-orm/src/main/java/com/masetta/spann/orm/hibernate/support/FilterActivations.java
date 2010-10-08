@@ -37,5 +37,5 @@ public class FilterActivations extends ArrayList<FilterActivation> {
 	public FilterActivations(int initialCapacity) {
 		super(initialCapacity);
 	}
-
+	
 }

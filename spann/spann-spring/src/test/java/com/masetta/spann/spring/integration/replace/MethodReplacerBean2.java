@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-package com.masetta.spann.orm.jpa.beans.entitymanager;
+package com.masetta.spann.spring.integration.replace;
 
-import javax.persistence.EntityManager;
+import java.lang.reflect.Method;
 
-public interface EntityManagerSupport  {
+import org.springframework.beans.factory.support.MethodReplacer;
+import org.springframework.stereotype.Component;
 
-	EntityManager getEntityManager();
+@Component("methodReplacerBean2")
+public class MethodReplacerBean2 implements MethodReplacer{
+
+	public Object reimplement(Object obj, Method method, Object[] args) throws Throwable {
+		return "###-" + args[1];
+	}
 
 }

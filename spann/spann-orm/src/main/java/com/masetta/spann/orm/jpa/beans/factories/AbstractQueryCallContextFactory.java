@@ -23,11 +23,16 @@ import org.springframework.context.ApplicationContextAware;
 
 import com.masetta.spann.orm.jpa.beans.QueryCallContext;
 import com.masetta.spann.orm.jpa.beans.entitymanager.EntityManagerSupport;
+import com.masetta.spann.orm.jpa.beans.entitymanager.EntityManagerSupportImpl;
 import com.masetta.spann.spring.util.Resolver;
 
-public abstract class AbstractQueryCallContextFactory extends EntityManagerSupport implements ApplicationContextAware, Resolver<QueryCallContext,Object[]> {
+public abstract class AbstractQueryCallContextFactory implements Resolver<QueryCallContext,Object[]> {
 	
 	public static final String QUERY_PROPERTY = "query";
+	
+	public static final String ENTITY_MANAGER_SUPPORT_PROPERTY = "entityManagerSupport";
+	
+	private EntityManagerSupport entityManagerSupport;
 	
 	private String query;
 	
@@ -43,6 +48,14 @@ public abstract class AbstractQueryCallContextFactory extends EntityManagerSuppo
 
 	public String getQuery( Object[] param ) {
 		return query;
+	}
+	
+	protected final EntityManager getEntityManager() {
+		return this.entityManagerSupport.getEntityManager();
+	}
+	
+	public void setEntityManagerSupport(EntityManagerSupport entityManagerSupport) {
+		this.entityManagerSupport = entityManagerSupport;
 	}
 
 }

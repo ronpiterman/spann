@@ -18,10 +18,15 @@ package com.masetta.spann.orm.jpa.beans;
 
 import java.io.Serializable;
 
+import javax.persistence.EntityManager;
+
 import com.masetta.spann.orm.jpa.beans.entitymanager.EntityManagerSupport;
+import com.masetta.spann.orm.jpa.beans.entitymanager.EntityManagerSupportImpl;
 
 
-public class BaseDaoImpl<T,PK extends Serializable> extends EntityManagerSupport implements BaseDao<T,PK>{
+public class BaseDaoImpl<T,PK extends Serializable> extends EntityManagerSupportImpl implements BaseDao<T,PK>{
+	
+	private EntityManagerSupport entityManagerSupport;
 	
 	private Class<T> entityType;
 
@@ -49,5 +54,8 @@ public class BaseDaoImpl<T,PK extends Serializable> extends EntityManagerSupport
 		this.entityType = entityType;
 	}
 
+	public void setEntityManagerSupport(EntityManagerSupport entityManagerSupport) {
+		this.entityManagerSupport = entityManagerSupport;
+	}
 	
 }

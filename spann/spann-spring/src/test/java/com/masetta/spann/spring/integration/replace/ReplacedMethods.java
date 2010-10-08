@@ -26,5 +26,4 @@ public interface ReplacedMethods {
 	
 	String notReplacedNotImplemented( String string , int i , float f );
 
-
 }

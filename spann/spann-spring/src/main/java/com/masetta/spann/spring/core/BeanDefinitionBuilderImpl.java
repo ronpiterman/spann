@@ -98,7 +98,7 @@ public class BeanDefinitionBuilderImpl implements BeanDefinitionBuilder {
 			generateBeanName();
 		}
 		else {
-			this.beanDefinitionHolder = new BeanDefinitionHolder( beanDefinition, name );
+			this.beanDefinitionHolder = new BeanDefinitionHolder( beanDefinition, scanContext.generateBeanName( name ) );
 		}
 		return this;
 	}

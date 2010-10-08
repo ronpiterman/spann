@@ -18,7 +18,9 @@ package com.masetta.spann.orm.jpa.beans;
 
 import java.io.Serializable;
 
-public interface BaseDao<T,PK extends Serializable> {
+import com.masetta.spann.orm.jpa.beans.entitymanager.EntityManagerSupport;
+
+public interface BaseDao<T,PK extends Serializable> extends EntityManagerSupport {
 	
 	T find( PK id );
 	

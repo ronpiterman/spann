@@ -64,6 +64,12 @@ public class TestReplace extends BaseIntegrationTest {
 			{ BeanInterface.class}
 		};
 	}
-
+	
+	@Test
+	public void testOverloaded() {
+		BeanClass bean = assertSingleBeanByType( BeanClass.class,  null );
+		Assert.assertEquals( bean.overloaded( "12" , 12) , "###-12" );
+		Assert.assertEquals( bean.overloaded( "12" , 12l ) , "12" );
+	}
 
 }

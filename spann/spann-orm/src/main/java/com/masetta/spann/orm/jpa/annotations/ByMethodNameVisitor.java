@@ -52,6 +52,8 @@ public class ByMethodNameVisitor extends AbstractGenericReplacerAnnotationVisito
 		ClassMetadata entity = ClassMetadataSupport.findTypeParameterCapture( (ClassMetadata) metadata.getParent(),
 				BaseDao.class.getCanonicalName(), 0 );
 		
+		BeanDefinitionHolder dao = DaoVisitor.getDao( context , metadata );
+		
 		MethodNameJpqlGenerator g = new MethodNameJpqlGenerator( metadata.getName(), 
 				StringUtils.unqualify( entity.getName() ) , null );
 		try {
@@ -60,7 +62,8 @@ public class ByMethodNameVisitor extends AbstractGenericReplacerAnnotationVisito
 			
 			BeanDefinitionHolder factory = context.builder(metadata, 
 					JpqlSimpleQueryFactory.class.getCanonicalName() , path )
-					.set( "query", jpql )
+					.set( JpqlSimpleQueryFactory.QUERY_PROPERTY, jpql )
+					.set( JpqlSimpleQueryFactory.ENTITY_MANAGER_SUPPORT_PROPERTY , dao )
 					.addFinal();
 				
 			GenericMethodReplacerSupport.setCallContextFactory(methodReplacer, 

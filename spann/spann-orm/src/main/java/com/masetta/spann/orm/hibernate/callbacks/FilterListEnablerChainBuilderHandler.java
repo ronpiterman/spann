@@ -39,4 +39,9 @@ public class FilterListEnablerChainBuilderHandler implements Handler<CallContext
 		builder.addAndConsume( new FilterListEnabler(entityManagerSupport, argumentIndex ) , argumentIndex );
 	}
 
+	@Override
+	public String toString() {
+		return "FilterListEnablerChainBuilderHandler [argumentIndex=" + argumentIndex + "]";
+	}
+	
 }

@@ -56,4 +56,9 @@ public class FilterActivation implements Serializable {
 			return parameters.entrySet();
 	}
 
+	@Override
+	public String toString() {
+		return "FilterActivation [name=" + name + ", parameters=" + parameters + "]";
+	}
+	
 }

@@ -378,7 +378,7 @@ public class ClassPathScanner implements ResourceLoaderAware {
 		}
 
 		private boolean nameAvailable( String name ) {
-		    return ! registry.isNameTaken( name ) && isBeanNameAvailable( name );
+		    return (! registry.isNameTaken( name )) && isBeanNameAvailable( name );
 		}
 
 		private String beanName(String baseName, String suffix) {
@@ -480,7 +480,8 @@ public class ClassPathScanner implements ResourceLoaderAware {
     
     /**
      * A Wrapper around spring's {@link BeanNameGenerator} and Spring's {@link BeanDefinitionRegistry}.
-     * Used to isolate the scan from the registry, to make tests simpler.
+     * 
+     * Used to isolate the scan from the registry.
      * @author Ron Piterman    
      */
     public static interface Registry {

@@ -25,11 +25,24 @@ import java.lang.annotation.Target;
 import com.masetta.spann.spring.core.annotations.Order;
 import com.masetta.spann.spring.core.annotations.Visitor;
 
+/**
+ * Execute a named query.
+ * The name of the query may be given; the default name is
+ * "{entity-name}.{method-name}".
+ * 
+ * @author Ron Piterman
+ *
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD,ElementType.ANNOTATION_TYPE})
 @Visitor(value=NamedQueryVisitor.class,order=Order.AFTER_CREATE)
 @DaoMethod
 @Documented
 public @interface NamedQuery {
+	
+	/**
+	 * The name of the named query to execute.
+	 * @return
+	 */
 	String value() default "";
 }

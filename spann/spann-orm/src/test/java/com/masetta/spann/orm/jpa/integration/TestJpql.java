@@ -16,6 +16,7 @@
 
 package com.masetta.spann.orm.jpa.integration;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -241,6 +242,22 @@ public class TestJpql extends BaseIntegrationTest {
 	//	@Jpql("UPDATE Author SET name = :name WHERE id = :id")
 	//	@NamedParameter({"name","id"})
 	//	public void setNameById( String name , Long id );
+	
+	@Test
+	public void testMethodNameOverride() {
+		List<?> result = new ArrayList();
+		expectJpqlPositional( "A", null, result, 12l );
+		replay();
+		List actual = this.authorDaoJpql.findA( 12l );
+		verify();
+		clearMocks();
+		
+		expectJpqlPositional( "a", null, result, "12" );
+		replay();
+		actual = this.authorDaoJpql.findA( "12" );
+		verify();
+		
+	}
 
 
 	public void setAuthorDao2(AuthorDaoJpql authorDaoJpql) {
