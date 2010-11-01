@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.masetta.spann</groupId>
@@ -9,29 +10,6 @@
 	<name>spann-parent</name>
 	<description>Parent POM for spann
 	</description>
-	<distributionManagement>
-	   <repository>
-	       <id>masetta-oss-nexus-repository</id>
-	       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-	   </repository>
-	   <snapshotRepository>
-	       <id>masetta-oss-nexus-snapshots-repository</id>
-	       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-	   </snapshotRepository>
-	</distributionManagement>
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt
-			</url>
-			<distribution>repo</distribution>
-			<comments>A business-friendly OSS license</comments>
-		</license>
-	</licenses>
-	<issueManagement>
-		<url>http://code.google.com/p/spann/issues/list
-		</url>
-	</issueManagement>
 	<pluginRepositories>
 		<pluginRepository>
 			<id>mc-release</id>
@@ -184,6 +162,43 @@
 	<properties>
 		<asm-version>2.2.3</asm-version>
 	</properties>
+	<scm>
+		<url>http://code.google.com/p/spann/source/checkout/trunk</url>
+	</scm>
+	<distributionManagement>
+        <repository>
+            <id>masetta-oss-nexus-repository</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <id>masetta-oss-nexus-snapshots-repository</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <site>
+            <id>masetta.org</id>
+            <url>ftp://srv3.sysproserver.de/html/spann/site</url>
+        </site>
+    </distributionManagement>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt
+            </url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+    <issueManagement>
+        <url>http://code.google.com/p/spann/issues/list</url>
+    </issueManagement>
+    <developers>
+        <developer>
+            <id>ron.piterman</id>
+            <name>Ron Piterman</name>
+            <email>ron (dot) piterman (at) masetta (dot) com</email>
+            <organizationUrl>http://www.masetta.com</organizationUrl>
+        </developer>
+    </developers>
 	<profiles>
 		<profile>
 			<id>spring2.5</id>
@@ -208,30 +223,33 @@
 			</properties>
 		</profile>
 		<profile>
-            <id>release-sign-artifacts</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<configuration>
+									<passphrase>${pgp.passphase}</passphrase>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 </project>
