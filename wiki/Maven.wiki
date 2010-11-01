@@ -27,7 +27,7 @@ To use spann in a maven project, use the following settings
       <!--  <artifactId>spann-metadata</artifactId> -->
       <!--  <artifactId>spann-spring</artifactId> -->
       <!--  <artifactId>spann-orm</artifactId> -->
-        <version>0.1.0</version>
+        <version>0.1.1</version>
     </dependency>
   
   </dependencies>
