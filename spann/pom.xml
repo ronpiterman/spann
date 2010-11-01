@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.masetta.spann</groupId>
@@ -23,8 +24,6 @@
             scm:svn:https://spann.googlecode.com/svn/trunk
         </developerConnection>
 		<tag>HEAD</tag>
-		<url>http://code.google.com/p/spann/source/checkout/trunk
-        </url>
 	</scm>
 	<build>
 		<plugins>
@@ -97,10 +96,6 @@
 			<id>masetta-oss-nexus-snapshots-repository</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
-		<site>
-			<id>masetta.org</id>
-			<url>ftp://srv3.sysproserver.de/html/spann/site</url>
-		</site>
 	</distributionManagement>
 
 </project>
