@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>spann-parent</artifactId>
 		<groupId>com.masetta.spann</groupId>
-		<version>0.1.1-SNAPSHOT</version>
+		<version>0.1.1</version>
 		<relativePath>../spann-parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>spann-spring</artifactId>
@@ -33,7 +33,7 @@
 	   <dependency>
             <groupId>com.masetta.spann</groupId>
             <artifactId>spann-metadata</artifactId>
-            <version>0.1.1-SNAPSHOT</version>
+            <version>0.1.1</version>
         </dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
