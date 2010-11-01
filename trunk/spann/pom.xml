@@ -17,13 +17,13 @@
 	</modules>
 	<scm>
 		<connection>
-            scm:svn:http://spann.googlecode.com/svn/tags/spann-0.1.0
+            scm:svn:http://spann.googlecode.com/svn/trunk
         </connection>
 		<developerConnection>
-            scm:svn:https://spann.googlecode.com/svn/tags/spann-0.1.0
+            scm:svn:https://spann.googlecode.com/svn/trunk
         </developerConnection>
 		<tag>HEAD</tag>
-		<url>http://code.google.com/p/spann/source/checkout/tags/spann-0.1.0
+		<url>http://code.google.com/p/spann/source/checkout/trunk
         </url>
 	</scm>
 	<build>
