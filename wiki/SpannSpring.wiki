@@ -69,12 +69,12 @@ A Minimal configuration as a spring bean would be:
 
 Spann component scan supports the following properties / attributes:
 
-|| *xml schema attribute* || *( bean property )* || *detail* ||
-|| base-package || ( basePackagesNames ) || comma separated list of package names to scan. All packages under the given packages will also be scanned recursivley. ||
+|| *xml schema attribute* || _* bean property *_ || *detail* ||
+|| base-package || _basePackagesNames_ || comma separated list of package names to scan. All packages under the given packages will also be scanned recursivley. ||
 || scoped-proxy-resolver || _scopeProxyModeResolver_ || a full qualified class name of a ScopeProxyModeResolver implementation. Consult spring documentation for details || 
-|| scoped-proxy-mode || -none- || one of `'targetClass'`, `'interfaces'` or `'no'`. This is a convenience method to setup a "constant" resolver. ||
-|| resource-pattern || ( resourcePattern ) || Ant style resource pattern to be used under the given packages. The default pattern is '**/*.class'. ||  
-||name-generator || (  ) || A full qualified class name ( A BeanNameGenerator implementation ) of a name generator to use for auto generating bean names. The default generator is conform to the spring default name generator. <br/>*Note* that this object will be "consulted", but spann will add '#n' to the generated bean names on demand to avoid conflicting bean names. || 
+|| scoped-proxy-mode || _-none-_|| one of `'targetClass'`, `'interfaces'` or `'no'`. This is a convenience method to setup a "constant" resolver. ||
+|| resource-pattern || _resourcePattern_ || Ant style resource pattern to be used under the given packages. The default pattern is '**/*.class'. ||  
+||name-generator || _ _  || A full qualified class name ( A BeanNameGenerator implementation ) of a name generator to use for auto generating bean names. The default generator is conform to the spring default name generator. <br/>*Note* that this object will be "consulted", but spann will add '#n' to the generated bean names on demand to avoid conflicting bean names. || 
 
 *Visitors*
 
