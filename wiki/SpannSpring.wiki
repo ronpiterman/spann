@@ -129,7 +129,7 @@ public class ImplementVisitor implements MetadataVisitor<ClassMetadata> {
 
 === Global vs. delegate `MetadataVisitor`===
 
-Note that spann uses the `SpannMetadata` interface to both configure global visitor and delegators of the
+Note that spann uses the `MetadataVisitor<T>` interface to both configure global visitor and delegators of the
 `DefaultVisitor`; these  two usecases should however be distinguished: 
 
 *Global visitors* (configured in xml) visit *every* class spann scans and visit only 
