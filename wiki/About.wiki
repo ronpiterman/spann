@@ -103,11 +103,12 @@ public interface UserDao extends BaseDao<User,Long> {
 
 * Synthetic adapters *
 
-  The following example may be very easily via the `@SyntheticAdapter` meta-annotation.
+  The following example can be very easily implemented using the `@SyntheticAdapter` meta-annotation.
 
-  It creates an adapter bean, implementing an abstract class or an interface, delegating
-  the abstract method to the annotated method, and optionaly using method signature 
-  to configure the adapter.
+  The `@SyntheticAdapter` Meta-Annotation is used to create an adapter bean, implementing an abstract class or an interface, to delegate
+  any call to the abstract method to the annotated method. The adapter can even be automatically configured according to the method signature.
+
+  This is done without using aspects, thus avoids runtime overhead and bean initialization order conflicts.
   
   {{{
 @Component
