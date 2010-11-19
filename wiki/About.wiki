@@ -10,8 +10,9 @@ without (almost) any XML. It's target is to *reduce boilerplate code and configu
 _Spann_ can be seen as a counterpart API to the [http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/extensible-xml.html XML Schema extension API] 
 (introduced in Spring 2.0): while the latter simplifies XML configuration via XML Schemas 
 and allows creating complex bean structures with simple XML, _spann_ simplifies bean configuration  
-by using annotations or any other class metadata (classes, generics, fields, methods). Further, 
-the spann-API is very straightforward and requires practically no configuration to introduce
+by using annotations or any other class metadata (classes, generics, fields, methods). 
+
+The spann-API is very straightforward and requires practically no configuration to introduce
 new annotations: you just create the Annotation interface, implement the `MetadataVisitor` interface to process it and glue them together using the `@Visitor` annotation.
 
 Spann adds *meta programming* capabilities to the spring container without (almost) any bytecode engineering.
