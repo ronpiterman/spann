@@ -17,7 +17,7 @@ new annotations: you just create the Annotation interface, implement the `Metada
 
 Spann adds *meta programming* capabilities to the spring container without (almost) any bytecode engineering.
 
-*But is'nt there a native annotation support in spring?*
+== But is'nt there a native annotation support in spring? ==
 
 Spring's native annotation support is limited to very simple usecases. In spring 2.5, four 
 annotations are predefined for different types of beans (@Component, @Service, @Repository and @Controller).
