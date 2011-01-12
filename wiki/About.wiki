@@ -30,7 +30,7 @@ is very demanding and requires knowledge of container internals.
 = How it works : A bird's-eye view =
 
 Similar to spring's component scan, _spann_ scans the classpath for classes under selected packages
-(filtered by resource by name pattern) and creates *class metadata* objects. 
+(filtered by resource name pattern) and creates *class metadata* objects. 
 Instead of processing this metadata itself (like spring does), _spann_ passes this 
 metadata to *`MetadataVisitor`s*. Through the `ScanContext`, `MetadataVisitor`s can create arbitrary
 bean definitions.
