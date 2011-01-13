@@ -38,6 +38,12 @@ import com.masetta.spann.metadata.core.modifier.Access;
 import com.masetta.spann.metadata.core.modifier.ClassModifier;
 import com.masetta.spann.metadata.core.modifier.ClassType;
 import com.masetta.spann.metadata.core.modifier.Modifier;
+
+/**
+ * ClassMetadata implementation for java primitive types.
+ * @author Ron Piterman
+ *
+ */
 public final class PrimitiveClassMetadata implements ClassMetadata , ClassModifier {
 	
 	private final String name;

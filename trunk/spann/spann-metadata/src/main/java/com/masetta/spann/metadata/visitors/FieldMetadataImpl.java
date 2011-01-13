@@ -22,7 +22,7 @@ import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.FieldMetadata;
 import com.masetta.spann.metadata.core.GenericType;
 import com.masetta.spann.metadata.core.modifier.FieldModifier;
-import com.masetta.spann.metadata.util.EqualsBuilder;
+import com.masetta.spann.metadata.util.Equals;
 
 class FieldMetadataImpl extends AnnotatedElementMetadataImpl implements FieldMetadata , SignatureOwner {
     
@@ -43,9 +43,9 @@ class FieldMetadataImpl extends AnnotatedElementMetadataImpl implements FieldMet
 
     /** {@inheritDoc} */
     @Override
-    protected boolean equals(AbstractMetadataImpl obj, EqualsBuilder b) {
-        return super.equals(obj, b)
-            && b.eq( modifier.isStatic() , ((FieldMetadata)obj).getModifier().isStatic() );
+    protected boolean equalsInternal(AbstractMetadataImpl obj) {
+        return super.equalsInternal(obj)
+            && Equals.eq( modifier.isStatic() , ((FieldMetadata)obj).getModifier().isStatic() );
     }
 
     /**

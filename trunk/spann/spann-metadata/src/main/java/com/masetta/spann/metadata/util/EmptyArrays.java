@@ -25,46 +25,46 @@ public final class EmptyArrays {
 	
 	private EmptyArrays() {}
     
-    /** Constant <code>CLASS</code> */
+    /** Empty class array */
     public static final Class<?>[] CLASS = {};
 
-    /** Constant <code>OBJECT</code> */
+    /** Empty object array */
     public static final Object[] OBJECT = {};
 
-    /** Constant <code>BOOLEAN={}</code> */
+    /** Empty boolean array */
     public static final boolean[] BOOLEAN = {};
 
-	/** Constant <code>METHOD</code> */
+	/** Empty method array */
 	public static final Method[] METHOD = {};
 
-    /** Constant <code>SHORT={}</code> */
+    /** Empty short array */
     public static final short[] SHORT = {}; 
     
-    /** Constant <code>CHAR={}</code> */
+    /** Empty char array */
     public static final char[] CHAR = {};
     
-    /** Constant <code>BYTE={}</code> */
+    /** Empty byte array */
     public static final byte[] BYTE = {};
     
-    /** Constant <code>INT={}</code> */
+    /** Empty int array */
     public static final int[] INT = {};
     
-    /** Constant <code>INTEGER={}</code> */
+    /** Empty Integer array */
     public static final Integer[] INTEGER = {};
     
-    /** Constant <code>LONG={}</code> */
+    /** Empty long array */
     public static final long[] LONG = {};
     
-    /** Constant <code>FLOAT={}</code> */
+    /** Empty float array */
     public static final float[] FLOAT = {};
     
-    /** Constant <code>DOUBLE={}</code> */
+    /** Empty double array */
     public static final double[] DOUBLE = {};
     
-    /** Constant <code>STRING="{}"</code> */
+    /** Empty String array */
     public static final String[] STRING = {};
 
-	/** Constant <code>ENUM</code> */
+	/** Empty Enum array */
 	public static final Enum<?>[] ENUM = {};
     
 }

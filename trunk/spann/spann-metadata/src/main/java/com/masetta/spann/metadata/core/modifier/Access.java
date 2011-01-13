@@ -19,6 +19,12 @@
  */
 
 package com.masetta.spann.metadata.core.modifier;
+
+/**
+ * Represents different access levels of java artefacts : private, protected, default and public.
+ * 
+ * @author Ron Piterman
+ */
 public enum Access {
     
     PRIVATE,

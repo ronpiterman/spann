@@ -25,8 +25,10 @@ import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.orm.jpa.JpaCallback;
 
 import com.masetta.spann.spring.util.Factory;
@@ -50,19 +52,25 @@ public class DaoMethodInvoker implements JpaCallback {
 	}
 	
 	public Object doInJpa(EntityManager em) throws PersistenceException {
-		invoke();
+		try {
+			invoke();
+		}
+		catch ( InvocationTargetException e ) {
+			throw new RuntimeException( e );
+		}
 		return null;
 	}
 
-	public void invoke() {
+	public void invoke() throws NoResultException , IllegalArgumentException, InvocationTargetException {
 		try {
 			Object[] args = process( arguments );
 			daoMethod.invoke( dao, args );
-		} catch (IllegalArgumentException e) {
-			throw new RuntimeException( e );
 		} catch (IllegalAccessException e) {
 			throw new RuntimeException( e );
 		} catch (InvocationTargetException e) {
+			if ( ExceptionUtils.getRootCause( e ) instanceof NoResultException ) {
+				throw (NoResultException) ExceptionUtils.getRootCause( e );
+			}
 			throw new RuntimeException( e );
 		}
 	}
@@ -121,5 +129,5 @@ public class DaoMethodInvoker implements JpaCallback {
 	public Object[] getArguments() {
 		return arguments;
 	}
-
+	
 }

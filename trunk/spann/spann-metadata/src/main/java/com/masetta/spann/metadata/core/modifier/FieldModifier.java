@@ -19,19 +19,25 @@
  */
 
 package com.masetta.spann.metadata.core.modifier;
+
+/**
+ * Modifier of a java Field.
+ *  
+ * @author Ron Piterman
+ */
 public interface FieldModifier extends Modifier {
 
     /**
-     * <p>isVolatile</p>
-     *
-     * @return a boolean.
+     * Retrieve the volatile modifier of the field.
+     * 
+     * @return true if the field is marked volatile.
      */
     boolean isVolatile();
     
     /**
-     * <p>isTrasient</p>
-     *
-     * @return a boolean.
+     * Retrieve the transient modifier of the field.
+     * 
+     * @return true if the field is marked transient.
      */
     boolean isTrasient();
 

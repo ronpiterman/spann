@@ -29,7 +29,7 @@ import com.masetta.spann.metadata.core.Metadata;
 
 
 /**
- * Implementation of a factory for lazy loading rules.
+ * Implementation of LazyLoadingRulesFactory. Provides an API to define rules for lazy loading.
  *
  * @author Ron Piterman
  * @version $Id: $

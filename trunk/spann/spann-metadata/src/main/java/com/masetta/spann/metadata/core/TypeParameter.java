@@ -19,8 +19,8 @@ package com.masetta.spann.metadata.core;
 
 
 /**
- * A type parameter, such as <code>T</code> in the class declaration <code>class Foo&lt;T extends Bar> </code> 
- * or <code>V</code> in the method declaration <code>&lt;V> void getValue( ... ) {...}</code> 
+ * A type parameter, such as <code>T</code> in the <code>class Foo&lt;T extends Bar> </code> 
+ * or <code>V</code> in <code>&lt;V> void getValue( ... ) {...}</code> 
  */
 public interface TypeParameter extends TypeReference {
     

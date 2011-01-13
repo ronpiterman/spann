@@ -24,7 +24,7 @@ import com.masetta.spann.metadata.core.GenericCapture;
 import com.masetta.spann.metadata.core.modifier.ClassModifier;
 import com.masetta.spann.metadata.core.modifier.FieldModifier;
 import com.masetta.spann.metadata.core.modifier.MethodModifier;
-import com.masetta.spann.metadata.reader.ClassMetadataResolver;
+import com.masetta.spann.metadata.core.support.ClassMetadataResolver;
 import com.masetta.spann.metadata.reader.ClassReaderAdapter;
 import com.masetta.spann.metadata.reader.VisitorAdapter;
 

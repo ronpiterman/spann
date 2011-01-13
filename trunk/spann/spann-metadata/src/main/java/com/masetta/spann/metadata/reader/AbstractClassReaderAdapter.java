@@ -23,10 +23,22 @@ import com.masetta.spann.metadata.core.modifier.ClassModifier;
 import com.masetta.spann.metadata.core.modifier.FieldModifier;
 import com.masetta.spann.metadata.core.modifier.MethodModifier;
 
+/**
+ * Base class for implementing ClassReaderAdapter, implementing reuse of modifier.
+ * 
+ * @author Ron Piterman
+ */
 public abstract class AbstractClassReaderAdapter implements ClassReaderAdapter {
     
+	/**
+	 * Modifier cache.
+	 */
     private final Map<String,Object> modifiers = new HashMap<String, Object>();
     
+    /**
+     * {@inheritDoc}
+     * Caches modifier and delegates to the abstract createClassModifierInternal.
+     */
     public ClassModifier createClassModifier(int argument) {
         Object o = modifiers.get( "c" + argument );
         if ( o == null ) {
@@ -38,6 +50,10 @@ public abstract class AbstractClassReaderAdapter implements ClassReaderAdapter {
 
     protected abstract ClassModifier createClassModifierInternal(int argument);
 
+    /**
+     * {@inheritDoc}
+     * Caches modifier and delegates to the abstract createFieldModifierInternal.
+     */
     public FieldModifier createFieldModifier(int argument) {
         Object o = modifiers.get( "f" + argument );
         if ( o == null ) {
@@ -49,6 +65,10 @@ public abstract class AbstractClassReaderAdapter implements ClassReaderAdapter {
 
     protected abstract FieldModifier createFieldModifierInternal(int argument);
 
+    /**
+     * {@inheritDoc}
+     * Caches modifier and delegates to the abstract createMethodModifierInternal.
+     */
     public MethodModifier createMethodModifier(int argument) {
         Object o = modifiers.get( "m" + argument );
         if ( o == null ) {

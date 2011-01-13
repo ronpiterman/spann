@@ -16,12 +16,23 @@
 
 package com.masetta.spann.metadata.common;
 
+/**
+ * Resource-path to class-name conversion and vice versa.
+ * 
+ * @author Ron Piterman
+ */
 public final class ResourceUtil {
     
     private ResourceUtil() {}
     
-    public static String convertResourcePathToClassName(String name) {
-        return name.replaceAll( "/" , "." );
+    /**
+     * Convert the given path to a class name.
+     * 
+     * @param path a resource path
+     * @return
+     */
+    public static String convertResourcePathToClassName(String path) {
+        return path.replaceAll( "/" , "." );
     }
     
     public static String convertClassNameToPath(String className) {

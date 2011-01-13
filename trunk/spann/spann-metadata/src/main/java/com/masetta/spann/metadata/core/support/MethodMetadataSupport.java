@@ -28,6 +28,12 @@ import java.util.Set;
 import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.MethodMetadata;
 import com.masetta.spann.metadata.core.ParameterMetadata;
+
+/**
+ * Support methods for FieldMetadata.
+ * 
+ * @author Ron Piterman
+ */
 public abstract class MethodMetadataSupport {
 	
 	private MethodMetadataSupport() {}

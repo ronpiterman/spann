@@ -19,6 +19,12 @@
  */
 
 package com.masetta.spann.metadata.core.modifier;
+
+/**
+ * Represents the different class type used in java : class, interface, enum and annotation.
+ * 
+ * @author Ron Piterman
+ */
 public enum ClassType {
     
     CLASS,

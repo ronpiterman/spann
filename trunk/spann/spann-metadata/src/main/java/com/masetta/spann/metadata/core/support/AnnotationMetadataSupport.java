@@ -21,6 +21,7 @@
 package com.masetta.spann.metadata.core.support;
 
 import java.lang.reflect.Array;
+
 import java.util.List;
 
 import com.masetta.spann.metadata.core.AnnotatedElementMetadata;
@@ -29,6 +30,12 @@ import com.masetta.spann.metadata.core.AnnotationPath;
 import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.EnumValue;
 import com.masetta.spann.metadata.util.Predicate;
+
+/**
+ * Provides convenience methods for dealing with {@link AnnotationMetadata} objects.
+ * 
+ * @author Ron Piterman
+ */
 public abstract class AnnotationMetadataSupport {
 	
 	private AnnotationMetadataSupport() {}

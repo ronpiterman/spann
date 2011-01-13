@@ -29,7 +29,7 @@ import com.masetta.spann.metadata.core.MethodMetadata;
 import com.masetta.spann.metadata.core.ParameterMetadata;
 import com.masetta.spann.metadata.core.TypeParameter;
 import com.masetta.spann.metadata.core.modifier.MethodModifier;
-import com.masetta.spann.metadata.util.EqualsBuilder;
+import com.masetta.spann.metadata.util.Equals;
 import com.masetta.spann.metadata.util.Unmodifiable;
 
 /**
@@ -124,9 +124,9 @@ class MethodMetadataImpl extends AnnotatedElementMetadataImpl implements MethodM
 
     /** {@inheritDoc} */
     @Override
-    protected boolean equals(AbstractMetadataImpl obj, EqualsBuilder b) {
-        return super.equals(obj, b)
-            && b.eq( parameters , ((MethodMetadata)obj).getParameters() );
+    protected boolean equalsInternal(AbstractMetadataImpl obj) {
+        return super.equalsInternal(obj)
+            && Equals.eq( parameters , ((MethodMetadata)obj).getParameters() );
     }
 
     /**

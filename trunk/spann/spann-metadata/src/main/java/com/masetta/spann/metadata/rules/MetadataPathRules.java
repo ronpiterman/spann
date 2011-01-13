@@ -20,7 +20,7 @@ import com.masetta.spann.metadata.core.ArtifactPath;
 
 /**
  * Metadata path based rules engine to determine which artifact elements
- * are to be visited (and metadata created).
+ * are to be visited (and which metadata objects should be created).
  * 
  * @see MetadataPathRulesBuilder
  * 
@@ -31,9 +31,10 @@ public interface MetadataPathRules {
     /**
      * Retrieve the set of elements which need to be visited for the given path.
      * 
-     * The elements are sub elements of the last path element.
+     * The elements are sub elements of the last path artifact.
      * 
-     * @param path
+     * @param path the current path
+     * 
      * @return the 'ored' bits of all elements of the last artifact in the path
      *     which should be visited according to this rules object. 
      */

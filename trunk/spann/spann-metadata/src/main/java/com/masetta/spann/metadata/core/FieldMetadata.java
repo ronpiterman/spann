@@ -21,26 +21,34 @@
 package com.masetta.spann.metadata.core;
 
 import com.masetta.spann.metadata.core.modifier.FieldModifier;
+
+/**
+ * Represents the metadata of a field.
+ * 
+ * @author Ron Piterman
+ */
 public interface FieldMetadata extends Metadata , AnnotatedElementMetadata {
     
     /**
-     * <p>getFieldClass</p>
+     * Retrieve the type of the field.
      *
-     * @return the field's type metadata. For generic type infomration use {@link #getFieldType()}.
+     * @return the field's type metadata. 
+     * 
+     * @see #getFieldType() for generic signature information
      */
     ClassMetadata getFieldClass();
     
     /**
-     * <p>getFieldType</p>
+     * Retrieve the generic type of the field.
      *
-     * @return the generic signature of the field.
+     * @return the generic signature of the field represented by this metadata object.
      */
     GenericType getFieldType();
     
     /**
-     * Retrieve the field modifier.
+     * Retrieve the field's modifier.
      *
-     * @return a {@link com.masetta.spann.metadata.core.modifier.FieldModifier} object.
+     * @return the modifier of the field represented by this metadata object.
      */
     FieldModifier getModifier();
 

@@ -19,6 +19,8 @@
  */
 
 package com.masetta.spann.metadata.util;
+
+
 public interface Matcher<T> {
     
     /**
@@ -33,10 +35,10 @@ public interface Matcher<T> {
      * If multiple calls to {@link #matches(Object)} with the same argument will
      * always result in the same value.
      * <p>
-     * This should <b>not</b> indicate if the matcher is statefull but if it matches
+     * This should <b>not only</b> indicate if the matcher is statefull but also if it matches
      * against mutable or unmutable state of the T argument.
      *
-     * @return true if this matcher only matches against
+     * @return true if this matcher is stateless and only matches against
      *         <b>final state</b> of the given type object.
      */
     boolean isStatic();

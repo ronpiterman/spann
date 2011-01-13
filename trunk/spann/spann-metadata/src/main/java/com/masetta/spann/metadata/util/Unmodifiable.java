@@ -20,6 +20,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Manages two objects: an underlying mutable object, and an immutable instance which references
+ * 	the mutable but exposes only its state, preventing unwanted changes by external actors.
+ *  
+ * @author Ron Piterman
+ *
+ * @param <T>
+ */
 public class Unmodifiable<T> {
     
     private final T unmodifable;

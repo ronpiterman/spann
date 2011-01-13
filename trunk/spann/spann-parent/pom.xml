@@ -176,7 +176,7 @@
         </snapshotRepository>
         <site>
             <id>masetta.org</id>
-            <url>ftp://srv3.sysproserver.de/html/spann/site</url>
+            <url>ftp://srv3.sysproserver.de/html/spann/</url>
         </site>
     </distributionManagement>
     <licenses>

@@ -19,6 +19,12 @@
  */
 
 package com.masetta.spann.metadata.util;
+
+/**
+ * What should be used? slf4j? commons-logging? just another log wrapper...
+ * @author Ron Piterman
+ *
+ */
 public interface SpannLog {
     
     /**

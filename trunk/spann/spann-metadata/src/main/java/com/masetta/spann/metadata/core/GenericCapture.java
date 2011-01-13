@@ -16,12 +16,26 @@
 
 package com.masetta.spann.metadata.core;
 
+/**
+ * Types of generic capture: IS, EXTENDS and SUPER_OF
+ * 
+ * @author Ron Piterman
+ */
 public enum GenericCapture {
-    
+
+	/**
+	 * As in <code>List&lt;String></code>
+	 */
     IS,
     
+    /**
+     * As in <code>List&lt;? extends String></code>
+     */
     EXTENDS,
     
+    /**
+     * As in <code>List<&ltX super Foo></code>
+     */
     SUPER_OF
 
 }

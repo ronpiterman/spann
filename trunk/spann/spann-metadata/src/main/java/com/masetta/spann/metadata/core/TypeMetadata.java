@@ -29,7 +29,7 @@ import java.util.List;
  * For example, having
  * <code> public class Foo extends ArrayList&lt;String> {...} </code>,
  * Foo will be represented by ClassMetadata foo.
- * foo's {@link ClassMetadata#getSuperClass(boolean) superClass } will return a {@link TypeMetadata},
+ * foo's superClass will be represented by a {@link TypeMetadata},
  * with a single {@link TypeArgument} of {@link TypeParameter#getType() type} java.lang.String.
  *
  * @author Ron Piterman
@@ -45,7 +45,10 @@ public interface TypeMetadata extends ClassMetadata {
     ClassMetadata getOuterType();
     
     /**
-     * <p>getTypeArguments</p>
+     * The type arguments of this class.
+     * <br>
+     * Having <code>class Foo extends ArrayList&lt;String></code>, Foo's superClass will have
+     * a single TypeArgument with 'type' String.
      *
      * @return a {@link java.util.List} object.
      */

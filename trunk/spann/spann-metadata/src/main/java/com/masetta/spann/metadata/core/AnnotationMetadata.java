@@ -16,6 +16,15 @@
 
 package com.masetta.spann.metadata.core;
 
+/**
+ * Represents metadata of an annotation proxy.
+ * <p>
+ * A Main difference of AnnotationMetadata from the java API is that it can differentiate between
+ * annotation attributes which are explicitly set and those that are implicitly set by the
+ * annotation interface's default value.
+ * 
+ * @author Ron Piterman
+ */
 public interface AnnotationMetadata extends Metadata {
     
     /**

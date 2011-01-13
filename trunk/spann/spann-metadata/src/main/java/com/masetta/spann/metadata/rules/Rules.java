@@ -33,53 +33,54 @@ public final class Rules {
     private static final ArtifactElement[] EMPTY_AE = new ArtifactElement[0];
 
     /**
-     * Lazy loading rules: only what is needed is loaded.
+     * Lazy-loading rules: Lazy. Only what is needed is loaded.
      */
     public static final LazyLoadingRulesFactory LAZY_LAZY = new ImmutableFactory( new LazyLoadingRulesFactoryImpl() );
     
     /**
-     * Eager loading rules: when an artifact element is needed, everything loads.
+     * Layz-loading rules: Eager. When an artifact element is needed, everything loads.
      */
     public static final LazyLoadingRulesFactory LAZY_EAGER_ALL = createEager( true , true , true );
     
     /**
-     * Deep eager loading rules: when an artifact element is needed, it and all its sub artifacts (
+     * Layz-loading rules: Deep. when an artifact element is needed, it and all its sub artifacts (
      * e.g. annotations, signature ) are loaded.
      */
     public static final LazyLoadingRulesFactory LAZY_EAGER_DEEP = createEager( true , false , false );
     
     /**
-     * Flat eager loading rules: when an artifact is needed, all its siblings are loaded, including
+     * Lazy-loading rules: Flat eager. When an artifact is needed, all its siblings are loaded, including
      * other artifact elements (e.g. when a method is loaded, all other methods, fields, 
      * and class-annotations are loaded ).
      */
     public static final LazyLoadingRulesFactory LAZY_EAGER_FLAT = createEager( false , true , true );
     
     /**
-     * Flat eager loading rules with boundaries to same artifact type: when an artifact is loaded,
+     * Lazy-loading rules: Flat eager same type. Lazy loading rules with boundaries to same artifact type:
+     *  when an artifact is loaded,
      * all its siblings of the same artifact type are loaded. E.g. when a method is loaded
      * all other methods are loaded, but fields and class-annotations are ignored.
      */
     public static final LazyLoadingRulesFactory LAZY_EAGER_FLAT_SINGLE_ARTIFACT = createEager( false , false , true );
     
     /**
-     * Deep eager loading rules with siblings boundaries to same artifact type: when an element is loaded,
-     * all its siblings of the same type are loaded and all its sub elements. E.g. when a method is loaded
+     * Lazy-loading rules: Deep eager loading rules with siblings boundaries to same artifact type. When an element is loaded,
+     * all its siblings of the same artifact type are loaded and all its sub elements. E.g. when a method is loaded
      * all other methods are loaded, but fields and class-annotations are ignored. Also,
      * method annotations and parameter annotations are also loaded.
      */
     public static final LazyLoadingRulesFactory LAZY_EAGER_DEEP_SINGLE_ARTIFACT = createEager( true , false , true );
     
-    /** Constant <code>RULES_LAZY</code> */
+    /** Loading rules: Lazy. Only class is loaded. */
     public static final MetadataPathRules RULES_LAZY = creareRules( Artifact.CLASS , ArtifactElement.SELF );
     
-    /** Constant <code>RULES_CLASS_ANNOTATIONS</code> */
+    /** Loading rules: Quite lazy. Only class and its annotations are loaded. */
     public static final MetadataPathRules RULES_CLASS_ANNOTATIONS = creareRules( Artifact.CLASS , ArtifactElement.ANNOTATIONS );
 
-    /** Constant <code>RULES_CLASS_ALL</code> */
+    /** Loading rules: Quite eager. All elements of a class are loaded (annotations, fields, methods) */
     public static final MetadataPathRules RULES_CLASS_ALL = creareRules( Artifact.CLASS , ArtifactElement.ANNOTATIONS , ArtifactElement.FIELDS, ArtifactElement.METHODS );
     
-    /** Constant <code>RULES_EAGER</code> */
+    /** Loading rules: Eager. All elements are loaded: class, fields, methods , parameters and all their annotations */
     public static final MetadataPathRules RULES_EAGER = creareRules(
     		Artifact.CLASS , ArtifactElement.ANNOTATIONS , 
     		Artifact.FIELD, ArtifactElement.ANNOTATIONS ,

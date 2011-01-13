@@ -16,6 +16,11 @@
 
 package com.masetta.spann.metadata.core.modifier;
 
+/**
+ * Modifier of a Class.
+ * 
+ * @author Ron Piterman
+ */
 public interface ClassModifier extends Modifier {
     
     boolean isAbstract();
