@@ -21,9 +21,16 @@
 package com.masetta.spann.metadata.core;
 
 import java.util.HashMap;
+
 import java.util.Map;
 
 import com.masetta.spann.metadata.util.EmptyArrays;
+
+/**
+ * Usefull array constants of different empty arrays of Metadata interfaces, used internally.
+ * 
+ * @author Ron Piterman
+ */
 public final class EmptyMetadataArrays {
     
     /** Constant <code>CLASS_METADATA</code> */
@@ -40,10 +47,11 @@ public final class EmptyMetadataArrays {
     private EmptyMetadataArrays() {}
     
     /**
-     * <p>getEmptyArray</p>
+     * Retrieve an empty array of the given type.
      *
-     * @param componentType a {@link java.lang.Class} object.
-     * @return a {@link java.lang.Object} object.
+     * @param componentType the type to retrieve an empty array for.
+     * 
+     * @return an empty one dimensional array of the given type.
      */
     public static Object getEmptyArray( Class<?> componentType ) {
     	return EMPTY_ARRAYS.get( componentType );

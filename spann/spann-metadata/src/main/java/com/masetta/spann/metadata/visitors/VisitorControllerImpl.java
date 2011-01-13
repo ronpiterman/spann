@@ -38,7 +38,7 @@ import com.masetta.spann.metadata.common.RuntimeIOException;
 import com.masetta.spann.metadata.core.ArtifactPath;
 import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.Metadata;
-import com.masetta.spann.metadata.reader.ClassMetadataResolver;
+import com.masetta.spann.metadata.core.support.ClassMetadataResolver;
 import com.masetta.spann.metadata.reader.ClassReaderAdapter;
 import com.masetta.spann.metadata.reader.VisitorAdapter;
 import com.masetta.spann.metadata.rules.LazyLoadingRulesFactory;

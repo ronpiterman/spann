@@ -33,8 +33,9 @@ public abstract class FieldMetadataSupport {
 	 * Find the given field in the given class.
 	 * Superclass fields are not included in the search. 
 	 * 
-	 * @param cm class metadata
+	 * @param cm ClassMetadata which contains a field with the given name.
 	 * @param fieldname field name to find
+	 * 
 	 * @return the field with the given name of the given class, or null.
 	 */
 	public static FieldMetadata findField(ClassMetadata cm, String fieldname) {
@@ -45,7 +46,5 @@ public abstract class FieldMetadataSupport {
 				return fm;
 		return null;
 	}
-
-	
 
 }

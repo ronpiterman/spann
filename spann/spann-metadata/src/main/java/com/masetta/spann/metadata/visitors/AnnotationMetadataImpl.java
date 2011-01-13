@@ -25,7 +25,7 @@ import com.masetta.spann.metadata.core.AnnotatedElementMetadata;
 import com.masetta.spann.metadata.core.AnnotationMetadata;
 import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.EmptyMetadataArrays;
-import com.masetta.spann.metadata.util.EqualsBuilder;
+import com.masetta.spann.metadata.util.Equals;
 
 class AnnotationMetadataImpl extends AbstractMetadataImpl implements AnnotationMetadata {
     
@@ -131,10 +131,10 @@ class AnnotationMetadataImpl extends AbstractMetadataImpl implements AnnotationM
 	}
 
 	@Override
-	protected boolean equals(AbstractMetadataImpl obj, EqualsBuilder b) {
+	protected boolean equalsInternal(AbstractMetadataImpl obj ) {
 		final AnnotationMetadataImpl other = (AnnotationMetadataImpl)obj;
-		return super.equals(obj, b) && b.eq( this.index , other.index )
-			&& b.eq( this.parent , other.parent );
+		return super.equalsInternal(obj ) && Equals.eq( this.index , other.index )
+			&& Equals.eq( this.parent , other.parent );
 	}
 
 	public ClassMetadata getType() {

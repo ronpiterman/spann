@@ -18,10 +18,25 @@ package com.masetta.spann.metadata.core.modifier;
 
 public interface MethodModifier extends Modifier {
     
+	/**
+	 * Retrieve the synchronized modifier of the method.
+	 * 
+	 * @return true if the method is marked as synchronized.
+	 */
     boolean isSynchronized();
     
+    /**
+     * Retrieve the bridge modifier of the method.
+     * 
+     * @return true if the method is a bridge method.
+     */
     boolean isBridge();
 
+    /**
+     * Retrieve the abstract modifier of the method.
+     * 
+     * @return true if the method is abstract.
+     */
     boolean isAbstract();
 
 }

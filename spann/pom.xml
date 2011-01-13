@@ -94,6 +94,10 @@
 			<id>masetta-oss-nexus-snapshots-repository</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<site>
+            <id>masetta.org</id>
+            <url>ftp://srv3.sysproserver.de/html/spann/</url>
+        </site>
 	</distributionManagement>
 
 </project>

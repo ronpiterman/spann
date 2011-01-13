@@ -16,11 +16,19 @@
 
 package com.masetta.spann.metadata.core;
 
-
-
-
+/**
+ * Reference to a ClassMetadata, used as super interface of different generic metadata interface.
+ * 
+ * @author Ron Piterman
+ */
 public interface TypeReference {
     
+	/**
+	 * Retrieve the class metadata this Object references. The exact semantic
+	 * of the returned ClassMetadata is varying, depending on the sub-class extending this interface.
+	 * 
+	 * @return The ClassMetadata this object references.
+	 */
     ClassMetadata getType();
 
 }

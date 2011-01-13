@@ -21,6 +21,12 @@
 package com.masetta.spann.metadata.common;
 
 import java.net.URL;
+
+/**
+ * Implementation of Resource of resources specified by a path on the classpath.
+ * @author Ron Piterman
+ *
+ */
 public class ClasspathResource implements Resource {
     
     private final String path;
@@ -30,8 +36,9 @@ public class ClasspathResource implements Resource {
     /**
      * <p>Constructor for ClasspathResource.</p>
      *
-     * @param path a {@link java.lang.String} object.
-     * @param classLoader a {@link java.lang.ClassLoader} object.
+     * @param path the path to the resource.
+     * @param classLoader the ClassLoader that should be used to access the resource and to load
+     * 		the underlying class.
      */
     public ClasspathResource(String path, ClassLoader classLoader) {
         super();
@@ -40,27 +47,21 @@ public class ClasspathResource implements Resource {
     }
 
     /**
-     * <p>Getter for the field <code>path</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
+     * Retrieve the path to the resource.
      */
     public String getPath() {
         return path;
     }
 
     /**
-     * <p>Getter for the field <code>classLoader</code>.</p>
-     *
-     * @return a {@link java.lang.ClassLoader} object.
+     * {@inheritDoc}
      */
     public ClassLoader getClassLoader() {
         return classLoader;
     }
 
     /**
-     * <p>toUrl</p>
-     *
-     * @return a {@link java.net.URL} object.
+     * {@inheritDoc}
      */
     public URL toUrl() {
 		return this.classLoader.getResource( path );

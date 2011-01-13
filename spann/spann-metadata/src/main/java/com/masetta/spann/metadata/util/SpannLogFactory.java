@@ -25,6 +25,11 @@ import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Create a log, trying to use slf4j, commons-logging or juli.
+ * 
+ * @author Ron Piterman
+ */
 public final class SpannLogFactory {
 	
 	private static SpannLog log = getLog( SpannLogFactory.class );

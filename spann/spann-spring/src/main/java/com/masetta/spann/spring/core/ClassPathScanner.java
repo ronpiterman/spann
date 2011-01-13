@@ -203,7 +203,7 @@ public class ClassPathScanner implements ResourceLoaderAware {
      * <p>
      * This method does <i>not</i> register any beans, but rather leaves this up to the caller.
      * 
-     * @param registry a BeanNameRegistry, used to encapsulate this method from
+     * @param registry a BeanNameRegistry, used to decouple this method from
      * 	the spring bean definition registry.
      * 
      * @return a set of all BeanDefinitionHolder created during the scan.

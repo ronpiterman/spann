@@ -19,6 +19,12 @@
  */
 
 package com.masetta.spann.metadata.core;
+
+/**
+ * Represents an Enum value, used as an annotation attibute value.
+ * 
+ * @author Ron Piterman
+ */
 public class EnumValue {
     
     private final String value;
@@ -38,29 +44,30 @@ public class EnumValue {
     }
 
     /**
-     * <p>Getter for the field <code>value</code>.</p>
+     * Retrieve the value-name of this enum value object.
      *
-     * @return a {@link java.lang.String} object.
+     * @return the name of the enum constant represented by this enum value object.
      */
     public String getValue() {
         return value;
     }
 
     /**
-     * <p>Getter for the field <code>enumType</code>.</p>
+     * Retrieve the class metadata of the enum type represented by this value.
      *
-     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     * @return a ClassMetadata of the enum type to which the value represented by the object belongs.
      */
     public ClassMetadata getEnumType() {
         return enumType;
     }
     
     /**
-     * <p>resolve</p>
+     * Resolve this enum value to the java Enum object.
      *
-     * @param type a {@link java.lang.Class} object.
-     * @param <T> a T object.
-     * @return a T object.
+     * @param type the Enum Type, must be the same as the class represented by this
+     * value's enumType property.
+     * 
+     * @return the java enum value represented by this object.
      */
     public <T extends Enum<T>> T resolve( Class<T> type ) {
     	return Enum.valueOf( type, value ); 

@@ -19,6 +19,12 @@ package com.masetta.spann.metadata.rules;
 import com.masetta.spann.metadata.common.ArtifactElement;
 import com.masetta.spann.metadata.core.ArtifactPath;
 
+/**
+ * Create loading rules for a given path and element using arbitrary internal
+ * logic.
+ * 
+ * @author Ron Piterman
+ */
 public interface LazyLoadingRulesFactory {
     
     /**

@@ -21,6 +21,12 @@
 package com.masetta.spann.metadata.common;
 
 import java.net.URL;
+
+/**
+ * Implementation of {@link Resource} specifying a Resource on the class path by its URL.
+ * 
+ * @author Ron Piterman
+ */
 public class UrlResource implements Resource {
 	
 	private final ClassLoader classLoader;
@@ -30,8 +36,8 @@ public class UrlResource implements Resource {
 	/**
 	 * <p>Constructor for UrlResource.</p>
 	 *
-	 * @param url a {@link java.net.URL} object.
-	 * @param classLoader a {@link java.lang.ClassLoader} object.
+	 * @param url the URL to the resource.
+	 * @param classLoader the ClassLoader that should be used to load the given URL.
 	 */
 	public UrlResource(URL url, ClassLoader classLoader) {
 		super();
@@ -40,27 +46,21 @@ public class UrlResource implements Resource {
 	}
 
 	/**
-	 * <p>Getter for the field <code>classLoader</code>.</p>
-	 *
-	 * @return a {@link java.lang.ClassLoader} object.
+	 * {@inheritDoc}
 	 */
 	public ClassLoader getClassLoader() {
 		return classLoader;
 	}
 
 	/**
-	 * <p>toUrl</p>
-	 *
-	 * @return a {@link java.net.URL} object.
+	 * {@inheritDoc}
 	 */
 	public URL toUrl() {
 		return url;
 	}
 	
 	/**
-	 * <p>toString</p>
-	 *
-	 * @return a {@link java.lang.String} object.
+	 * {@inheritDoc}
 	 */
 	public String toString() {
 		return "UrlResource [url=" + url + "]";

@@ -22,14 +22,13 @@ package com.masetta.spann.metadata.visitors;
 
 import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.TypeReference;
+
 public class TypeReferenceImpl implements TypeReference {
     
     private ClassMetadata type;
 
     /**
-     * <p>Getter for the field <code>type</code>.</p>
-     *
-     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     * {@inheritDoc}
      */
     public ClassMetadata getType() {
         return type;

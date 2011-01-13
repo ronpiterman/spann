@@ -21,9 +21,16 @@
 package com.masetta.spann.metadata.core.support;
 
 import java.io.Serializable;
+
 import java.util.Comparator;
 
 import com.masetta.spann.metadata.core.AnnotationPath;
+
+/**
+ * Comparator of {@link AnnotationPath}, used to sorting AnnotationPaths by length.
+ * 
+ * @author Ron Piterman
+ */
 public final class AnnotationPathByLengthComparator implements Comparator<AnnotationPath> , Serializable  {
 	
 	private static final long serialVersionUID = 1L;

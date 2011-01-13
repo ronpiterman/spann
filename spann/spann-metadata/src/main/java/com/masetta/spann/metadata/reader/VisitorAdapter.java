@@ -25,8 +25,10 @@ import com.masetta.spann.metadata.visitors.MethodVisitorImpl;
  * Generic adapter interface for class reader visitor interfaces.<p>
  * 
  * @author Ron Piterman
+ * 
  * @param <T> The delegate type, one of {@link ClassVisitorImpl}, {@link MethodVisitorImpl}, 
  * 		{@link AnnotationVisitorImpl}, {@link FieldVisitorImpl}.
+ * 
  * @version $Id: $
  */
 public interface VisitorAdapter<T> {

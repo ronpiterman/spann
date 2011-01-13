@@ -20,6 +20,11 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+/**
+ * Invocation handler for logging proxy.
+ * @author Ron Piterman
+ *
+ */
 class TraceInvocationHandler implements InvocationHandler {
 	
 	private final Object target;

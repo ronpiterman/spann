@@ -1,4 +1,3 @@
-
 /**
  * Copyright 2010 the original author or authors.
  *
@@ -13,23 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * @author rpt
- * @version $Id: $
  */
 
-package com.masetta.spann.metadata.reader;
-
-import com.masetta.spann.metadata.core.ClassMetadata;
-public interface ClassMetadataResolver {
-    
-    /**
-     * <p>resolve</p>
-     *
-     * @param className a {@link java.lang.String} object.
-     * @param dimensions a int.
-     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
-     */
-    ClassMetadata resolve( String className , int dimensions );
-
-}
+/**
+ * Classes for generating unit test delegates for automating tests of the Queries-Syntax 
+ * used by spann-orm based Daos.
+ */
+package com.masetta.spann.orm.jpa.test;

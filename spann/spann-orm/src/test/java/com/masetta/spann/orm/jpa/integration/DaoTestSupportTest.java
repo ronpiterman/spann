@@ -16,12 +16,14 @@
 
 package com.masetta.spann.orm.jpa.integration;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.easymock.EasyMock;
@@ -79,7 +81,7 @@ public class DaoTestSupportTest extends AbstractSpringTest {
 	}
 	
 	@Test(dataProvider="invoker")
-	public void testDaoMethod( DaoMethodInvoker invoker ) {
+	public void testDaoMethod( DaoMethodInvoker invoker ) throws NoResultException, IllegalArgumentException, InvocationTargetException {
 		invoker.invoke();
 	}
 	

@@ -21,7 +21,14 @@
 package com.masetta.spann.metadata.rules;
 
 import com.masetta.spann.metadata.core.Metadata;
+
 import com.masetta.spann.metadata.util.Matcher;
+
+/**
+ * Simple matcher using the elements name and an "equals" strategy.
+ * 
+ * @author Ron Piterman
+ */
 public class MetadataNameMatcher implements Matcher<Metadata> {
     
     private String name;

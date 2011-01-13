@@ -21,6 +21,15 @@
 package com.masetta.spann.metadata.core;
 
 import java.util.Iterator;
+
+/**
+ * Immutable path of artifacts, representing a parent-child path. For example Class-Method-Parameter.
+ * 
+ * ArtifactPath can not be created directly. Instead, use the EMPTY_PATH constant
+ * and {@link ArtifactPath#append(Metadata) append} method. 
+ * 
+ * @author Ron Piterman
+ */
 public final class ArtifactPath implements Iterable<Metadata> {
     
     /** Constant <code>EMPTY_PATH</code> */
@@ -41,19 +50,19 @@ public final class ArtifactPath implements Iterable<Metadata> {
     }
     
     /**
-     * <p>append</p>
+     * Create a new path, appending the given metadata object to the end of this path.
      *
-     * @param metadata a {@link com.masetta.spann.metadata.core.Metadata} object.
-     * @return a {@link com.masetta.spann.metadata.core.ArtifactPath} object.
+     * @param metadata a {@link Metadata} to append to this path.
+     * @return a new ArtifactPath, which is the result of appending the given metadata to this path.
      */
     public ArtifactPath append( Metadata metadata ) {
         return new ArtifactPath( this , metadata );
     }
     
     /**
-     * <p>size</p>
-     *
-     * @return a int.
+     * Retrieve the size of this path.
+     * 
+     * @return the size of this path.
      */
     public int size() {
         if ( parent == null )
@@ -62,27 +71,29 @@ public final class ArtifactPath implements Iterable<Metadata> {
     }
     
     /**
-     * <p>iterator</p>
-     *
-     * @return a {@link java.util.Iterator} object.
+     * Create an iterator for this path.
+     * 
+     * @return a new iterator for this path.
      */
     public Iterator<Metadata> iterator() {
         return new PathIterator( this );
     }
     
     /**
-     * <p>Getter for the field <code>metadata</code>.</p>
+     * Retrieve the last element of the path.
      *
-     * @return a {@link com.masetta.spann.metadata.core.Metadata} object.
+     * @return The last metadata element in the path.
      */
     public Metadata getMetadata() {
         return this.metadata;
     }
 
     /**
-     * <p>Getter for the field <code>parent</code>.</p>
+     * Retrieve the parent path of this path. The parent path represents
+     * all elements of this path excluding the last element.
      *
-     * @return a {@link com.masetta.spann.metadata.core.ArtifactPath} object.
+     * @return the parent path, representing all elements of this path excluding the last one, or null
+     * 	if this path is empty.
      */
     public ArtifactPath getParent() {
         return parent;
@@ -114,9 +125,7 @@ public final class ArtifactPath implements Iterable<Metadata> {
     }
     
     /**
-     * <p>toString</p>
-     *
-     * @return a {@link java.lang.String} object.
+     * {@inheritDoc}
      */
     public String toString() {
         return "ArtifactPath [" + toStringInternal( "" ) + "]";

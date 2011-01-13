@@ -29,16 +29,16 @@ import com.masetta.spann.metadata.core.modifier.MethodModifier;
 public interface MethodMetadata extends Metadata , AnnotatedElementMetadata {
     
     /**
-     * Modifier
+     * Retrieve the modifier of the method.
      *
-     * @return a {@link com.masetta.spann.metadata.core.modifier.MethodModifier} object.
+     * @return a {@link MethodModifier} object.
      */
     MethodModifier getModifier();
     
     /**
-     * Return type of the method, or null for void methods.
+     * Retrieve the return type of the method or null for void methods.
      *
-     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} representing the return
+     * @return a {@link ClassMetadata} representing the return
      * 		class of the method, or null if the method is void.
      */
     ClassMetadata getReturnClass();
@@ -46,16 +46,16 @@ public interface MethodMetadata extends Metadata , AnnotatedElementMetadata {
     /**
      * Generic return type of the method.
      * Note that this never indicates array dimensions. For array dimensions
-     * use {@link #getReturnClass() getReturnType() }.{@link ClassMetadata#getDimensions() getDimensions()}
+     * use methodMetadata.{@link #getReturnClass() getReturnType() }.{@link ClassMetadata#getDimensions() getDimensions()}
      *
-     * @return a {@link com.masetta.spann.metadata.core.GenericType} object.
+     * @return the generic return type of the method, if generic information is available, otherwise null.
      */
     GenericType getReturnType();
 
     /**
-     * <p>getParameters</p>
+     * Retrieve the method's parameters metadata.
      *
-     * @return Metadata of the parameters of the method.
+     * @return a list of ParameterMetadata representing the parameters of this method.
      */
     List<ParameterMetadata> getParameters();
 
@@ -64,21 +64,28 @@ public interface MethodMetadata extends Metadata , AnnotatedElementMetadata {
      * For exmaple, method <code>&lt;X> X get( String key , Class&lt;X> type);</code>
      * will have one type parameter with name 'X'.
      *
-     * @return a {@link java.util.List} object.
+     * @return a List of TypeParameters.
      */
     List<TypeParameter> getTypeParameters();
     
     /**
-     * <p>getDefault</p>
+     * For annotation interface methods only (attributes), retrieve the default value of the annotation
+     * attribute represented by this method metadata.
+     * <p>
+     * For attributes of type Class, a ClassMetadata object is returned.<br>
+     * For attributes of type Enum, an EnumValue object is returned.<br>
+     * For attributes of any annotation type, an AnnotationMetadata object is returned.<br>
+     * For attributes of a primitive or String type, the actual value is returned.<br>
+     * For attributes of any array type, an array of any of the above is returned.<br>
+     * 
      *
-     * @return a {@link java.lang.Object} object.
+     * @return the annotation attribute's default value, or null if this method metadata does
+     * not represent an annotation attribute method or there is not default value for it.
      */
     Object getDefault();
     
     /**
-     * <p>getParent</p>
-     *
-     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     * @return the ClassMetadata of the class declaring this method.
      */
     ClassMetadata getParent();
     

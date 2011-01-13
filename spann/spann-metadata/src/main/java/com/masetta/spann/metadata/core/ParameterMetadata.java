@@ -19,20 +19,28 @@
  */
 
 package com.masetta.spann.metadata.core;
+
+
+/**
+ * Metadata of a method parameter.
+ * 
+ * @author Ron Piterman
+ */
 public interface ParameterMetadata extends Metadata , AnnotatedElementMetadata {
 
     /**
-     * <p>getParameterClass</p>
+     * Retrieve the class (type) of the parameter.
      *
-     * @return a {@link com.masetta.spann.metadata.core.ClassMetadata} object.
+     * @return a ClassMetadata object representing this parameter's type.
      */
     ClassMetadata getParameterClass();
     
     /**
-     * Retrieve the generic type infomration for this method parameter.
+     * Retrieve the generic type infomration for this parameter.
      *
+     * @return the generic type of this parameter, or null if none.
+     * 
      * @see FieldMetadata#getFieldType()
-     * @return a {@link com.masetta.spann.metadata.core.GenericType} object.
      */
     GenericType getParameterType();
 

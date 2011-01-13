@@ -19,6 +19,12 @@
  */
 
 package com.masetta.spann.metadata.common;
+
+/**
+ * RuntimeIOException - has the same semantics as IOException but does not require catching.
+ * 
+ * @author Ron Piterman
+ */
 public class RuntimeIOException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;

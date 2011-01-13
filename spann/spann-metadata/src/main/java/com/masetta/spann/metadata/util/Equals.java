@@ -24,35 +24,26 @@ import java.util.Arrays;
  * @author Ron Piterman
  * @version $Id: $
  */
-public class EqualsBuilder {
-    
-    private boolean equals = true;
+public final class Equals {
+	
+	private Equals() {}
     
     /**
-     * <p>eq</p>
-     *
-     * @param o1 a {@link java.lang.Object} object.
-     * @param o2 a {@link java.lang.Object} object.
-     * @return a boolean.
+     * @param o1 Object 1
+     * @param o2 Object 2
+     * @return true if both are null or equal.
      */
-    public boolean eq( Object o1 , Object o2 ) {
-        return eq( o1 == null ? o2 == null : o1.equals( o2 ) );
+    public static boolean eq( Object o1 , Object o2 ) {
+        return  o1 == null ? o2 == null : o1.equals( o2 );
     }
     
     /**
-     * <p>eq</p>
-     *
-     * @param o1 an array of {@link java.lang.Object} objects.
-     * @param o2 an array of {@link java.lang.Object} objects.
-     * @return a boolean.
+     * @param o1 array 1
+     * @param o2 array 2
+     * @return true if both arrays are equal.
      */
-    public boolean eq( Object[] o1 , Object[] o2 ) {
-        return eq( Arrays.equals( o1, o2 ) );
-    }
-    
-    private boolean eq( boolean eq ) {
-        this.equals = eq;
-        return this.equals;
+    public static boolean eq( Object[] o1 , Object[] o2 ) {
+        return Arrays.equals( o1, o2 );
     }
     
 }

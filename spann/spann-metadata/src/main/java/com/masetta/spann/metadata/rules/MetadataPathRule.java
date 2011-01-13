@@ -21,6 +21,7 @@
 package com.masetta.spann.metadata.rules;
 
 import java.util.Collection;
+
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,12 @@ import com.masetta.spann.metadata.common.ArtifactElement;
 import com.masetta.spann.metadata.core.ArtifactPath;
 import com.masetta.spann.metadata.core.Metadata;
 import com.masetta.spann.metadata.util.Matcher;
+
+/**
+ * 
+ * @author Ron Piterman
+ *
+ */
 public class MetadataPathRule {
     
     private final Map<Artifact,List<Matcher<Metadata>>> path;

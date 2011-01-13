@@ -17,7 +17,7 @@
 package com.masetta.spann.metadata.core;
 
 /**
- * A generic type, representing one of: (1) method return type (2)
+ * A generic type, used to represent one of: (1) method return type (2)
  * method parameters, or (3) field's type.
  * <p>
  * A Generic type points to either a context bound type parameter or to a
@@ -72,7 +72,5 @@ public interface GenericType extends TypeReference {
      * Mutually exclusive with {@link #getContextBoundTypeParameter()}.
      */
     ClassMetadata getType();
-    
-    
 
 }

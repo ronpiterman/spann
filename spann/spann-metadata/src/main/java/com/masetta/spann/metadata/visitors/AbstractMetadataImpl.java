@@ -20,7 +20,7 @@ import com.masetta.spann.metadata.common.Artifact;
 import com.masetta.spann.metadata.common.ArtifactElement;
 import com.masetta.spann.metadata.core.ArtifactPath;
 import com.masetta.spann.metadata.core.Metadata;
-import com.masetta.spann.metadata.util.EqualsBuilder;
+import com.masetta.spann.metadata.util.Equals;
 
 abstract class AbstractMetadataImpl implements Metadata {
     
@@ -95,12 +95,11 @@ abstract class AbstractMetadataImpl implements Metadata {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        EqualsBuilder b = new EqualsBuilder();
-        return equals( (AbstractMetadataImpl) obj , b );
+        return equalsInternal( (AbstractMetadataImpl) obj );
     }
 
-    protected boolean equals(AbstractMetadataImpl obj, EqualsBuilder b) {
-        return b.eq( path ,obj.getPath() );
+    protected boolean equalsInternal(AbstractMetadataImpl obj) {
+        return Equals.eq( path ,obj.getPath() );
     }    
     
     public String toString() {

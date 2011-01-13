@@ -61,10 +61,6 @@ public class DefaultVisitor implements MetadataVisitor<ClassMetadata> {
 
 	private static final String VISITOR = Visitor.class.getCanonicalName();
     
-    private static final String VISIT_METHODS = VisitMethods.class.getCanonicalName();
-    
-    private static final String VISIT_FIELDS = VisitFields.class.getCanonicalName();
-    
     /** 
      * Compares AnnotationPaths whos target annotation is Visitor, according to the Visitor annotation's 
      * precedence attribute.

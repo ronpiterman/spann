@@ -20,11 +20,17 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import com.masetta.spann.metadata.core.AnnotationMetadata;
 import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.TypeArgument;
 import com.masetta.spann.metadata.core.TypeMetadata;
 import com.masetta.spann.metadata.core.TypeParameter;
 
+/**
+ * Provides convenience methods for dealing with {@link ClassMetadata} objects.
+ * 
+ * @author Ron Piterman
+ */
 public final class ClassMetadataSupport {
 
 	private static final Map<String, Character> PRIMITIVE_TYPES = createPrimitiveTypesMap();
@@ -151,8 +157,15 @@ public final class ClassMetadataSupport {
 	/**
 	 * If the class underlying the given ClassMetadata is an instanceof the
 	 * given typename.
+	 * 
+	 * @param cm the ClassMetadata which should be checked
+	 * @param supertypeName a full qualified class name of a super type to check agains.
+	 * @param dimension the array dimensions of supertypeName to check agains.
+	 * 
+	 * @return true if the given ClassMetadata is an instanceof the given supertypeName with
+	 * 	the given array-dimensions.
 	 */
-	public static boolean instanceOf(ClassMetadata cm, String supertypeName, int dimension) {
+	public static boolean instanceOf( ClassMetadata cm, String supertypeName, int dimension) {
 		if ( cm == null )
 			return false;
 
@@ -174,10 +187,28 @@ public final class ClassMetadataSupport {
 		return false;
 	}
 
+	/**
+	 * Returns a user friendly class name for the given ClassMetadata. The returned string
+	 * will contain array-paretheses for each array dimension of the given ClassMetadata.
+	 * 
+	 * @param cm ClassMetadata to return a nice classname for.
+	 * 
+	 * @return a full qualified class name, suffixed with array parentheses (if needed).
+	 */
 	public static String getNiceClassnameFor(ClassMetadata cm) {
 		return ClassMetadataSupport.getNiceClassnameFor(cm.getName(), cm.getDimensions());
 	}
-
+	
+	/**
+	 * Returns a user friendly class name for the given classname and array dimensions. T
+	 * he returned string will contain array-paretheses for each array dimension of the given 
+	 * classname.
+	 * 
+	 * @param classname the class name.
+	 * @param dimensions the number of array dimensions of the class.
+	 * 
+	 * @return a full qualified class name, suffixed with array parentheses (if needed).
+	 */
 	public static String getNiceClassnameFor(String classname, int dimensions) {
 		switch ( dimensions ) {
 			case 0:
@@ -196,10 +227,27 @@ public final class ClassMetadataSupport {
 		}
 	}
 
+	/**
+	 * Return a class name that can be used by Class.forName(String) method for
+	 * the given ClassMetadata.
+	 * 
+	 * @param cm ClassMetadata to retrieve the reflection class name for.
+	 * 
+	 * @return A standard java class name that may be used by Class.forName(String).
+	 */
 	public static String getReflectionClassnameFor(ClassMetadata cm) {
 		return getReflectionClassnameFor(cm.getName(), cm.getDimensions());
 	}
 
+	/**
+	 * Return a class name that can be used by Class.forName(String) method for
+	 * the given classname and array dimensions.
+	 * 
+	 * @param classname the class name to use
+	 * @param dimensions array dimensions of the created reflection-classname.
+	 * 
+	 * @return A standard java class name that may be used by Class.forName(String).
+	 */
 	public static String getReflectionClassnameFor(String classname, int dimensions) {
 		boolean primitive = PRIMITIVE_TYPES.containsKey(classname);
 		char arrayPrefix = primitive ? PRIMITIVE_TYPES.get(classname) : 'L';
@@ -222,6 +270,15 @@ public final class ClassMetadataSupport {
 		}
 	}
 
+	/**
+	 * Resolve the given classMetadata to a java class.
+	 * 
+	 * @param classMetadata a ClassMetadata object to resolve to a java Class object.
+	 * 
+	 * @return the java Class object represented the given ClassMetadata object.
+	 * @throws RuntimeException if the class is not found by the class loader attached 
+	 * 		to the given class metadata.
+	 */
 	public static Class<?> resolve(ClassMetadata classMetadata) {
 		try {
 			ClassLoader cl = classMetadata.getClassLoader();
@@ -237,6 +294,19 @@ public final class ClassMetadataSupport {
 		}
 	}
 	
+	/**
+	 * Create a new instance of the class represented by the given class metadata,
+	 * casting it to the given type.
+	 * 
+	 * @param <T> the type to cast the instance to, typically an interface which is known
+	 * 	to be a supertype of the given class metadtaa.
+	 * @param type the type to cast the instacen to, typically an interface which is known
+	 * 	to be a supertype of the given class metadtaa.
+	 * @param classMetadata a ClassMetadata representing a subclass of the given type.
+	 * 
+	 * @return a new instance of the class represented by the given classMetadata, casted to the
+	 * 		given type.
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T newInstance( Class<T> type , ClassMetadata classMetadata ) {
 		try {
