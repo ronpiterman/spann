@@ -2,9 +2,7 @@
 
 (The current development version is 0.1.3-SNAPSHOT)
 
-Downloads are available only via Nexus OSS Repository, you can download directly from there, or use maven/ivy/etc.
-
-To use spann in a maven project, use the following repository/dependencies.
+To use spann in a maven/ivy/etc based project, use the following repository/dependencies.
 
 You can also [https://oss.sonatype.org/content/groups/staging/com/masetta/spann Download manually]
 
