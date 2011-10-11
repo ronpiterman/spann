@@ -226,7 +226,7 @@ public class MethodDelegatorFactoryBean implements FactoryBean, InitializingBean
 	}
 	
 	public static void configureSimple( BeanDefinition beanDefinition , String delegateBeanName, MethodMetadata methodMetadata ) {
-		if ( ! beanDefinition.getBeanClassName().equals( MethodDelegatorFactoryBean.class ) ) {
+		if ( ! MethodDelegatorFactoryBean.class.getName().equals( beanDefinition.getBeanClassName() ) ) {
 			throw new IllegalArgumentException( "BeanDefinition's beanClassName is not " + MethodDelegatorFactoryBean.class.getCanonicalName() );
 		}
 		
