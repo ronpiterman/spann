@@ -1,0 +1,13 @@
+#summary Release Log
+
+= Release Log =
+
+*Current development:* 0.1.2-SNAPSHOT
+
+== 0.1.1 : November 1st 2010 ==
+
+Diverse Bug Fixes
+
+== 0.1.0 : October 1st 2010 ==
+
+Initial Release
