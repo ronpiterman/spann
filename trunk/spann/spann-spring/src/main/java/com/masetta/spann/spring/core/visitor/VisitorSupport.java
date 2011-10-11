@@ -155,7 +155,7 @@ public abstract class VisitorSupport {
 		String result = null;
 		for ( String beanName : context.getSpringBeanDefinitionNames() ) {
 			BeanDefinition def = context.getSpringBeanDefinition( beanName );
-			if ( def.getBeanClassName().equals( className ) ) {
+			if ( className.equals( def.getBeanClassName() ) ) {
 				if ( result != null ) {
 					throw new IllegalArgumentException("More than one spring bean defined for class " + className );
 				}

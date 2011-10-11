@@ -46,7 +46,7 @@ public abstract class AbstractGenericReplacerAnnotationVisitor extends Annotatio
 		if ( replacer == null ) {
 			throw new IllegalConfigurationException( getAnnotationType() , metadata , "No method replacer found." );
 		}
-		if ( ! replacer.getBeanDefinition().getBeanClassName().equals( GenericMethodReplacer.class.getName() ) ) {
+		if ( ! GenericMethodReplacer.class.getName().equals( replacer.getBeanDefinition().getBeanClassName() ) ) {
 			throw new IllegalConfigurationException( getAnnotationType() , metadata , "Method replacer bean is not of type GenericMethodReplacer." );
 		}
 		
