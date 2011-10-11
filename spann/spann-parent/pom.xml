@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.masetta.spann</groupId>
 	<artifactId>spann-parent</artifactId>
-	<version>0.1.3-SNAPSHOT</version>
+	<version>0.1.3</version>
 	<packaging>pom</packaging>
 	<name>spann-parent</name>
 	<description>Parent POM for spann
@@ -163,7 +163,7 @@
 		<asm-version>2.2.3</asm-version>
 	</properties>
 	<scm>
-		<url>http://code.google.com/p/spann/source/checkout/trunk</url>
+		<url>http://code.google.com/p/spann/source/checkout/tags/spann-0.1.3/checkout/trunk</url>
 	</scm>
 	<distributionManagement>
         <repository>
