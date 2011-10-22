@@ -11,7 +11,6 @@ import com.masetta.spann.metadata.common.Artifact;
 import com.masetta.spann.spring.base.beanconfig.Attached;
 import com.masetta.spann.spring.base.beanconfig.BeanConfig;
 import com.masetta.spann.spring.base.beanconfig.WireMeta;
-import com.masetta.spann.spring.base.beanconfig.factories.BeanNameFactory;
 import com.masetta.spann.spring.base.beanconfig.factories.BeanReferenceFactory;
 import com.masetta.spann.spring.base.beanconfig.factories.MetadataNameFactory;
 

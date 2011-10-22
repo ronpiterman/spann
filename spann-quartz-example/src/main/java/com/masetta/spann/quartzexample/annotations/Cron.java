@@ -5,7 +5,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.quartz.CronTrigger;
 import org.springframework.scheduling.quartz.CronTriggerBean;
 
 import com.masetta.spann.metadata.common.Artifact;
