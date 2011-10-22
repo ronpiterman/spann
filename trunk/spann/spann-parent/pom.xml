@@ -45,31 +45,31 @@
 					<optimize>true</optimize>
 				</configuration>
 			</plugin>
-			<plugin>
-				<inherited>true</inherited>
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<version>1.8.0</version>
-				<configuration>
-					<header>${basedir}/../spann-parent/license.txt</header>
-					<failIfMissing>true</failIfMissing>
-					<aggregate>true</aggregate>
-					<excludes>
-						<exclude>license.txt</exclude>
-						<exclude>sonar.sh</exclude>
-						<exclude>log4j.properties</exclude>
-					</excludes>
-				</configuration>
-				<executions>
-					<execution>
-						<id>check-headers</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<inherited>true</inherited> -->
+<!-- 				<groupId>com.mycila.maven-license-plugin</groupId> -->
+<!-- 				<artifactId>maven-license-plugin</artifactId> -->
+<!-- 				<version>1.8.0</version> -->
+<!-- 				<configuration> -->
+<!-- 					<header>${basedir}/../spann-parent/license.txt</header> -->
+<!-- 					<failIfMissing>true</failIfMissing> -->
+<!-- 					<aggregate>true</aggregate> -->
+<!-- 					<excludes> -->
+<!-- 						<exclude>license.txt</exclude> -->
+<!-- 						<exclude>sonar.sh</exclude> -->
+<!-- 						<exclude>log4j.properties</exclude> -->
+<!-- 					</excludes> -->
+<!-- 				</configuration> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<id>check-headers</id> -->
+<!-- 						<phase>verify</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>check</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
 		</plugins>
 	</build>
 	<reporting>
@@ -195,7 +195,7 @@
         <developer>
             <id>ron.piterman</id>
             <name>Ron Piterman</name>
-            <email>ron (dot) piterman (at) masetta (dot) com</email>
+            <email>ron (dot) piterman (at) masetta (dot) de</email>
             <organizationUrl>http://www.masetta.com</organizationUrl>
         </developer>
     </developers>

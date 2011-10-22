@@ -30,23 +30,34 @@ import com.masetta.spann.spring.exceptions.IllegalConfigurationException;
  * It allows deferring attached bean resolution to avoid visitor order conflicts.
  * <p>
  * If no bean is attached to the given metadata in the given scope and role, an 
- * {@link IllegalConfigurationException} is thrown.  
+ * {@link IllegalConfigurationException} is thrown, unless the reference is optional.
  *  
  * @author Ron Piterman
  */
 public class RuntimeSpannReference {
 	
-	private Metadata metadata;
+	private final Metadata metadata;
 	
-	private Artifact scope;
+	private final Artifact scope;
 	
-	private String role;
+	private final String role;
+	
+	private final boolean optional;
+
+	public boolean isOptional() {
+		return optional;
+	}
 
 	public RuntimeSpannReference(Metadata metadata, Artifact scope, String role) {
+		this( metadata , scope , role, false );
+	}
+	
+	public RuntimeSpannReference(Metadata metadata, Artifact scope, String role, boolean optional ) {
 		super();
 		this.metadata = metadata;
 		this.scope = scope;
 		this.role = role;
+		this.optional = optional;
 	}
 
 	public Metadata getMetadata() {

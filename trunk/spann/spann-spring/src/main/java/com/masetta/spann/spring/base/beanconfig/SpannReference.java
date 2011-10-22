@@ -36,11 +36,14 @@ public @interface SpannReference {
 	String PROPERTY = "property";
 	String ROLE = "role";
 	String SCOPE = "scope";
+	String OPTIONAL = "optional";
 	
 	String property();
 	
 	String role();
 	
 	Artifact scope();
+	
+	boolean optional() default false;
 
 }
