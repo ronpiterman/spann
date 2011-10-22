@@ -64,6 +64,6 @@
 	</dependencies>
 	<properties>
 	   <spring-version>3.0.6.RELEASE</spring-version>
-	   <spann-version>0.1.4-SNAPSHOT</spann-version>
+	   <spann-version>[0.1.4]</spann-version>
 	</properties>
 </project>
