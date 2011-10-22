@@ -2,7 +2,12 @@
 
 = Release Log =
 
-*Current development:* 0.1.2-SNAPSHOT
+*Current development:* 0.1.5-SNAPSHOT
+
+== 0.1.4 : October 22 2011 ==
+
+ * Added `wire()` to `@BeanConfig`
+ * Allow `@BeanConfig`-references to be optional
 
 == 0.1.1 : November 1st 2010 ==
 
