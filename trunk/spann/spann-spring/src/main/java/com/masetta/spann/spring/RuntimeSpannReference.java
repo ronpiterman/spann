@@ -71,5 +71,11 @@ public class RuntimeSpannReference {
 	public String getRole() {
 		return role;
 	}
+
+	@Override
+	public String toString() {
+		return "RuntimeSpannReference [metadata=" + metadata + ", scope=" + scope + ", role="
+				+ role + ", optional=" + optional + "]";
+	}
 	
 }

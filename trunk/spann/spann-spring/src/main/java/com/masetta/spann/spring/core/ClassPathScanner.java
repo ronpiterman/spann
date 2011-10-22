@@ -63,6 +63,7 @@ import com.masetta.spann.spring.RuntimeSpannReference;
 import com.masetta.spann.spring.ScanContext;
 import com.masetta.spann.spring.ScanFinishedListener;
 import com.masetta.spann.spring.core.visitor.DefaultVisitor;
+import com.masetta.spann.spring.exceptions.IllegalConfigurationException;
 import com.masetta.spann.spring.util.Reference;
 
 /**
@@ -257,6 +258,14 @@ public class ClassPathScanner implements ResourceLoaderAware {
 			RuntimeSpannReference ref = (RuntimeSpannReference) o;
 			BeanDefinitionHolder h = scanContext.getAttachedBean( ref.getMetadata(),
 					ref.getScope(), ref.getRole() );
+			if ( h == null ) {
+				if ( ref.isOptional() ) {
+					return null;
+				}
+				else {
+					throw new IllegalConfigurationException("No bean attached for reference " + ref );
+				}
+			}
 			return new RuntimeBeanReference( h.getBeanName() );
 		}
 		return o;
