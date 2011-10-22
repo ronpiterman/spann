@@ -29,6 +29,7 @@ import com.masetta.spann.metadata.core.AnnotationMetadata;
 import com.masetta.spann.metadata.core.AnnotationPath;
 import com.masetta.spann.metadata.core.ClassMetadata;
 import com.masetta.spann.metadata.core.EnumValue;
+import com.masetta.spann.metadata.core.Metadata;
 import com.masetta.spann.metadata.core.MethodMetadata;
 import com.masetta.spann.metadata.core.modifier.ClassType;
 import com.masetta.spann.metadata.core.support.ClassMetadataSupport;
@@ -36,6 +37,9 @@ import com.masetta.spann.spring.RuntimeSpannReference;
 import com.masetta.spann.spring.ScanContext;
 import com.masetta.spann.spring.base.AnnotationPathMetadataVisitor;
 import com.masetta.spann.spring.core.visitor.DefSupport;
+import com.masetta.spann.spring.core.visitor.VisitorSupport;
+import com.masetta.spann.spring.exceptions.AnnotationConfigurationException;
+import com.masetta.spann.spring.util.InstanceCache;
 
 public class BeanConfigVisitor extends AnnotationPathMetadataVisitor<AnnotatedElementMetadata> {
 
@@ -43,7 +47,7 @@ public class BeanConfigVisitor extends AnnotationPathMetadataVisitor<AnnotatedEl
 	
 	private static final String BEAN_CONFIG = BeanConfig.class.getCanonicalName();
 	
-	private Map<String,AttributeHandler> handler = new HashMap<String,AttributeHandler>();
+	private InstanceCache helperInstances = new InstanceCache();
 
 	public BeanConfigVisitor() {
 		super( AnnotatedElementMetadata.class, BEAN_CONFIG , false );
@@ -65,14 +69,12 @@ public class BeanConfigVisitor extends AnnotationPathMetadataVisitor<AnnotatedEl
 		
 		boolean explicit = path.getAttribute( 0, Boolean.class, BeanConfig.EXPLICIT_ATTRIBUTE, true );
 		
-		AnnotationMetadata annotation = path.getPath()[1];
-		
 		ClassMetadata defHandlerType = path.getAttribute( 0 , ClassMetadata.class,
 				BeanConfig.DEFAULT_ATTRIBUTE_HANDLER_ATTRIBUTE , true );
 		
 		AttributeHandler defaultHandler = getHandler( defHandlerType );
 		
-		// TODO apply references
+		// apply references
 		for ( AnnotationMetadata am : path.getAttribute(0, AnnotationMetadata[].class, BeanConfig.REFERENCES_ATTRIBUTE, true ) ) {
 			String property = am.getAttribute( String.class, SpannReference.PROPERTY, false );
 			String role = am.getAttribute( String.class, SpannReference.ROLE, false );
@@ -81,31 +83,64 @@ public class BeanConfigVisitor extends AnnotationPathMetadataVisitor<AnnotatedEl
 					scope.resolve( Artifact.class ) , role ) );
 			
 		}
+		// apply wire data
+		for ( AnnotationMetadata am : path.getAttribute(0, AnnotationMetadata[].class, BeanConfig.WIRE_ATTRIBUTE, true ) ) {
+			String property = am.getAttribute( String.class, WireMeta.PROPERTY, true );
+			ClassMetadata valFactory = am.getAttribute( ClassMetadata.class, WireMeta.FACTORY, true );
+			EnumValue wireValueScope = am.getAttribute( EnumValue.class, WireMeta.SCOPE, true );
+			
+			Metadata targetMetadata = findAncestor( wireValueScope.resolve( Artifact.class ), metadata );
+			if ( targetMetadata == null ) {
+				throw new AnnotationConfigurationException( metadata, BEAN_CONFIG, "" + wireValueScope + " is not ancestor of " + metadata );
+			}
+			
+			Object value = getMetaValueFactory( valFactory ).create( targetMetadata, context, path );
+			DefSupport.setProperty( beanDefinition, property, value );
+		}
 		
-		AttributeHandler h = null;
-		for ( MethodMetadata method : annotation.getType().getMethods() ) {
-			Object value = annotation.getAttribute( method.getName(), false );
-			if ( explicit && value == null )
-				continue;
-			
-			List<AnnotationPath> paths = method.findAnnotationPaths( ATTRIBUTE_HANDLER_DEF );
-			ClassMetadata handlerDef = paths.isEmpty() ? null : paths.get( 0 ).getAttribute( 
-					0 , ClassMetadata.class , AttributeHandlerDefinition.VALUE_ATTRIBUTE , false ); 
-			
-			h = handlerDef == null ? defaultHandler : getHandler( handlerDef );
-			
-			h.handle( metadata , context , beanDefinition, annotation , method.getName() );
+		
+		AnnotationMetadata[] annPath = path.getPath();
+		if ( annPath.length > 1 ) {
+			AnnotationMetadata annotation = annPath[1];
+			AttributeHandler h = null;
+			for ( MethodMetadata method : annotation.getType().getMethods() ) {
+				Object value = annotation.getAttribute( method.getName(), false );
+				if ( explicit && value == null )
+					continue;
+				
+				List<AnnotationPath> paths = method.findAnnotationPaths( ATTRIBUTE_HANDLER_DEF );
+				ClassMetadata handlerDef = paths.isEmpty() ? null : paths.get( 0 ).getAttribute( 
+						0 , ClassMetadata.class , AttributeHandlerDefinition.VALUE_ATTRIBUTE , false ); 
+				
+				h = handlerDef == null ? defaultHandler : getHandler( handlerDef );
+				
+				h.handle( metadata , context , beanDefinition, annotation , method.getName() );
+			}
 		}
 		
 	}
 
-	private AttributeHandler getHandler(ClassMetadata cls) {
-		AttributeHandler h = this.handler.get( cls.getName() );
-		if ( h == null ) {
-			h = ClassMetadataSupport.newInstance( AttributeHandler.class, cls );
-			this.handler.put( cls.getName(), h );
+	private Metadata findAncestor( Artifact scope, Metadata metadata) {
+		if ( metadata == null )
+			return null;
+		
+		switch ( scope ) {
+			case UNDEFINED:
+			case UNKNOWN:
+				return metadata;
+			default : 
+				if ( scope.equals( metadata.getArtifact() ) )
+					return metadata;
+				else return findAncestor( scope , metadata.getParent() );
 		}
-		return h;
+	}
+
+	private AttributeHandler getHandler(ClassMetadata cls) {
+		return this.helperInstances.get( cls.getName() , AttributeHandler.class );
+	}
+	
+	private WireMetaValueFactory getMetaValueFactory( ClassMetadata cls ) {
+		return this.helperInstances.get( cls.getName(), WireMetaValueFactory.class );
 	}
 
 	private BeanDefinition getOrCreateBeanDefinition(AnnotatedElementMetadata metadata, ScanContext context,
