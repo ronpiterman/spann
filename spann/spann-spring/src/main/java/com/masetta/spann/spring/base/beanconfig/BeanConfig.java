@@ -78,6 +78,7 @@ public @interface BeanConfig {
 	String EXPLICIT_ATTRIBUTE = "explicit";
 	String REFERENCES_ATTRIBUTE = "references";
 	String DEFAULT_ATTRIBUTE_HANDLER_ATTRIBUTE = "defaultAttributeHandler";
+	String WIRE_ATTRIBUTE = "wire";
 	
 	/**
 	 * The attache scope of the bean to configure.
@@ -129,5 +130,10 @@ public @interface BeanConfig {
 	 * (on any meta-annotation level) will be handled by the given Handler.
 	 */
 	Class<? extends AttributeHandler> defaultAttributeHandler() default DefaultAttributeHandler.class;
+	
+	/**
+	 * Set bean properties using metadata or context information.
+	 */
+	WireMeta[] wire() default {};
 	
 }

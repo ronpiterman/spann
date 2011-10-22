@@ -25,7 +25,7 @@ import com.masetta.spann.spring.base.beanconfig.AttributeHandlerDefinition;
 
 /**
  * Marks annotation attribute which mutate properties of the BeanDefinition instance itself, 
- * instead of the BeanDefinition proeprties.
+ * instead of the Bean's proeprties.
  * 
  * @author Ron Piterman
  */
