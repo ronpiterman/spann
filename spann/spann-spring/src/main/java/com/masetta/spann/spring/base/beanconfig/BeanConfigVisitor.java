@@ -79,9 +79,9 @@ public class BeanConfigVisitor extends AnnotationPathMetadataVisitor<AnnotatedEl
 			String property = am.getAttribute( String.class, SpannReference.PROPERTY, false );
 			String role = am.getAttribute( String.class, SpannReference.ROLE, false );
 			EnumValue scope = am.getAttribute( EnumValue.class, SpannReference.SCOPE, false );
+			Boolean optional = am.getAttribute( Boolean.class, SpannReference.OPTIONAL, true );
 			DefSupport.setProperty( beanDefinition, property, new RuntimeSpannReference( metadata,
-					scope.resolve( Artifact.class ) , role ) );
-			
+					scope.resolve( Artifact.class ) , role , optional ) );
 		}
 		// apply wire data
 		for ( AnnotationMetadata am : path.getAttribute(0, AnnotationMetadata[].class, BeanConfig.WIRE_ATTRIBUTE, true ) ) {
@@ -95,7 +95,9 @@ public class BeanConfigVisitor extends AnnotationPathMetadataVisitor<AnnotatedEl
 			}
 			
 			Object value = getMetaValueFactory( valFactory ).create( targetMetadata, context, path );
-			DefSupport.setProperty( beanDefinition, property, value );
+			if ( value != null ) {
+				DefSupport.setProperty( beanDefinition, property, value );
+			}
 		}
 		
 		
