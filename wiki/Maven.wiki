@@ -31,7 +31,7 @@ You can also [https://oss.sonatype.org/content/groups/staging/com/masetta/spann 
       <!--  <artifactId>spann-metadata</artifactId> -->
       <!--  <artifactId>spann-spring</artifactId> -->
       <!--  <artifactId>spann-orm</artifactId> -->
-        <version>0.1.2</version>
+        <version>0.1.4</version>
     </dependency>
   
   </dependencies>
