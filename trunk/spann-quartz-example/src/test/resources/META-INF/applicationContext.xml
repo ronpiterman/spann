@@ -13,12 +13,6 @@ http://os.masetta.com/spann/schema/spann-1.0 http://os.masetta.com/spann/schema/
     
     <spann:scan base-package="com.masetta.spann.quartzexample"/>
     
-    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers">
-            <bean class="com.masetta.spann.quartzexample.helper.ByClassListFactoryBean">
-                <property name="type" value="org.quartz.Trigger"/>
-            </bean>
-        </property> 
-    </bean>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" autowire="byType"/>
 
 </beans>
