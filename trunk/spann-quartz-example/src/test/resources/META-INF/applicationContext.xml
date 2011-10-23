@@ -7,8 +7,6 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 http://os.masetta.com/spann/schema/spann-1.0 http://os.masetta.com/spann/schema/spann-1.0.xsd">
 
-    <context:annotation-config/>
-    
     <context:component-scan base-package="com.masetta.spann.quartzexample"/>
     
     <spann:scan base-package="com.masetta.spann.quartzexample"/>
