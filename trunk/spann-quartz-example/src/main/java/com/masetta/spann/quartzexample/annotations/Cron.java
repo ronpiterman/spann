@@ -16,7 +16,7 @@ import com.masetta.spann.spring.base.beanconfig.SpannReference;
 @Target({ElementType.METHOD,ElementType.ANNOTATION_TYPE})
 // Configure a Bean Definition
 @BeanConfig(create=CronTriggerBean.class,
-		attached=@Attached(role="quartzScheduler",scope=Artifact.METHOD),explicit=true,
+		attached=@Attached(role="quartzTrigger",scope=Artifact.METHOD),explicit=true,
 		references=@SpannReference(property="jobDetail",role="quartzJob", scope=Artifact.METHOD))
 public @interface Cron {
 	
