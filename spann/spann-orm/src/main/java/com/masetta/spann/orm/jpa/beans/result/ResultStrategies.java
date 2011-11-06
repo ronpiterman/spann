@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.masetta.spann.orm.jpa.beans;
+package com.masetta.spann.orm.jpa.beans.result;
 
 import java.util.List;
 
+import com.masetta.spann.orm.jpa.beans.QueryCallContext;
 import com.masetta.spann.spring.util.Resolver;
 
 /**
