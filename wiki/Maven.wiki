@@ -1,6 +1,6 @@
-*The current released version is 0.1.4*
+*The current released version is 0.1.5*
 
-(The current development version is 0.1.5-SNAPSHOT)
+(The current development version is 0.1.6-SNAPSHOT)
 
 To use spann in a maven/ivy/etc based project, use the following repository/dependencies.
 
@@ -31,7 +31,7 @@ You can also [https://oss.sonatype.org/content/groups/staging/com/masetta/spann 
       <!--  <artifactId>spann-metadata</artifactId> -->
       <!--  <artifactId>spann-spring</artifactId> -->
       <!--  <artifactId>spann-orm</artifactId> -->
-        <version>0.1.4</version>
+        <version>0.1.5</version>
     </dependency>
   
   </dependencies>
