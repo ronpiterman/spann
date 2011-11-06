@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.masetta.spann</groupId>
 	<artifactId>spann</artifactId>
-	<version>0.1.5-SNAPSHOT</version>
+	<version>0.1.5</version>
 	<packaging>pom</packaging>
 	<name>spann-aggregator</name>
 	<description>Aggregator POM of spann
@@ -17,10 +17,10 @@
 	</modules>
 	<scm>
 		<connection>
-            scm:svn:http://spann.googlecode.com/svn/trunk/spann
+            scm:svn:http://spann.googlecode.com/svn/tags/spann-0.1.5/spann
         </connection>
 		<developerConnection>
-            scm:svn:https://spann.googlecode.com/svn/trunk/spann
+            scm:svn:https://spann.googlecode.com/svn/tags/spann-0.1.5/spann
         </developerConnection>
 	</scm>
 	<build>

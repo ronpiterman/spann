@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>spann-parent</artifactId>
 		<groupId>com.masetta.spann</groupId>
-		<version>0.1.5-SNAPSHOT</version>
+		<version>0.1.5</version>
 		<relativePath>../spann-parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>spann-metadata</artifactId>
