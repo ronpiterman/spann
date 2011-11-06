@@ -74,6 +74,34 @@ public abstract class BaseIntegrationTest extends AbstractSpringTest {
 		expectUpdate( q , result );
 	}
 
+	protected void expectSQL( String sql , Class mappingClass, String mappingName, QueryPosition qp , List<?> result, boolean positional, Object ...args ) {
+		Query q = expectSQL( sql , mappingClass , mappingName );
+		expect( q , qp );
+		if ( positional ) {
+			expectPositional( q , args );
+		}
+		else {
+			expectNamed( q, args );
+		}
+		expectResult( q , result );
+	}
+
+	private Query expectSQL(String sql, Class mappingClass, String mappingName) {
+		if ( mappingClass != null && mappingName != null ) {
+			throw new IllegalArgumentException( "Test error: mappingClass and MappingName are both given." );
+		}
+		Query query= createMock( Query.class );
+		if ( mappingClass != null ) {
+			EasyMock.expect( entityManager.createNativeQuery( sql , mappingClass ) ).andReturn( query );
+		}
+		else if ( mappingName != null ) {
+			EasyMock.expect( entityManager.createNativeQuery( sql , mappingName ) ).andReturn( query );
+		}
+		else {
+			EasyMock.expect( entityManager.createNativeQuery( sql ) ).andReturn( query );
+		}
+		return query;
+	}
 
 	private void expectUpdate(Query q, int result) {
 		EasyMock.expect( q.executeUpdate() ).andReturn( result );

@@ -55,6 +55,9 @@ public class DaoTestSupportTest extends AbstractSpringTest {
 		
 		EasyMock.expect( em.createQuery( EasyMock.isA( String.class ) ) ).andReturn( query ).anyTimes();
 		EasyMock.expect( em.createNamedQuery( EasyMock.isA( String.class ) ) ).andReturn( query ).anyTimes();
+		EasyMock.expect( em.createNativeQuery( EasyMock.isA( String.class ) ) ).andReturn( query ).anyTimes();
+		EasyMock.expect( em.createNativeQuery( EasyMock.isA( String.class ) , EasyMock.isA( String.class )) ).andReturn( query ).anyTimes();
+		EasyMock.expect( em.createNativeQuery( EasyMock.isA( String.class ) , EasyMock.isA( Class.class )) ).andReturn( query ).anyTimes();
 		
 		EasyMock.expect( query.setFirstResult( EasyMock.anyInt() ) ).andReturn( query ).anyTimes();
 		
@@ -65,6 +68,7 @@ public class DaoTestSupportTest extends AbstractSpringTest {
 		EasyMock.expect( query.executeUpdate() ).andReturn( 1 ).anyTimes() ;
 		EasyMock.expect( query.getResultList() ).andReturn( new ArrayList() ).anyTimes();
 		EasyMock.expect( query.getSingleResult() ).andReturn( null ).anyTimes();
+		
 		
 		EasyMock.replay( em , query );
 		
