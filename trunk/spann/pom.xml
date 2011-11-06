@@ -17,10 +17,10 @@
 	</modules>
 	<scm>
 		<connection>
-            scm:svn:http://spann.googlecode.com/svn/trunk
+            scm:svn:http://spann.googlecode.com/svn/trunk/spann
         </connection>
 		<developerConnection>
-            scm:svn:https://spann.googlecode.com/svn/trunk
+            scm:svn:https://spann.googlecode.com/svn/trunk/spann
         </developerConnection>
 	</scm>
 	<build>
