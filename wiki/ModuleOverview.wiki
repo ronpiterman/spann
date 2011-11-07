@@ -26,6 +26,9 @@ The spann-spring module builds on spann-metadata class path scanning facility an
 Main features of spann-spring:
 
  *  API to define custom visitors for class metadata. This allows developers to  process of annotations or any other class metadata.
+
  *  Additional API for custom handling of class and/or method annotations.
+
  *  A few generic annotations for common tasks, to allow developers further access to spring features (for example to implement abstract methods by delegation)
+
  * ScanContext's Attach API allows sharing BeanDefinitions between Visitors, making it easy to develop *Annotation Composition*.
