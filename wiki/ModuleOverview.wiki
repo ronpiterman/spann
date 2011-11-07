@@ -2,7 +2,7 @@
 
 Spann consists of 2 core API modules and other modules which leverage this API to implement solutions for common usecases.
 
-== org.spann:spann-metadata ==
+== com.masetta.spann:spann-metadata ==
 
 The metadata module provides a complete Metadata scanning API. It uses ASM (objectweb) to read metadata from selected classes.
 
@@ -19,13 +19,13 @@ Main features of spann-meatdata are:
  *  Portable accross different versions of ASM: can be used from within spring without any ASM dependency (using the ASM implementation delivered with spring), or elsewhere with any other ASM version.
 
 
-== org.spann:spann-spring ==
+== com.masetta.spann:spann-spring ==
 
-The core module introduces class path scanning and configurable ClassMetadata Visitor API for the spring container.
+The spann-spring module builds on spann-metadata class path scanning facility and offers a ClassMetadata Visitor API for the spring container. By Implementing Visitors, developers can use the ScanContext to create BeanDefinitions, thus defining new spring beans. 
 
 Main features of spann-spring:
 
  *  API to define custom visitors for class metadata. This allows developers to  process of annotations or any other class metadata.
  *  Additional API for custom handling of class and/or method annotations.
- *  A few generic annotations for common tasks, to allow developers further access to
-spring features (for example to implement abstract methods by delegation)
+ *  A few generic annotations for common tasks, to allow developers further access to spring features (for example to implement abstract methods by delegation)
+ * ScanContext's Attach API allows sharing BeanDefinitions between Visitors, making it easy to develop *Annotation Composition*.
